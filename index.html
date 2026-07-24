@@ -1,0 +1,800 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Setlz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter+Tight:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- ============================================================
+     NAV
+============================================================ -->
+<header class="nav">
+  <div class="nav-inner">
+    <a class="logo" href="#top">
+      <span class="logo-mark" aria-hidden="true"></span>
+      <span class="logo-word" data-brand>Setlz</span>
+    </a>
+    <nav class="nav-links">
+      <a href="#race">The race</a>
+      <a href="#how">How it works</a>
+      <a href="#hold">The hold</a>
+      <a href="#why">Why we win</a>
+      <a href="#cases">Use cases</a>
+      <a href="#request-demo">Get a demo</a>
+    </nav>
+    <a class="btn btn-primary btn-sm" href="#race">See it setl</a>
+  </div>
+</header>
+
+<main id="top">
+
+<!-- ============================================================
+     1. HERO
+============================================================ -->
+<section class="hero">
+  <div class="hero-glow" aria-hidden="true"></div>
+  <div class="container">
+    <p class="eyebrow mono">EURC ON BASE &middot; WHITELABELLED SETLMENT INFRASTRUCTURE</p>
+    <h1 class="hero-h1">The money arrives the moment the service does.</h1>
+    <p class="hero-sub">Every business that takes payment before it delivers sits on a float: cash held in limbo between pay and deliver. <span data-brand>Setlz</span> turns that gap into instant, whitelabelled setlment, at 40% below what they pay today.</p>
+    <div class="hero-ctas">
+      <a class="btn btn-primary" href="#request-demo">Request a demo</a>
+      <a class="btn btn-ghost" href="#race">See it setl</a>
+    </div>
+  </div>
+
+  <!-- Live setlment stream -->
+  <div class="container stream-wrap">
+    <div class="stream-card">
+      <div class="stream-head">
+        <span class="mono stream-label"><span class="pulse-dot" aria-hidden="true"></span>SETLMENT STREAM</span>
+        <span class="mono stream-note">SIMULATED FLOW &middot; RAIL BUILT AND TESTED END TO END</span>
+      </div>
+      <div class="stream-body">
+        <div class="stream-lanes" id="stream-lanes" aria-hidden="true">
+          <div class="lane-line"></div>
+          <div class="lane-line"></div>
+          <div class="lane-line"></div>
+        </div>
+        <div class="ledger">
+          <div class="mono ledger-head">SETLD</div>
+          <ul id="ledger-list" class="ledger-list"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     2. THE RACE
+============================================================ -->
+<section class="section" id="race">
+  <div class="container">
+    <p class="eyebrow mono">02 &middot; THE RACE</p>
+    <h2 class="h2">Send one payment down both rails.<br>Watch which one comes back.</h2>
+
+    <div class="race-card reveal">
+      <div class="race-top">
+        <button class="btn btn-primary" id="race-btn">Send a payment</button>
+        <div class="race-toggle-wrap">
+          <label class="race-toggle mono">
+            <input type="checkbox" id="hold-toggle">
+            <span>WITH 24 HOUR POST-CHECK-IN HOLD</span>
+          </label>
+          <span class="mono race-toggle-note">THE HOLD IS POLICY. THE SPEED IS PHYSICS.</span>
+        </div>
+        <div class="race-clock mono" id="race-clock">0.0s</div>
+      </div>
+
+      <div class="race-track">
+        <div class="race-row">
+          <div class="race-meta">
+            <span class="race-name">Traditional rails</span>
+            <span class="mono race-tag">CARDS + BANK PAYOUT &middot; T+2</span>
+          </div>
+          <div class="bar-wrap">
+            <div class="bar-shell">
+              <div class="bar bar-legacy" id="bar-legacy"></div>
+            </div>
+            <div class="bar-marks mono" aria-hidden="true"><span>DAY 0</span><span>DAY 1</span><span>DAY 2</span></div>
+          </div>
+          <div class="mono race-status" id="legacy-status">WAITING</div>
+        </div>
+
+        <div class="race-row">
+          <div class="race-meta">
+            <span class="race-name race-name-accent" data-brand>Setlz</span>
+            <span class="mono race-tag">EURC ON BASE</span>
+          </div>
+          <div class="bar-shell">
+            <div class="bar bar-settova" id="bar-settova"></div>
+          </div>
+          <div class="mono race-status" id="settova-status">WAITING</div>
+        </div>
+      </div>
+
+      <div class="tx-confirm" id="tx-confirm" hidden>
+        <div class="tx-head">
+          <span class="tx-check" aria-hidden="true">&#10003;</span>
+          <span class="mono">SETLD ON BASE</span>
+          <span class="mono tx-final" id="tx-final"></span>
+        </div>
+        <div class="tx-grid mono">
+          <span>TX</span><span id="tx-hash">0x&hellip;</span>
+          <span>NETWORK</span><span>Base &middot; EURC</span>
+          <span class="tx-hold">HOLD</span><span class="tx-hold">24H POST-CHECK-IN &middot; RELEASED ON RULE</span>
+          <span>SPLIT</span><span>SELLER &middot; MARGIN &middot; BUDGETS &middot; ATOMIC</span>
+        </div>
+        <p class="mono tx-note">SIMULATED CONFIRMATION FOR THIS DEMO</p>
+      </div>
+    </div>
+
+    <p class="race-caption"><span data-brand>Setlz</span> is not a concept. The rail, escrow, delivery triggers and integrations are built and tested end to end, across repeated runs with AtlasOra: our first reference customer.</p>
+
+    <div class="tech-strip mono reveal">
+      <span>UNDER 30 MIN &middot; DELIVERY TO PROVIDER PAID &middot; LIVE RUNS</span>
+      <span>11 MIN &middot; FIAT TO STABLECOIN TO FIAT ROUND TRIP*</span>
+      <span>99.9% &middot; SETLMENT UPTIME</span>
+    </div>
+    <p class="mono race-foot">*BOUNDED BY OUR OWN 20-MINUTE SETLMENT CRON JOB, NOT A RAIL LIMIT.</p>
+  </div>
+</section>
+
+<!-- ============================================================
+     3. WHAT IT IS
+============================================================ -->
+<section class="section section-tight" id="what">
+  <div class="container">
+    <p class="eyebrow mono">03 &middot; WHAT IT IS</p>
+    <p class="statement reveal">A setlment engine: any payment in, setld in EURC on Base in seconds, split atomically, under your brand.</p>
+    <div class="flow reveal" role="img" aria-label="Customer pays, held in escrow, service delivered, provider paid">
+      <span class="mono flow-node">CUSTOMER PAYS</span><span class="flow-arrow" aria-hidden="true">&rarr;</span>
+      <span class="mono flow-node flow-node-hold">HELD IN ESCROW</span><span class="flow-arrow" aria-hidden="true">&rarr;</span>
+      <span class="mono flow-node">SERVICE DELIVERED</span><span class="flow-arrow" aria-hidden="true">&rarr;</span>
+      <span class="mono flow-node flow-node-paid">PROVIDER PAID</span>
+    </div>
+    <p class="mono flow-timing">LEGACY RAILS: DAYS &middot; <span data-brand-upper>SETLZ</span>: ABOUT 11 MINUTES</p>
+    <div class="stat-grid">
+      <div class="stat-card reveal"><span class="mono stat-label">DELIVERY TO PAYOUT</span><span class="stat-value">Minutes</span></div>
+      <div class="stat-card reveal"><span class="mono stat-label">SETLMENT EXECUTION</span><span class="stat-value">Cents</span></div>
+      <div class="stat-card reveal"><span class="mono stat-label">OWNERSHIP</span><span class="stat-value">Whitelabel</span></div>
+      <div class="stat-card reveal"><span class="mono stat-label">PRICE VS INCUMBENTS</span><span class="stat-value">40% less</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     4. HOW IT WORKS
+============================================================ -->
+<section class="section" id="how">
+  <div class="container">
+    <p class="eyebrow mono">04 &middot; HOW IT WORKS</p>
+    <h2 class="h2">Fiat in. Stablecoin speed. Fiat out.</h2>
+
+    <div class="steps">
+      <div class="step reveal">
+        <span class="mono step-num">01</span>
+        <h3>Pay in</h3>
+        <p>Cards, Apple Pay, bank transfer. Your customer sees your brand, never ours.</p>
+      </div>
+      <div class="step-arrow mono" aria-hidden="true">&rarr;</div>
+      <div class="step reveal">
+        <span class="mono step-num">02</span>
+        <h3>Setl to escrow</h3>
+        <p>EURC on Base, final in seconds.</p>
+      </div>
+      <div class="step-arrow mono" aria-hidden="true">&rarr;</div>
+      <div class="step reveal">
+        <span class="mono step-num">03</span>
+        <h3>Hold by rule</h3>
+        <p>Programmable, API-defined per customer: check-in, proof of delivery, milestone.</p>
+      </div>
+      <div class="step-arrow mono" aria-hidden="true">&rarr;</div>
+      <div class="step reveal">
+        <span class="mono step-num">04</span>
+        <h3>Split</h3>
+        <p>Atomic: payout, margin, budgets. No reconciliation.</p>
+      </div>
+      <div class="step-arrow mono" aria-hidden="true">&rarr;</div>
+      <div class="step reveal">
+        <span class="mono step-num">05</span>
+        <h3>Pay out</h3>
+        <p>Near-instant, with native on and off ramps.</p>
+      </div>
+    </div>
+
+    <!-- "ON-CHAIN WALLETS": upgrade to a stronger custody claim pending wallet architecture verification (v2.9 claim gate). -->
+    <div class="tech-strip mono reveal">
+      <span>BASE NETWORK</span><span>EURC</span><span>ON-CHAIN WALLETS</span><span>KYC/AML INTEGRATED</span><span>EU GEO-RING-FENCING</span><span>IDLE-BALANCE TREASURY ROUTING</span><span>PROGRAMMABLE ESCROW</span>
+    </div>
+
+    <!-- Multi-coin strip (change order v2.5). Compact, not a numbered section. -->
+    <div class="coin-strip reveal">
+      <h3>One engine, every currency.</h3>
+      <p class="coin-lead">The engine is coin-agnostic. The currency is a corridor decision.</p>
+      <div class="coin-chips">
+        <span class="mono coin-chip"><span class="coin-name">EURC</span><span class="coin-tag coin-tag-live">LIVE</span></span>
+        <span class="mono coin-chip"><span class="coin-name">USDC</span><span class="coin-tag coin-tag-live">LIVE</span></span>
+        <span class="mono coin-chip"><span class="coin-name">GBP AND OTHER LOCAL-CURRENCY STABLECOINS</span><span class="coin-tag">INTEGRATION-READY</span></span>
+        <span class="mono coin-chip"><span class="coin-name">A NEW COIN IS CONFIGURATION, NOT A REBUILD</span></span>
+      </div>
+      <p class="mono coin-foot">e.g. tGBP, issued by an FCA-registered firm, live on Base. Ecosystem example, not a partnership.</p>
+    </div>
+
+    <!-- Compliance modules (change order v2.9). Frame: your policy, executable on
+         our rails. Never "we handle compliance", never "we perform KYC for you". -->
+    <div class="coin-strip reveal">
+      <h3>Compliance: obligation yours, tooling ours.</h3>
+      <p class="coin-lead">Your policy, executable on our rails.</p>
+      <div class="coin-chips">
+        <span class="mono coin-chip"><span class="coin-name">PLUGGABLE KYC: BRING YOUR PROVIDER OR USE THE PRE-WIRED INTEGRATION</span></span>
+        <span class="mono coin-chip"><span class="coin-name">AML SCREENING HOOKS</span></span>
+        <span class="mono coin-chip"><span class="coin-name">JURISDICTION GEO-FENCING</span></span>
+        <span class="mono coin-chip"><span class="coin-name">TRANSACTION-LEVEL REPORTING</span></span>
+      </div>
+      <p class="comp-punch">Screening as a release condition: an escrow can be programmed not to release until your own checks pass.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     5. THE HOLD
+============================================================ -->
+<section class="section section-tint" id="hold">
+  <div class="container">
+    <p class="eyebrow mono">05 &middot; THE HOLD</p>
+    <h2 class="h2">Instant does not mean reckless.</h2>
+    <p class="section-lede reveal">Every marketplace needs a gap between payment and payout. On <span data-brand>Setlz</span>, funds setl in seconds into on-chain escrow, fully reserved and lent to no one, and release is a rule you write.</p>
+
+    <!-- Interactive escrow simulator (change order v2.2). All values in ESCROW_CONFIG in app.js. -->
+    <div class="esc reveal" id="esc" data-state="idle">
+      <div class="esc-top">
+        <span class="mono esc-stage-label" id="esc-stage">01 PAYMENT</span>
+        <div class="esc-scenarios" id="esc-scenarios" role="group" aria-label="Scenario presets"></div>
+        <div class="esc-rail" role="group" aria-label="Payment rail (cosmetic)">
+          <button class="mono esc-rail-btn is-on" type="button" data-rail="card">CARD</button>
+          <button class="mono esc-rail-btn" type="button" data-rail="eurc">EURC</button>
+          <button class="mono esc-rail-btn" type="button" data-rail="usdc">USDC</button>
+          <span class="mono esc-rail-ghost">+ ANY BASE STABLECOIN</span>
+        </div>
+        <span class="mono esc-sim-note">INTERACTIVE DEMO &middot; SIMULATED TRANSACTIONS</span>
+      </div>
+
+      <div class="esc-board" id="esc-board">
+
+        <div class="esc-col">
+          <div class="esc-node" id="esc-payer">
+            <span class="mono esc-node-label" id="esc-payer-label">PAYER</span>
+            <span class="mono esc-node-amt" id="esc-payer-amt">&euro;1,000</span>
+            <span class="mono esc-node-sub" id="esc-payer-sub">PAYS VIA CARD</span>
+            <span class="mono esc-node-status" id="esc-payer-status">READY</span>
+          </div>
+        </div>
+
+        <div class="esc-col esc-col-mid">
+          <div class="esc-vault" id="esc-vault">
+            <div class="esc-vault-head">
+              <svg class="esc-lock" viewBox="0 0 16 16" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><rect x="2.5" y="7" width="11" height="7" rx="1.5"/><path d="M5 7V5a3 3 0 0 1 6 0v2"/></svg>
+              <span class="mono">ESCROW &middot; ON-CHAIN</span>
+              <span class="mono esc-chip" id="esc-chip">AWAITING PAYMENT</span>
+            </div>
+            <div class="esc-vault-amt mono" id="esc-vault-amt">&euro;0</div>
+            <div class="mono esc-hash" id="esc-hash" hidden></div>
+            <p class="esc-beat" id="esc-beat" hidden>Setld. Final. Held by rule, not by banks.</p>
+            <div class="esc-rule" id="esc-rule" hidden>
+              <div class="mono esc-rule-line" id="esc-rule-line">RELEASE RULE: DELIVERY CONFIRMED, THEN RELEASE</div>
+              <div class="mono esc-cond" id="esc-cond">DELIVERY: PENDING</div>
+            </div>
+          </div>
+
+          <div class="esc-views" id="esc-views" hidden>
+            <div class="esc-view">
+              <span class="mono esc-view-label" id="esc-view-a">PAYER VIEW</span>
+              <span class="mono esc-view-amt">LOCKED &middot; &euro;1,000 EURC</span>
+            </div>
+            <div class="esc-view">
+              <span class="mono esc-view-label" id="esc-view-b">SELLER VIEW</span>
+              <span class="mono esc-view-amt">LOCKED &middot; &euro;1,000 EURC</span>
+            </div>
+          </div>
+          <p class="esc-views-caption" id="esc-views-caption" hidden>Visible to both sides. Verifiable by both sides.</p>
+
+          <p class="esc-compare" id="esc-compare" hidden>On card rails this money would still be in flight, and clawable for up to 120 days.</p>
+
+          <div class="esc-banner mono" id="esc-banner" hidden>FUNDS REMAIN SECURED WHILE THE WINDOW RUNS</div>
+
+          <div class="esc-actions" id="esc-actions">
+            <button class="btn btn-primary" id="esc-primary" type="button">Simulate a purchase</button>
+            <button class="btn btn-ghost" id="esc-dispute-btn" type="button" hidden>Open dispute</button>
+            <button class="btn btn-primary" id="esc-refund-btn" type="button" hidden>Refund payer</button>
+            <button class="btn btn-ghost" id="esc-release-btn" type="button" hidden>Release to seller</button>
+          </div>
+
+          <p class="esc-stamp" id="esc-stamp" hidden></p>
+          <div class="mono esc-receipt" id="esc-receipt" hidden>
+            <span>RELEASE TO FINAL: SECONDS</span>
+            <span>CHARGEBACKS ON-CHAIN: NONE</span>
+            <span>BANKING HOURS CONSULTED: ZERO</span>
+          </div>
+        </div>
+
+        <div class="esc-col">
+          <div class="esc-node esc-wallet" data-wallet="seller">
+            <span class="mono esc-node-label">SELLER</span>
+            <span class="mono esc-node-amt">&euro;880</span>
+            <span class="mono esc-node-status">AWAITING</span>
+          </div>
+          <div class="esc-node esc-wallet" data-wallet="partner">
+            <span class="mono esc-node-label">PARTNER</span>
+            <span class="mono esc-node-amt">&euro;20</span>
+            <span class="mono esc-node-status">AWAITING</span>
+          </div>
+          <div class="esc-node esc-wallet" data-wallet="platform">
+            <span class="mono esc-node-label">PLATFORM</span>
+            <span class="mono esc-node-amt">&euro;100</span>
+            <span class="mono esc-node-status">AWAITING</span>
+          </div>
+        </div>
+
+      </div>
+      <p class="esc-coin-caption">Setlz in EURC today. Engineered for any Base-native fiat stablecoin.</p>
+      <div class="sr-only" aria-live="polite" id="esc-live"></div>
+    </div>
+
+    <div class="pullquotes">
+      <p class="pullquote reveal">Chargebacks are buyer protection by lawsuit. Escrow is buyer protection by design.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     6. WHY TRADITIONAL RAILS LOSE
+============================================================ -->
+<section class="section" id="compare">
+  <div class="container">
+    <p class="eyebrow mono">06 &middot; THE COMPARISON</p>
+    <h2 class="h2">Why traditional rails lose.</h2>
+
+    <!-- Cross-border world map race (change order v2.3). All corridor data in WM_CONFIG in app.js. -->
+    <div class="wm reveal" id="wm">
+      <div class="wm-top">
+        <div class="wm-corridors" id="wm-corridors" role="group" aria-label="Corridor presets"></div>
+        <button class="btn btn-ghost btn-sm" id="wm-replay" type="button">Replay</button>
+        <span class="mono wm-note">CAPABILITY DEMONSTRATION &middot; SIMULATED TRANSACTIONS AND TIMESTAMPS</span>
+      </div>
+
+      <div class="wm-map" id="wm-map">
+        <svg id="wm-svg" preserveAspectRatio="xMidYMid meet" aria-hidden="true"></svg>
+        <div class="wm-ov wm-daybox mono" id="wm-daybox" hidden></div>
+        <div class="wm-ov wm-stall mono" id="wm-stall" hidden>BANKING HOURS</div>
+        <div class="wm-ov wm-flipcap" id="wm-flipcap" hidden></div>
+        <div class="wm-ov wm-dest" id="wm-dest" hidden>
+          <div class="mono wm-setld" id="wm-setld"></div>
+          <div class="mono wm-stage2" id="wm-stage2" hidden></div>
+        </div>
+      </div>
+
+      <div class="wm-meters">
+        <div class="wm-lane wm-lane-settova">
+          <span class="mono wm-lane-title" id="wm-lane-brand">SETLZ</span>
+          <div class="mono wm-row"><span>ON-CHAIN FINALITY</span><span id="wm-fin">0.0s</span></div>
+          <div class="mono wm-row"><span>BANK CREDIT</span><span id="wm-credit">SEPA INSTANT · PENDING</span></div>
+          <div class="mono wm-row"><span>NETWORK COST</span><span>UNDER $0.01*</span></div>
+          <div class="mono wm-row"><span>FX</span><span>BASIS-POINT SPREAD ON DEEP POOLS</span></div>
+          <p class="mono wm-foot">*ON-CHAIN SETLMENT COST. OFF-RAMP PROVIDER FEE APPLIES.</p>
+        </div>
+        <div class="wm-lane">
+          <span class="mono wm-lane-title">INTERNATIONAL WIRE</span>
+          <div class="mono wm-row"><span>ELAPSED</span><span id="wm-elapsed">NOT STARTED</span></div>
+          <div class="mono wm-row"><span>FEES</span><span id="wm-fees">$0</span></div>
+          <div class="mono wm-row"><span>HOPS</span><span>4 TO 5 INTERMEDIARIES</span></div>
+          <div class="mono wm-row"><span>FX MARGIN</span><span>1 TO 4% HIDDEN IN THE RATE</span></div>
+          <div class="mono wm-row"><span>AVAILABILITY</span><span>BANKING HOURS ONLY</span></div>
+          <p class="mono wm-foot">TYPICAL INTERNATIONAL WIRE CHARGES. FX MARGIN APPLIES ON TOP OF THE $30 TO 40 IN FEES.</p>
+        </div>
+      </div>
+
+      <p class="wm-payoff" id="wm-payoff" hidden></p>
+      <div class="sr-only" aria-live="polite" id="wm-live"></div>
+    </div>
+
+    <div class="table-scroll reveal">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th class="mono"></th>
+            <th class="mono th-settova" data-brand>Setlz</th>
+            <th class="mono">CARDS + BANK PAYOUTS</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Setlment</td><td class="cell-win">Seconds</td><td>T+2 or worse</td></tr>
+          <tr><td>Cost</td><td class="cell-win">Near zero on-chain</td><td>2 to 6% plus FX spread</td></tr>
+          <tr><td>FX</td><td class="cell-win">Transparent on-chain swap, basis-point spreads on deep pools</td><td>1 to 4% margin hidden in the exchange rate</td></tr>
+          <tr><td>Cross-border</td><td class="cell-win">Native</td><td>Correspondent banking</td></tr>
+          <tr><td>Splits</td><td class="cell-win">Atomic and programmable</td><td>Manual reconciliation</td></tr>
+          <tr><td>Chargebacks</td><td class="cell-win">None on-chain</td><td>Weeks of exposure</td></tr>
+          <tr><td>Uptime</td><td class="cell-win">24/7</td><td>Banking hours</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p class="compare-close reveal">Every row above is money. Faster setlment is working capital. Lower cost is margin. No chargebacks is fewer write-offs.</p>
+
+    <!-- Business model strip (from the deck). Revenue projections stay off the site. -->
+    <div class="coin-strip reveal">
+      <h3>Two lines. One rail.</h3>
+      <p class="coin-lead">Licence at cost. Transactions for profit.</p>
+      <p class="coin-support"><strong>Licence, at cost:</strong> onboarding, integration, support. We make money only when you transact.</p>
+      <p class="coin-support"><strong>Transaction fee:</strong> a thin fee per transaction setld, 40% under card processors. The customer keeps the difference.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     6. WHY SETLZ WINS
+============================================================ -->
+<section class="section" id="why">
+  <div class="container">
+    <p class="eyebrow mono">07 &middot; WHY <span class="brand-upper" data-brand-upper>SETLZ</span> WINS</p>
+    <h2 class="h2">Crypto rails exist. Almost nobody has built commerce on them. We did.</h2>
+    <p class="section-lede reveal">Three camps: accounts that hold your money, rails that move it, orchestrators that dress up the old system. None of them setl a transaction end to end. We built the layer that does. Everyone sells the plumbing. We sell the appliance.</p>
+
+    <div class="camps">
+
+      <article class="camp reveal">
+        <div class="camp-head">
+          <span class="mono camp-label">CAMP ONE</span>
+          <h3>Crypto neobanks</h3>
+          <p class="mono camp-names">REVOLUT &middot; NEXO &middot; THE CRYPTO-ACCOUNT CROWD</p>
+        </div>
+        <p class="camp-attack">They are accounts, not engines. An account cannot take a payment, setl it, split it four ways, and hold it against a condition, in the same breath.</p>
+        <ul class="camp-lines">
+          <li>An account holds money on its balance sheet. An engine moves it, splits it, and accounts for it, with every escrow visible to both sides on-chain.</li>
+          <li>Escrow is a three-party instrument. An account cannot hold funds between a buyer and a seller against a condition.</li>
+        </ul>
+        <p class="camp-punch">Crypto neobanks solved spending crypto. Nobody spends their way to a setld marketplace.</p>
+      </article>
+
+      <article class="camp reveal">
+        <div class="camp-head">
+          <span class="mono camp-label">CAMP TWO</span>
+          <h3>Stablecoin setlment layers and rails</h3>
+          <p class="mono camp-names">BRIDGE &middot; BVNK &middot; ZERO HASH &middot; PEERS</p>
+        </div>
+        <p class="camp-attack">They built the pipe and called it plumbing done. A transfer leg is maybe 20% of what a transaction needs. The other 80% is the hard part: escrow, triggers, compliance hooks, ramps, treasury, atomic splits.</p>
+        <ul class="camp-lines">
+          <li>They hand you virtual accounts and payout APIs, then leave you to build the escrow, the delivery trigger, and the branded logic yourself. That layer is the product. It is what we build.</li>
+          <li><span data-brand>Setlz</span> was built the other way: a marketplace needed to setl real bookings, so we built the engine underneath it and tested it end to end with AtlasOra, inside a full MoR and TOMS wrapper.</li>
+          <li>Multi-coin by design: EURC-native for EU flows, USDC live for dollar corridors, any Base-native fiat stablecoin integrable with minimal effort. Dollar-only rails solve one corridor. Coin-agnostic engines solve the map.</li>
+        </ul>
+        <p class="camp-punch">Rails are a feature. Setlment is a system. We sell the system.</p>
+      </article>
+
+      <article class="camp reveal">
+        <div class="camp-head">
+          <span class="mono camp-label">CAMP THREE</span>
+          <h3>Platform-payment orchestrators</h3>
+          <p class="mono camp-names">STRIPE CONNECT &middot; ADYEN FOR PLATFORMS &middot; MANGOPAY &middot; WISE PLATFORM</p>
+        </div>
+        <p class="camp-attack">World-class orchestration of legacy rails. Payouts still ride T+2 banking, percentage-based costs, and banking-hours cut-offs.</p>
+        <p class="camp-punch"><span data-brand>Setlz</span> does not orchestrate the old system. It replaces it: seconds to finality, atomic splits, 24/7.</p>
+      </article>
+
+    </div>
+  </div>
+
+  <!-- The trump card: full-bleed blue -->
+  <div class="trump">
+    <div class="container">
+      <p class="mono trump-label">THE PART THEY CANNOT COPY FROM A WHITEPAPER</p>
+      <p class="trump-text">Every competitor above shares one trait: their setlment engine was never built underneath a real marketplace by the team that runs it. Ours was. Every feature exists because a real booking, a real host payout, or a real dispute demanded it.</p>
+      <p class="trump-punch">Infrastructure built from a whitepaper guesses. Infrastructure built from a working marketplace knows.</p>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       PREPARED TRUST CENTERPIECE (v2.9). BUILT, NOT ENABLED.
+       Enable ONLY when ALL THREE conditions hold:
+         1) wallet architecture memo confirms user-held keys,
+         2) third-party audit complete,
+         3) Gavin sign-off.
+       Until then this block stays commented out and its claims appear nowhere
+       rendered on the site.
+
+  <div class="container">
+    <div class="trust-center reveal">
+      <p class="mono trust-label">VERIFIED TRUST ARCHITECTURE</p>
+      <p class="trust-text">No admin keys. No upgrade path. No pause switch. Published contract addresses.</p>
+      <p class="trust-punch">If we disappeared tomorrow, your money does not.</p>
+    </div>
+  </div>
+  ========================================================================== -->
+
+  <div class="container">
+    <!-- Moat (from the deck): the assembly, not the pieces. -->
+    <div class="coin-strip reveal">
+      <h3>Not one feature. Compounding defensibility.</h3>
+      <p class="coin-support"><strong>Regulatory position:</strong> the per-vertical liability and merchant-of-record posture, plus regulated partnerships. Legal work, time and capital to rebuild.</p>
+      <p class="coin-support"><strong>Integration depth:</strong> wired into the customer's PMS, TMS or dispatch system. Removing us means re-plumbing operations.</p>
+      <p class="coin-support"><strong>Trigger and dispute library:</strong> every completed vertical is edge-case data the next entrant does not have.</p>
+      <p class="comp-punch">Could Stripe build this? It owns the parts. Owning the parts is not assembling the product, and horizontal providers are built not to.</p>
+    </div>
+
+    <!-- Why now (from the deck). -->
+    <div class="coin-strip reveal">
+      <h3>Why now.</h3>
+      <div class="coin-chips">
+        <span class="mono coin-chip"><span class="coin-name">REGULATION LIVE &middot; MiCA AND THE US GENIUS ACT</span></span>
+        <span class="mono coin-chip"><span class="coin-name">DEMAND IS PULL &middot; 77% OF CORPORATES WANT CROSS-BORDER SETLMENT ON STABLECOINS</span></span>
+        <span class="mono coin-chip"><span class="coin-name">RAILS COMMODITISED &middot; SETLMENT COST DROPPED TO CENTS</span></span>
+      </div>
+      <p class="mono coin-foot">77% figure: EY-Parthenon, 2025. Other figures from public industry research.</p>
+    </div>
+
+    <p class="circle-line reveal">Built on Circle's EURC. Native today, engineered for every currency that follows.</p>
+  </div>
+</section>
+
+<!-- ============================================================
+     7. USE CASES
+============================================================ -->
+<!-- STRUCTURAL NOTE (internal): all setlment-as-a-service patterns beyond the
+     current MoR model raise MiCA CASP classification questions. The site may show
+     patterns; productising any of them is a Gavin decision first. -->
+<section class="section" id="cases">
+  <div class="container">
+    <p class="eyebrow mono">08 &middot; USE CASES</p>
+    <h2 class="h2">Proven on one marketplace. Built for many.</h2>
+
+    <article class="case-banner reveal">
+      <span class="mono case-tag case-tag-live">BUILT AND TESTED WITH ATLASORA</span>
+      <h3>Short-term rental marketplaces</h3>
+      <p>A property manager on the Costa del Sol waits days for payouts and loses 15.5% to the incumbent's mandatory host commission. On rails like <span data-brand>Setlz</span>, a marketplace can run at 10% all-in and pay hosts in minutes, not days.</p>
+      <p class="case-payoff">That 5.5-point gap is the difference between renting your rails and owning them.</p>
+    </article>
+
+    <div class="case-grid">
+
+      <article class="case-card reveal">
+        <span class="mono case-tag">OUR INDUSTRY &middot; BUILT AND TESTED &middot; CORRIDORS EXPLORATORY</span>
+        <h3>Travel supply setlment</h3>
+        <p>Suppliers wait on monthly cycles or virtual cards at 2 to 3% typical cost. <span data-brand>Setlz</span> pays them seconds after checkout, commission and tax split atomically.</p>
+        <p class="case-payoff">The supplier ledger clears itself at checkout.</p>
+      </article>
+
+      <article class="case-card reveal">
+        <span class="mono case-tag">EXPLORATORY</span>
+        <h3>Property management money flows</h3>
+        <p>Rent collected, split atomically: owner, management fee, maintenance reserve. Damage holds on holiday and equipment rentals release by rule.</p>
+        <p class="case-payoff">Owner statements stop being a month-end project.</p>
+      </article>
+
+      <article class="case-card reveal">
+        <span class="mono case-tag">ANY VERTICAL &middot; EXPLORATORY</span>
+        <h3>Marketplace payouts</h3>
+        <p>A platform paying 5,000 sellers across 12 countries reconciles bank files every Friday. On <span data-brand>Setlz</span> the split executes the moment the buyer pays.</p>
+        <p class="case-payoff">Reconciliation stops being a department.</p>
+      </article>
+
+      <article class="case-card reveal">
+        <span class="mono case-tag">EXPLORATORY</span>
+        <h3>Logistics and freight</h3>
+        <p>Shipper, forwarder, and carrier splits release on proof of delivery. Carriers stop waiting 30 to 90 days and stop factoring invoices at 1 to 5%.</p>
+        <p class="case-payoff">Delivered means paid.</p>
+      </article>
+
+      <article class="case-card reveal">
+        <span class="mono case-tag">EXPLORATORY</span>
+        <h3>Fintech and PSPs</h3>
+        <p>Platforms that need a whitelabelled setlment layer without becoming a processor themselves. The rail plugs in under their brand.</p>
+        <p class="case-payoff">A processor's capabilities without becoming one.</p>
+      </article>
+
+      <article class="case-card reveal">
+        <span class="mono case-tag">EXPLORATORY</span>
+        <h3>Commodities and documentary trade</h3>
+        <p>Milestone escrow does the work of a letter of credit (typically around 1% and days to weeks to arrange): funds locked at contract, released against shipping documents.</p>
+        <p class="case-payoff">The paperwork becomes the release rule.</p>
+      </article>
+
+      <article class="case-card reveal">
+        <span class="mono case-tag">EXPLORATORY</span>
+        <h3>Creator and campaign escrow</h3>
+        <p>Brands fund campaigns into escrow, release on deliverable approval, split to creator, agency, and platform in one transaction.</p>
+        <p class="case-payoff">Approval is the payment run.</p>
+      </article>
+
+      <article class="case-card reveal">
+        <span class="mono case-tag">EXPLORATORY</span>
+        <h3>Ticketing and events</h3>
+        <p>Ticket funds sit in escrow until entry validates, then setl to the organiser instantly. Cancellations run the refund path, not a chargeback war.</p>
+        <p class="case-payoff">The gate scan is the setlment event.</p>
+      </article>
+
+      <article class="case-card reveal">
+        <span class="mono case-tag">CAPABILITY LIVE IN INTERNAL TESTING</span>
+        <h3>Platform treasury</h3>
+        <p>Multi-entity groups move funds between their own companies across borders in seconds, no correspondent hop, 24/7.</p>
+        <p class="case-payoff">Your float works the same hours your platform does.</p>
+      </article>
+
+    </div>
+
+    <div class="pattern reveal">
+      <p class="pattern-head">The pattern is universal. If money waits on a condition, splits between parties, or crosses a border, it runs on <span data-brand>Setlz</span>.</p>
+      <div class="pattern-grid mono">
+        <span>CONSTRUCTION MILESTONE PAYMENTS</span>
+        <span>CONTRACTOR PAYOUT AGGREGATORS</span>
+        <span>ROYALTY AND REVENUE-SHARE SPLITS</span>
+        <span>AUCTION SETLMENT</span>
+        <span>PRIZE POOLS AND TOURNAMENT PAYOUTS</span>
+        <span>PRE-ORDER AND GROUP-BUY ESCROW</span>
+        <span>EQUIPMENT RENTAL DAMAGE HOLDS</span>
+        <span>GRANT AND AID MILESTONE DISBURSEMENT</span>
+        <span>HIGH-VALUE GOODS ESCROW (VEHICLES, WATCHES, ART)</span>
+        <span>ACQUISITION EARNOUTS</span>
+        <span>FRANCHISE REVENUE SPLITS</span>
+        <span>AFFILIATE AND AD NETWORK PAYOUTS</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============================================================
+     9. TEAM (from the deck; roles are Setlz-specific, several
+     shared with AtlasOra under the group structure)
+============================================================ -->
+<section class="section section-tint" id="team">
+  <div class="container">
+    <p class="eyebrow mono">09 &middot; TEAM</p>
+    <h2 class="h2">Built the rail. Tested end to end.</h2>
+    <p class="section-lede reveal"><span data-brand>Setlz</span> is built by the team that designed, shipped and runs the setlment rail for AtlasOra, our reference customer. Real infrastructure, not a slide.</p>
+
+    <div class="team-grid">
+      <div class="team-card reveal">
+        <span class="team-name">Samuel Dreier</span>
+        <span class="mono team-role">CEO &middot; BUILD AND COMMERCIAL</span>
+        <p>Serial entrepreneur: three ventures across fintech, commodities and logistics, the first at 18.</p>
+      </div>
+      <div class="team-card reveal">
+        <span class="team-name">Jake Crocker</span>
+        <span class="mono team-role">CTO &middot; THE RAIL ITSELF</span>
+        <p>Built the rail, escrow system and live PMS integrations. Shipped and in production.</p>
+      </div>
+      <div class="team-card reveal">
+        <span class="team-name">Andrew Deighan</span>
+        <span class="mono team-role">MARKETPLACE CEO &middot; REFERENCE CUSTOMER</span>
+        <p>Runs AtlasOra, the rail's first and proving customer.</p>
+      </div>
+      <div class="team-card reveal">
+        <span class="team-name">Edison Dalani</span>
+        <span class="mono team-role">CFO &middot; FINANCE</span>
+        <p>Ex-Expedia finance leader: treasury, controls, regulated payments.</p>
+      </div>
+      <div class="team-card reveal">
+        <span class="team-name">Mark Mosley</span>
+        <span class="mono team-role">COO &middot; OPERATIONS</span>
+        <p>Scales onboarding, operations and the integration pipeline.</p>
+      </div>
+      <div class="team-card reveal">
+        <span class="team-name">Adam Bates</span>
+        <span class="mono team-role">CMO &middot; GO-TO-MARKET</span>
+        <p>Ex-BBDO partner: brand and demand for the B2B motion.</p>
+      </div>
+    </div>
+    <p class="mono team-fine">ROLES SHOWN ARE SETLZ-SPECIFIC; SEVERAL ARE SHARED WITH ATLASORA UNDER THE GROUP STRUCTURE.</p>
+  </div>
+</section>
+
+<!-- ============================================================
+     10. REQUEST A DEMO (front-end only, not wired)
+============================================================ -->
+<section class="demo-band" id="request-demo">
+  <div class="container demo-grid">
+
+    <div class="demo-copy">
+      <p class="eyebrow mono eyebrow-dark">10 &middot; GET A DEMO</p>
+      <h2 class="demo-h2">See it setl on your numbers.</h2>
+      <p class="demo-sub">Twenty minutes, your flows, live on Base testnet. We will run your payout split through the engine while you watch.</p>
+      <div class="demo-chips mono">
+        <span>BUILT AND TESTED ON BASE</span>
+        <span>EURC-NATIVE</span>
+        <span>ESCROW HELD BY RULE</span>
+      </div>
+    </div>
+
+    <div class="demo-card">
+      <form id="demo-form" novalidate>
+        <div class="demo-field">
+          <label class="mono" for="demo-name" data-demo-label="name">NAME</label>
+          <input id="demo-name" name="name" type="text" required autocomplete="name">
+          <span class="mono demo-error" id="demo-name-err" hidden></span>
+        </div>
+        <div class="demo-field">
+          <label class="mono" for="demo-email" data-demo-label="email">WORK EMAIL</label>
+          <input id="demo-email" name="email" type="email" required autocomplete="email">
+          <span class="mono demo-error" id="demo-email-err" hidden></span>
+        </div>
+        <div class="demo-field">
+          <label class="mono" for="demo-company" data-demo-label="company">COMPANY</label>
+          <input id="demo-company" name="company" type="text" required autocomplete="organization">
+          <span class="mono demo-error" id="demo-company-err" hidden></span>
+        </div>
+        <div class="demo-field">
+          <label class="mono" for="demo-settling" data-demo-label="settling">WHAT ARE YOU SETLING?</label>
+          <select id="demo-settling" name="settling"></select>
+        </div>
+        <div class="demo-field">
+          <label class="mono" for="demo-notes" data-demo-label="notes">ANYTHING WE SHOULD KNOW? (OPTIONAL)</label>
+          <textarea id="demo-notes" name="notes" rows="3"></textarea>
+        </div>
+        <!-- WIRING SLOT (mandatory the moment this form is connected):
+             consent checkbox + privacy policy link go here. -->
+        <button class="btn btn-primary demo-submit" id="demo-submit" type="submit">Request a demo</button>
+        <p class="mono demo-fine">DEMO SITE. FORM NOT YET CONNECTED. NO DATA IS STORED OR TRANSMITTED.</p>
+      </form>
+
+      <div class="demo-confirm" id="demo-confirm" hidden>
+        <h3 id="demo-confirm-head"></h3>
+        <p id="demo-confirm-line"></p>
+        <a class="mono demo-mailto" id="demo-mailto" href="#"></a>
+        <p class="mono demo-fine" id="demo-confirm-fine"></p>
+      </div>
+      <div class="sr-only" aria-live="polite" id="demo-live"></div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============================================================
+     8. FOOTER
+============================================================ -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a class="logo" href="#top">
+          <span class="logo-mark" aria-hidden="true"></span>
+          <span class="logo-word" data-brand>Setlz</span>
+        </a>
+        <!-- PENDING LEGAL REVIEW: AtlasOra attribution line below -->
+        <p class="footer-parent">A product of AtlasOra.</p>
+      </div>
+      <div class="footer-col">
+        <span class="mono footer-head">PRODUCT</span>
+        <a href="#" class="dead">Setlment engine</a>
+        <a href="#" class="dead">Programmable splits</a>
+        <a href="#" class="dead">Treasury routing</a>
+      </div>
+      <div class="footer-col">
+        <span class="mono footer-head">DEVELOPERS</span>
+        <a href="#" class="dead">Documentation</a>
+        <a href="#" class="dead">API reference</a>
+        <a href="#" class="dead">Status</a>
+      </div>
+      <div class="footer-col">
+        <span class="mono footer-head">COMPANY</span>
+        <a href="#" class="dead">About</a>
+        <a href="#" class="dead">Compliance</a>
+        <a href="#" class="dead">Contact</a>
+      </div>
+    </div>
+    <p class="mono footer-fine">DEMO SITE &middot; PRODUCT NAME PENDING CLEARANCE &middot; NOT AN OFFER OF SERVICES</p>
+  </div>
+</footer>
+
+</main>
+
+<script src="map-dots.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
