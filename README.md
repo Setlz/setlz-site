@@ -1,6 +1,6 @@
 # Setlz demo site
 
-Local-only demo marketing site for Setlz (formerly the Settova placeholder), AtlasOra's EURC-on-Base settlement layer. The folder name (`settova-site`), the `settova` launch config, and internal CSS class names and element ids keep the old codename; nothing user-visible does.
+Local-only demo marketing site for Setlz, AtlasOra's EURC-on-Base settlement layer.
 
 **Demo site. Not an offer of services. Do not deploy.**
 
@@ -9,7 +9,7 @@ Local-only demo marketing site for Setlz (formerly the Settova placeholder), Atl
 One command, from the repo root:
 
 ```
-python -m http.server 8231 --directory settova-site
+python -m http.server 8231
 ```
 
 Then open http://localhost:8231.
@@ -17,7 +17,7 @@ Then open http://localhost:8231.
 No Python? Any static file server works:
 
 ```
-npx serve settova-site -l 8231
+npx serve . -l 8231
 ```
 
 There is no build step, no backend, and no tracking. Four files: `index.html`, `styles.css`, `app.js`, and `map-dots.js` (generated dot-matrix land grid; the site makes no external requests at runtime).
