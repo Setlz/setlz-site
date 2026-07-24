@@ -1,6 +1,6 @@
 # Setlz demo site
 
-Local-only demo marketing site for Setlz, AtlasOra's EURC-on-Base settlement layer.
+Demo marketing site for Setlz, whitelabelled delivery-triggered setlment infrastructure.
 
 **Demo site. Not an offer of services. Do not deploy.**
 
