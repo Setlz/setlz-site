@@ -1,5 +1,5 @@
 /* ============================================================
-   SETLZ DEMO SITE (formerly Settova; internal class names keep the old codename)
+   SETLZ DEMO SITE
    Accent is variable-ised: swap --accent for a one-line rebrand.
    Palette matched to the Setlz logo: charcoal square, emerald bar,
    off-white bars. Eyedropper approximations; refine when the
@@ -473,7 +473,7 @@ h3 {
 }
 
 .bar-legacy { background: #D2D6D9; }
-.bar-settova {
+.bar-setlz {
   background: linear-gradient(90deg, var(--accent-dark), var(--accent));
   box-shadow: 0 0 18px var(--accent-glow);
 }
@@ -1096,7 +1096,7 @@ h3 {
 .wm-wire-node { fill: #fff; stroke: #7F868C; }
 .wm-wire-label { font-family: var(--font-mono); fill: var(--ink-faint); letter-spacing: 0.05em; }
 
-.wm-pulse-settova { fill: var(--accent); filter: drop-shadow(0 0 5px rgba(39, 165, 94, 0.8)); }
+.wm-pulse-setlz { fill: var(--accent); filter: drop-shadow(0 0 5px rgba(39, 165, 94, 0.8)); }
 .wm-pulse-wire { fill: #7F868C; }
 
 .wm-badge-rect { fill: var(--ink); rx: 3px; }
@@ -1192,7 +1192,7 @@ h3 {
   padding: 3px 9px;
   margin-bottom: 4px;
 }
-.wm-lane-settova .wm-lane-title { background: var(--accent); }
+.wm-lane-setlz .wm-lane-title { background: var(--accent); }
 
 .wm-row {
   display: flex;
@@ -1232,7 +1232,7 @@ h3 {
   border-bottom: 2px solid var(--ink);
 }
 
-.th-settova { color: var(--ink); font-weight: 700; font-size: 14px; }
+.th-setlz { color: var(--ink); font-weight: 700; font-size: 14px; }
 
 .compare-table td {
   padding: 12px 16px;
@@ -1256,7 +1256,7 @@ h3 {
   max-width: 48ch;
 }
 
-/* ---------- why settova wins ---------- */
+/* ---------- why setlz wins ---------- */
 
 .camps { display: grid; gap: 22px; }
 
