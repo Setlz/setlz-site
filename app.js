@@ -119,9 +119,9 @@ if (lanesEl && ledgerEl) {
 const raceBtn = document.getElementById("race-btn");
 const raceClock = document.getElementById("race-clock");
 const barLegacy = document.getElementById("bar-legacy");
-const barSetlz = document.getElementById("bar-settova");
+const barSetlz = document.getElementById("bar-setlz");
 const legacyStatus = document.getElementById("legacy-status");
-const settovaStatus = document.getElementById("settova-status");
+const setlzStatus = document.getElementById("setlz-status");
 const txConfirm = document.getElementById("tx-confirm");
 const txHash = document.getElementById("tx-hash");
 const txFinal = document.getElementById("tx-final");
@@ -151,8 +151,8 @@ function runRace() {
   barLegacy.style.width = "0%";
   barSetlz.style.width = "0%";
   barSetlz.classList.remove("bar-holding");
-  settovaStatus.textContent = "SETLING…";
-  settovaStatus.classList.remove("is-win");
+  setlzStatus.textContent = "SETLING…";
+  setlzStatus.classList.remove("is-win");
   legacyStatus.textContent = "SUBMITTED";
 
   const start = performance.now();
@@ -179,12 +179,12 @@ function runRace() {
       const finality = elapsed;
       txHash.textContent = "0x" + randomHash(10) + "…" + randomHash(6);
       if (holdMode) {
-        settovaStatus.textContent = "IN ESCROW · FINAL · " + finality.toFixed(1) + "s";
+        setlzStatus.textContent = "IN ESCROW · FINAL · " + finality.toFixed(1) + "s";
         barSetlz.classList.add("bar-holding");
         txFinal.textContent = "ESCROW FINALITY · " + finality.toFixed(1) + "s";
       } else {
-        settovaStatus.textContent = "SETLD · " + finality.toFixed(1) + "s";
-        settovaStatus.classList.add("is-win");
+        setlzStatus.textContent = "SETLD · " + finality.toFixed(1) + "s";
+        setlzStatus.classList.add("is-win");
         txFinal.textContent = "FINALITY · " + finality.toFixed(1) + "s";
         txConfirm.hidden = false;
       }
@@ -195,13 +195,13 @@ function runRace() {
         // Map the compressed demo hold onto the 24h policy it represents.
         const holdElapsed = (elapsed - SETLZ_SECONDS) / HOLD_DEMO_SECONDS;
         const policyLeft = HOLD_TOTAL_SECONDS * (1 - holdElapsed);
-        settovaStatus.textContent = "HOLD · " + formatCountdown(policyLeft) + " OF 24H POLICY";
+        setlzStatus.textContent = "HOLD · " + formatCountdown(policyLeft) + " OF 24H POLICY";
       } else {
         released = true;
         barSetlz.classList.remove("bar-holding");
         barSetlz.style.width = "100%";
-        settovaStatus.textContent = "RULE FIRED · RELEASED + SPLIT";
-        settovaStatus.classList.add("is-win");
+        setlzStatus.textContent = "RULE FIRED · RELEASED + SPLIT";
+        setlzStatus.classList.add("is-win");
         txConfirm.hidden = false;
       }
     }
@@ -811,7 +811,7 @@ if (wm && typeof MAP_DOTS !== "undefined") {
 
     // Pulses and the coin badge.
     const wirePulse = elNS("circle", { class: "wm-pulse-wire", r: 3 * u, opacity: 0 }, gDyn);
-    const setPulse = elNS("circle", { class: "wm-pulse-settova", r: 3.6 * u, opacity: 0 }, gDyn);
+    const setPulse = elNS("circle", { class: "wm-pulse-setlz", r: 3.6 * u, opacity: 0 }, gDyn);
     const badge = elNS("g", { opacity: 0 }, gDyn);
     const badgeRect = elNS("rect", { class: "wm-badge-rect", rx: 3 * u, height: 11 * u }, badge);
     const badgeText = elNS("text", { class: "wm-badge-text", "font-size": 6 * u, "text-anchor": "middle" }, badge);
