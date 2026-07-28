@@ -1,0 +1,73 @@
+{
+  "note": "Numeric baseline captured before Phase 1 of the rebuild. Pixel screenshots were not possible in this environment; see design/README.md.",
+  "capturedAt": "2026-07-28",
+  "commit": "89b1a1b",
+  "widths": {
+    "1440": {
+      "viewport": { "w": 1440, "h": 900 },
+      "documentHeight": 17365,
+      "screens": 19.3,
+      "overflowX": false,
+      "sections": {
+        "hero": 1162,
+        "race": 1035,
+        "what": 725,
+        "how": 1417,
+        "hold": 1393,
+        "compare": 2230,
+        "why": 4074,
+        "cases": 3095,
+        "team": 1034,
+        "request-demo": 803,
+        "footer": 327
+      }
+    },
+    "768": {
+      "viewport": { "w": 768, "h": 1024 },
+      "documentHeight": 18320,
+      "screens": 17.9,
+      "overflowX": false,
+      "sections": null
+    },
+    "390": {
+      "viewport": { "w": 390, "h": 844 },
+      "documentHeight": 26332,
+      "screens": 31.2,
+      "overflowX": false,
+      "sections": {
+        "hero": 1181,
+        "race": 1382,
+        "what": 1177,
+        "how": 2466,
+        "hold": 1933,
+        "compare": 2591,
+        "why": 6133,
+        "cases": 5938,
+        "team": 1869,
+        "request-demo": 1107,
+        "footer": 483
+      }
+    }
+  },
+  "inventory": {
+    "indexHtmlLines": 825,
+    "stylesCssLines": 1718,
+    "appJsLines": 1231,
+    "demoWidgets": 4,
+    "borderedCardInstances": 28,
+    "tagPillInstances": 17,
+    "badgeLabelInstances": 16,
+    "aphorismKickers": 19,
+    "monoClassInstances": 161,
+    "numberedEyebrows": 8,
+    "deadFooterLinks": 9,
+    "rawHexLiteralsInCss": 61,
+    "borderRadiusDeclarations": 55,
+    "distinctFontSizeDeclarations": 31
+  },
+  "observations": [
+    "At 390px the page is 31.2 screens. Phase 7.1 sets the target at roughly 12.",
+    "#why (6133px) and #cases (5938px) are 46% of the mobile page between them. Phase 5.5 relocates #why and Phase 1.2 cuts #cases from 9 cards to 3, which should remove roughly 9000px on its own.",
+    "No horizontal overflow at any of the three widths, so Phase 7.1's 320px check is the only open question there."
+  ]
+}
