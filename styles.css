@@ -571,12 +571,17 @@ h3 {
   60%, 100% { transform: translateY(220%); }
 }
 
-/* Below 1200px there is no gutter left once the container takes its width,
-   so the labels would sit over content. Dots and segments still carry the
-   state on their own. */
-@media (max-width: 1200px) {
-  .rail-lbl { display: none; }
-}
+/* LABELS ARE OFF, and this is a correction rather than a preference.
+   Measured in a real browser: the longest label, "Stablecoin service
+   delivered", runs about 234px at 11px with label tracking. For it to clear
+   a 1120px container it would need a viewport past 1650px. Below that it
+   sits on top of the headline. The dots and segments already convey the
+   state, the rail is decorative and aria-hidden, and 5.2 established that
+   tiny wide-tracked uppercase is a legibility problem in its own right.
+
+   The markup is kept: it documents the deck's node sequence, and if the
+   layout ever gains a real gutter this is one line to undo. */
+.rail-lbl { display: none; }
 
 
 /* Reduced motion: rendered static in its complete state, no transitions and
@@ -586,10 +591,12 @@ h3 {
 .rail.is-static .rail-lbl { transition: none; }
 .rail.is-static .rail-seg.is-settling::after { animation: none; }
 
-/* Below the mobile breakpoint the rail is HIDDEN, not shrunk. It cannot earn
-   a gutter on a 390px viewport, and scaling it down would leave four
-   illegible dots competing with the content for the same 24px. */
-@media (max-width: 760px) {
+/* The rail needs a real gutter, not just a narrow viewport check. The
+   container is 1120px wide plus 24px of padding, so below about 1240px the
+   rail's own 11px dot column overlaps the content: at 1126px the dots were
+   landing on the headline. Hidden below 1280px, which is the first common
+   width with clearance, rather than shrunk. */
+@media (max-width: 1279px) {
   .rail { display: none; }
 }
 
