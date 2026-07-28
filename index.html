@@ -22,14 +22,13 @@
       <span class="logo-word" data-brand>Setlz</span>
     </a>
     <nav class="nav-links">
-      <a href="#race">The race</a>
       <a href="#how">How it works</a>
-      <a href="#hold">The hold</a>
+      <a href="#hold">See it setl</a>
       <a href="#why">Why we win</a>
       <a href="#cases">Use cases</a>
       <a href="#request-demo">Get a demo</a>
     </nav>
-    <a class="btn btn-primary btn-sm" href="#race">See it setl</a>
+    <a class="btn btn-primary btn-sm" href="#hold">See it setl</a>
   </div>
 </header>
 
@@ -46,7 +45,7 @@
     <p class="hero-sub">Every business that takes payment before it delivers sits on a float: cash held in limbo between pay and deliver. <span data-brand>Setlz</span> turns that gap into instant, whitelabelled setlment utilising stablecoins, at 40% below what they pay today.</p>
     <div class="hero-ctas">
       <a class="btn btn-primary" href="#request-demo">Request a demo</a>
-      <a class="btn btn-ghost" href="#race">See it setl</a>
+      <a class="btn btn-ghost" href="#hold">See it setl</a>
     </div>
   </div>
 
@@ -73,82 +72,7 @@
 </section>
 
 <!-- ============================================================
-     2. THE RACE
-============================================================ -->
-<section class="section" id="race">
-  <div class="container">
-    <p class="eyebrow mono">02 &middot; THE RACE</p>
-    <h2 class="h2">Send one payment down both rails.<br>Watch which one comes back.</h2>
-
-    <div class="race-card reveal">
-      <div class="race-top">
-        <button class="btn btn-primary" id="race-btn">Send a payment</button>
-        <div class="race-toggle-wrap">
-          <label class="race-toggle mono">
-            <input type="checkbox" id="hold-toggle">
-            <span>WITH 24 HOUR POST-CHECK-IN HOLD</span>
-          </label>
-          <span class="mono race-toggle-note">THE HOLD IS POLICY. THE SPEED IS PHYSICS.</span>
-        </div>
-        <div class="race-clock mono" id="race-clock">0.0s</div>
-      </div>
-
-      <div class="race-track">
-        <div class="race-row">
-          <div class="race-meta">
-            <span class="race-name">Traditional rails</span>
-            <span class="mono race-tag">CARDS + BANK PAYOUT &middot; T+2</span>
-          </div>
-          <div class="bar-wrap">
-            <div class="bar-shell">
-              <div class="bar bar-legacy" id="bar-legacy"></div>
-            </div>
-            <div class="bar-marks mono" aria-hidden="true"><span>DAY 0</span><span>DAY 1</span><span>DAY 2</span></div>
-          </div>
-          <div class="mono race-status" id="legacy-status">WAITING</div>
-        </div>
-
-        <div class="race-row">
-          <div class="race-meta">
-            <span class="race-name race-name-accent" data-brand>Setlz</span>
-            <span class="mono race-tag">EURC ON BASE</span>
-          </div>
-          <div class="bar-shell">
-            <div class="bar bar-setlz" id="bar-setlz"></div>
-          </div>
-          <div class="mono race-status" id="setlz-status">WAITING</div>
-        </div>
-      </div>
-
-      <div class="tx-confirm" id="tx-confirm" hidden>
-        <div class="tx-head">
-          <span class="tx-check" aria-hidden="true">&#10003;</span>
-          <span class="mono">SETLD ON BASE</span>
-          <span class="mono tx-final" id="tx-final"></span>
-        </div>
-        <div class="tx-grid mono">
-          <span>TX</span><span id="tx-hash">0x&hellip;</span>
-          <span>NETWORK</span><span>Base &middot; EURC</span>
-          <span class="tx-hold">HOLD</span><span class="tx-hold">24H POST-CHECK-IN &middot; RELEASED ON RULE</span>
-          <span>SPLIT</span><span>SELLER &middot; MARGIN &middot; BUDGETS &middot; ATOMIC</span>
-        </div>
-        <p class="mono tx-note">SIMULATED CONFIRMATION FOR THIS DEMO</p>
-      </div>
-    </div>
-
-    <p class="race-caption"><span data-brand>Setlz</span> is not a concept. The rail, escrow, delivery triggers and integrations are built and tested end to end, across repeated runs with AtlasOra: our first reference customer.</p>
-
-    <div class="tech-strip mono reveal">
-      <span>UNDER 30 MIN &middot; DELIVERY TO PROVIDER PAID &middot; LIVE RUNS</span>
-      <span>11 MIN &middot; FIAT TO STABLECOIN TO FIAT ROUND TRIP*</span>
-      <span>99.9% &middot; SETLMENT UPTIME</span>
-    </div>
-    <p class="mono race-foot">*BOUNDED BY OUR OWN 20-MINUTE SETLMENT CRON JOB, NOT A RAIL LIMIT.</p>
-  </div>
-</section>
-
-<!-- ============================================================
-     3. WHAT IT IS
+     2. WHAT IT IS
 ============================================================ -->
 <section class="section section-tight" id="what">
   <div class="container">
@@ -353,6 +277,18 @@
     <div class="pullquotes">
       <p class="pullquote reveal">Chargebacks are buyer protection by lawsuit. Escrow is buyer protection by design.</p>
     </div>
+
+    <!-- Proof (deck slide 09). Relocated here when the race widget was deleted:
+         this is section content, not demo chrome, and it belongs beside the
+         surviving demo. -->
+    <p class="race-caption"><span data-brand>Setlz</span> is not a concept. The rail, escrow, delivery triggers and integrations are built and tested end to end, across repeated runs with AtlasOra: our first reference customer.</p>
+
+    <div class="tech-strip mono reveal">
+      <span>UNDER 30 MIN &middot; DELIVERY TO PROVIDER PAID &middot; LIVE RUNS</span>
+      <span>11 MIN &middot; FIAT TO STABLECOIN TO FIAT ROUND TRIP*</span>
+      <span>99.9% &middot; SETLMENT UPTIME</span>
+    </div>
+    <p class="mono race-foot">*BOUNDED BY OUR OWN 20-MINUTE SETLMENT CRON JOB, NOT A RAIL LIMIT.</p>
   </div>
 </section>
 
@@ -363,49 +299,6 @@
   <div class="container">
     <p class="eyebrow mono">06 &middot; THE COMPARISON</p>
     <h2 class="h2">Why traditional rails lose.</h2>
-
-    <!-- Cross-border world map race (change order v2.3). All corridor data in WM_CONFIG in app.js. -->
-    <div class="wm reveal" id="wm">
-      <div class="wm-top">
-        <div class="wm-corridors" id="wm-corridors" role="group" aria-label="Corridor presets"></div>
-        <button class="btn btn-ghost btn-sm" id="wm-replay" type="button">Replay</button>
-        <span class="mono wm-note">CAPABILITY DEMONSTRATION &middot; SIMULATED TRANSACTIONS AND TIMESTAMPS</span>
-      </div>
-
-      <div class="wm-map" id="wm-map">
-        <svg id="wm-svg" preserveAspectRatio="xMidYMid meet" aria-hidden="true"></svg>
-        <div class="wm-ov wm-daybox mono" id="wm-daybox" hidden></div>
-        <div class="wm-ov wm-stall mono" id="wm-stall" hidden>BANKING HOURS</div>
-        <div class="wm-ov wm-flipcap" id="wm-flipcap" hidden></div>
-        <div class="wm-ov wm-dest" id="wm-dest" hidden>
-          <div class="mono wm-setld" id="wm-setld"></div>
-          <div class="mono wm-stage2" id="wm-stage2" hidden></div>
-        </div>
-      </div>
-
-      <div class="wm-meters">
-        <div class="wm-lane wm-lane-setlz">
-          <span class="mono wm-lane-title" id="wm-lane-brand">SETLZ</span>
-          <div class="mono wm-row"><span>ON-CHAIN FINALITY</span><span id="wm-fin">0.0s</span></div>
-          <div class="mono wm-row"><span>BANK CREDIT</span><span id="wm-credit">SEPA INSTANT · PENDING</span></div>
-          <div class="mono wm-row"><span>NETWORK COST</span><span>UNDER $0.01*</span></div>
-          <div class="mono wm-row"><span>FX</span><span>BASIS-POINT SPREAD ON DEEP POOLS</span></div>
-          <p class="mono wm-foot">*ON-CHAIN SETLMENT COST. OFF-RAMP PROVIDER FEE APPLIES.</p>
-        </div>
-        <div class="wm-lane">
-          <span class="mono wm-lane-title">INTERNATIONAL WIRE</span>
-          <div class="mono wm-row"><span>ELAPSED</span><span id="wm-elapsed">NOT STARTED</span></div>
-          <div class="mono wm-row"><span>FEES</span><span id="wm-fees">$0</span></div>
-          <div class="mono wm-row"><span>HOPS</span><span>4 TO 5 INTERMEDIARIES</span></div>
-          <div class="mono wm-row"><span>FX MARGIN</span><span>1 TO 4% HIDDEN IN THE RATE</span></div>
-          <div class="mono wm-row"><span>AVAILABILITY</span><span>BANKING HOURS ONLY</span></div>
-          <p class="mono wm-foot">TYPICAL INTERNATIONAL WIRE CHARGES. FX MARGIN APPLIES ON TOP OF THE $30 TO 40 IN FEES.</p>
-        </div>
-      </div>
-
-      <p class="wm-payoff" id="wm-payoff" hidden></p>
-      <div class="sr-only" aria-live="polite" id="wm-live"></div>
-    </div>
 
     <div class="table-scroll reveal">
       <table class="compare-table">
@@ -819,7 +712,6 @@
 
 </main>
 
-<script src="map-dots.js"></script>
 <script src="app.js"></script>
 </body>
 </html>
