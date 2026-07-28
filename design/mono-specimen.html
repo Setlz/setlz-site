@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Setlz mono candidates at hero scale</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Martian+Mono:wght@300;400;500;600;700&family=Azeret+Mono:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@400;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#FBFAF7; --ink:#15171A; --ink-soft:#4A4E54; --mist:#E9E7E0;
+  --line:#DAD7CE; --signal:#1CA964; --signal-deep:#0A6E48;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"Inter",sans-serif;padding:48px 40px 80px}
+.wrap{max-width:1180px;margin:0 auto}
+h1{font-family:"Space Grotesk",sans-serif;font-size:26px;font-weight:700;letter-spacing:-.02em;margin-bottom:6px}
+.sub{color:var(--ink-soft);font-size:14px;max-width:70ch;margin-bottom:44px}
+
+.cand{margin-bottom:56px}
+.cand-head{display:flex;align-items:baseline;gap:14px;border-top:2px solid var(--ink);padding-top:12px;margin-bottom:4px}
+.cand-name{font-family:"Space Grotesk",sans-serif;font-size:19px;font-weight:600}
+.cand-meta{font-family:"Inter",sans-serif;font-size:12.5px;color:var(--ink-soft)}
+.tag{font-family:"Inter",sans-serif;font-size:11px;font-weight:600;padding:2px 8px;border-radius:3px;background:var(--mist);color:var(--ink-soft)}
+.tag.free{background:#E8F5EE;color:var(--signal-deep)}
+
+/* the ledger row: label row, hairline, data row, hero numeral in the last column */
+.ledger{margin-top:20px}
+.lrow{display:grid;grid-template-columns:1.5fr 1.5fr 1fr .8fr 1.6fr;align-items:end;gap:18px}
+.llabel{font-size:10.5px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-soft);font-family:"Inter",sans-serif}
+.hair{height:1px;background:var(--line);margin:9px 0 14px}
+.lval{font-size:15px;font-variant-numeric:tabular-nums;color:var(--ink)}
+.hero-num{font-size:clamp(52px,7.4vw,116px);font-weight:600;letter-spacing:-.03em;line-height:.82;font-variant-numeric:tabular-nums;text-align:right;color:var(--ink)}
+.closing-hair{height:1px;background:var(--line);margin-top:16px}
+
+.m-martian .lval,.m-martian .hero-num{font-family:"Martian Mono",monospace}
+.m-azeret  .lval,.m-azeret  .hero-num{font-family:"Azeret Mono",monospace}
+.m-jb      .lval,.m-jb      .hero-num{font-family:"JetBrains Mono",monospace}
+
+.figset{margin-top:18px;display:flex;gap:34px;flex-wrap:wrap;align-items:baseline}
+.figs{font-size:34px;font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+.m-martian .figs{font-family:"Martian Mono",monospace}
+.m-azeret .figs{font-family:"Azeret Mono",monospace}
+.m-jb .figs{font-family:"JetBrains Mono",monospace}
+.figcap{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft)}
+
+.note{font-size:13px;color:var(--ink-soft);max-width:78ch;margin-top:16px;line-height:1.5}
+.note b{color:var(--ink)}
+.paid{border-top:2px solid var(--line);padding-top:12px;margin-top:8px}
+.paid-box{background:var(--mist);padding:18px 20px;border-radius:4px;margin-top:16px;font-size:13.5px;line-height:1.55;color:var(--ink-soft);max-width:82ch}
+.paid-box b{color:var(--ink)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>The mono at hero scale</h1>
+  <p class="sub">The one axis the brief allows changing. Each candidate is set in the actual hero pattern from Phase 3.2: a ledger row where the elapsed time is the largest numeral on the page but lives inside the row as the last column's value, under its own column label. Not a stat tile. JetBrains Mono is included last as the incumbent baseline, not as a candidate.</p>
+
+  <!-- FREE PICK -->
+  <div class="cand m-martian">
+    <div class="cand-head">
+      <span class="cand-name">Martian Mono</span>
+      <span class="tag free">FREE &middot; OFL</span>
+      <span class="cand-meta">Evil Martians &middot; variable 100&ndash;800 &middot; superelliptical, wide, engineered</span>
+    </div>
+    <div class="ledger">
+      <div class="lrow">
+        <span class="llabel">From</span><span class="llabel">To</span><span class="llabel">Amount</span><span class="llabel">Split</span><span class="llabel" style="text-align:right">Elapsed</span>
+      </div>
+      <div class="hair"></div>
+      <div class="lrow">
+        <span class="lval">Guest booking</span><span class="lval">Host &middot; M&aacute;laga</span><span class="lval">&euro;1,000.00</span><span class="lval">3 ways</span>
+        <span class="hero-num">0.42s</span>
+      </div>
+      <div class="closing-hair"></div>
+    </div>
+    <div class="figset">
+      <span class="figs">0123456789</span>
+      <span class="figs">&euro;1,000.00</span>
+      <span class="figs">11:04</span>
+      <span class="figcap">tabular by construction</span>
+    </div>
+    <p class="note"><b>Why this one.</b> It was designed as a display-capable mono, not a code face retrofitted to headlines. The superellipse shapes and the wide advance make a settlement figure read as engineered rather than typed, and the width is an asset in a ledger row where columns want to fill. Variable 100&ndash;800 covers the label weight and the hero weight from one file.</p>
+  </div>
+
+  <!-- FREE ALTERNATE -->
+  <div class="cand m-azeret">
+    <div class="cand-head">
+      <span class="cand-name">Azeret Mono</span>
+      <span class="tag free">FREE &middot; OFL</span>
+      <span class="cand-meta">Displaay &middot; 100&ndash;900 &middot; tight, mechanical, high-contrast details</span>
+    </div>
+    <div class="ledger">
+      <div class="lrow">
+        <span class="llabel">From</span><span class="llabel">To</span><span class="llabel">Amount</span><span class="llabel">Split</span><span class="llabel" style="text-align:right">Elapsed</span>
+      </div>
+      <div class="hair"></div>
+      <div class="lrow">
+        <span class="lval">Guest booking</span><span class="lval">Host &middot; M&aacute;laga</span><span class="lval">&euro;1,000.00</span><span class="lval">3 ways</span>
+        <span class="hero-num">0.42s</span>
+      </div>
+      <div class="closing-hair"></div>
+    </div>
+    <div class="figset">
+      <span class="figs">0123456789</span>
+      <span class="figs">&euro;1,000.00</span>
+      <span class="figs">11:04</span>
+      <span class="figcap">tabular by construction</span>
+    </div>
+    <p class="note">Shown as the hedge if Martian reads too wide once it is in the real grid. Narrower, more severe, more &ldquo;terminal&rdquo;. Holds up large but has less warmth against the paper ground.</p>
+  </div>
+
+  <!-- INCUMBENT -->
+  <div class="cand m-jb">
+    <div class="cand-head">
+      <span class="cand-name">JetBrains Mono</span>
+      <span class="tag">INCUMBENT</span>
+      <span class="cand-meta">the current face &mdash; baseline for comparison, not a candidate</span>
+    </div>
+    <div class="ledger">
+      <div class="lrow">
+        <span class="llabel">From</span><span class="llabel">To</span><span class="llabel">Amount</span><span class="llabel">Split</span><span class="llabel" style="text-align:right">Elapsed</span>
+      </div>
+      <div class="hair"></div>
+      <div class="lrow">
+        <span class="lval">Guest booking</span><span class="lval">Host &middot; M&aacute;laga</span><span class="lval">&euro;1,000.00</span><span class="lval">3 ways</span>
+        <span class="hero-num">0.42s</span>
+      </div>
+      <div class="closing-hair"></div>
+    </div>
+    <p class="note">This is the problem the brief names. It is a good editor face and it is completely anonymous at 116px. Nothing about it says settlement, or says anyone chose it.</p>
+  </div>
+
+  <!-- PAID PICK -->
+  <div class="cand paid">
+    <div class="cand-head" style="border:0;padding:0">
+      <span class="cand-name">Pitch</span>
+      <span class="tag">PAID</span>
+      <span class="cand-meta">Klim Type Foundry &middot; the paid recommendation</span>
+    </div>
+    <div class="paid-box">
+      <b>Cannot be rendered here.</b> Pitch is licensed and there is no trial webfont, so showing it would mean substituting a lookalike and calling it Pitch. It is the paid recommendation on these grounds: it is one of the few monospaces drawn explicitly for text <i>and</i> display, its numerals have real personality without novelty, and its slight warmth suits the paper ground better than any of the engineered-grotesque monos above. Klim also licenses cleanly for web at a startup-reasonable tier.<br><br>
+      <b>To judge it properly:</b> view Klim's own specimen at klim.co.nz, or request a trial licence and I will drop it into this specimen page in place of Martian for a direct comparison in the real grid.
+    </div>
+  </div>
+</div>
+</body>
+</html>
