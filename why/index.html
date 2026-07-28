@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Why Setlz &middot; Setlz</title>
+<!-- Self-hosted variable faces, 94KB total for the latin subset.
+     Preloaded so the stylesheet does not gate first paint on a
+     third-party round trip. -->
+<link rel="preload" href="/fonts/inter-latin-var.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/martian-mono-latin-var.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/space-grotesk-latin-var.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+
+<!-- ============================================================
+     WHY SETLZ (Phase 5.5)
+
+     The competitive teardown moved off the homepage. At ~630 words on a
+     landing page it read as insecurity, and a prospect does not read it;
+     it is investor and deck material. Here it has room to be thorough,
+     and the homepage keeps one paragraph and a link.
+
+     Content is verbatim from the homepage. No new claims, so README's
+     content guardrails already cover it.
+============================================================ -->
+
+<header class="nav">
+  <div class="nav-inner">
+    <a class="logo" href="/">
+      <span class="logo-mark" aria-hidden="true"></span>
+      <span class="logo-word" data-brand>Setlz</span>
+    </a>
+    <nav class="nav-links">
+      <a href="/#how">How it works</a>
+      <a href="/#hold">See it settle</a>
+      <a href="/#pricing">Pricing</a>
+      <a href="/#cases">Use cases</a>
+    </nav>
+    <a class="btn btn-primary btn-sm" href="/#request-demo">Request a demo</a>
+  </div>
+</header>
+
+<main id="top">
+
+<section class="section band tier-standard" id="why">
+  <div class="container">
+    <p class="eyebrow">Why <span data-brand>Setlz</span> wins</p>
+    <h2 class="h2">Crypto rails exist. Almost nobody has built commerce on them. We did.</h2>
+    <p class="section-lede">Three camps: accounts that hold your money, rails that move it, orchestrators that dress up the old system. None of them settle a transaction end to end. We built the layer that does. Everyone sells the plumbing. We sell the appliance.</p>
+
+<div class="group camps reveal">
+
+      <article class="grow grow-prose">
+        <div class="camp-head">
+          <span class="glabel">Camp one</span>
+          <h3>Crypto neobanks</h3>
+          <p class="camp-names">Revolut &middot; Nexo &middot; the crypto-account crowd</p>
+        </div>
+        <p class="camp-attack">They are accounts, not engines. An account cannot take a payment, settle it, split it four ways, and hold it against a condition, in the same breath.</p>
+        <ul class="camp-lines">
+          <li>An account holds money on its balance sheet. An engine moves it, splits it, and accounts for it, with every escrow visible to both sides on-chain.</li>
+          <li>Escrow is a three-party instrument. An account cannot hold funds between a buyer and a seller against a condition.</li>
+        </ul>
+      </article>
+
+      <article class="grow grow-prose">
+        <div class="camp-head">
+          <span class="glabel">Camp two</span>
+          <h3>Stablecoin settlement layers and rails</h3>
+          <p class="camp-names">Bridge &middot; BVNK &middot; Zero Hash &middot; peers</p>
+        </div>
+        <p class="camp-attack">They built the pipe and called it plumbing done. A transfer leg is maybe 20% of what a transaction needs. The other 80% is the hard part: escrow, triggers, compliance hooks, ramps, treasury, atomic splits.</p>
+        <ul class="camp-lines">
+          <li>They hand you virtual accounts and payout APIs, then leave you to build the escrow, the delivery trigger, and the branded logic yourself. That layer is the product. It is what we build.</li>
+          <li><span data-brand>Setlz</span> was built the other way: a marketplace needed to settle real bookings, so we built the engine underneath it and tested it end to end with AtlasOra, inside a full MoR and TOMS wrapper.</li>
+          <li>Multi-coin by design: EURC-native for EU flows, USDC live for dollar corridors, any Base-native fiat stablecoin integrable with minimal effort. Dollar-only rails solve one corridor. Coin-agnostic engines solve the map.</li>
+        </ul>
+        <p class="camp-punch">Rails are a feature. Settlement is a system. We sell the system.</p>
+      </article>
+
+      <article class="grow grow-prose">
+        <div class="camp-head">
+          <span class="glabel">Camp three</span>
+          <h3>Platform-payment orchestrators</h3>
+          <p class="camp-names">Stripe Connect &middot; Adyen for Platforms &middot; Mangopay &middot; Wise Platform</p>
+        </div>
+        <p class="camp-attack">World-class orchestration of legacy rails. Payouts still ride T+2 banking, percentage-based costs, and banking-hours cut-offs.</p>
+      </article>
+
+    </div>
+  </div>
+  </div>
+
+<!-- The trump card: full-bleed blue -->
+  <div class="trump">
+    <div class="container">
+      <p class="mono trump-label">The part they cannot copy from a whitepaper</p>
+      <p class="trump-text">Every competitor above shares one trait: their settlement engine was never built underneath a real marketplace by the team that runs it. Ours was. Every feature exists because a real booking, a real host payout, or a real dispute demanded it.</p>
+      <p class="trump-punch">Infrastructure built from a whitepaper guesses. Infrastructure built from a working marketplace knows.</p>
+    </div>
+  </div>
+
+<!-- ==========================================================================
+       PREPARED TRUST CENTERPIECE (v2.9). BUILT, NOT ENABLED.
+       Enable ONLY when ALL THREE conditions hold:
+         1) wallet architecture memo confirms user-held keys,
+         2) third-party audit complete,
+         3) Gavin sign-off.
+       Until then this block stays commented out and its claims appear nowhere
+       rendered on the site.
+
+  <div class="container">
+    <div class="trust-center reveal">
+      <p class="mono trust-label">Verified trust architecture</p>
+      <p class="trust-text">No admin keys. No upgrade path. No pause switch. Published contract addresses.</p>
+      <p class="trust-punch">If we disappeared tomorrow, your money does not.</p>
+    </div>
+  </div>
+  ========================================================================== -->
+
+  <div class="container">
+<!-- Moat (from the deck): the assembly, not the pieces. -->
+    <div class="block reveal">
+      <h3>Not one feature. Compounding defensibility.</h3>
+      <p class="block-lead">We do not claim no one else could build the pieces. The moat is that we assemble them into a whitelabelled, vertical-specific settlement appliance the horizontal players are structurally disinclined to build, and it deepens with every vertical we complete.</p>
+      <p class="block-support"><strong>Regulatory position:</strong> the per-vertical liability and merchant-of-record posture, plus regulated partnerships. Legal work, time and capital to rebuild.</p>
+      <p class="block-support"><strong>Integration depth:</strong> wired into the customer's PMS, TMS or dispatch system. Removing us means re-plumbing operations.</p>
+      <p class="block-support"><strong>Trigger and dispute library:</strong> every completed vertical is edge-case data the next entrant does not have.</p>
+      <p class="block-support"><strong>Why they will not follow us down:</strong> the rail providers are horizontal by design, and their moat is serving every use case shallowly. Building deep vertical products fragments that model. We go where their architecture will not let them: one vertical at a time, owning the whole flow.</p>
+    </div>
+
+<p class="circle-line reveal">Built on Circle's EURC. Native today, engineered for every currency that follows.</p>
+  </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a class="logo" href="/">
+          <span class="logo-mark" aria-hidden="true"></span>
+          <span class="logo-word" data-brand>Setlz</span>
+        </a>
+        <!-- PENDING LEGAL REVIEW: Setlz HoldCo LTD attribution line below -->
+        <p class="footer-parent">A product of Setlz HoldCo LTD.</p>
+      </div>
+    </div>
+    <p class="mono footer-fine">Demo site</p>
+  </div>
+</footer>
+
+<script src="/app.js"></script>
+</body>
+</html>

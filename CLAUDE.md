@@ -32,6 +32,10 @@ Five files at the root, no subdirectories:
 | `app.js` | 1231 | All behaviour: brand injection, four demos, form, scroll reveal. |
 | `map-dots.js` | 4 | Generated dot-matrix world-map grid (`MAP_DOTS`, `MAP_GRID`). Minified data, baked offline from public-domain polygons. Do not hand-edit. |
 | `README.md` | 85 | Content guardrails and change-order log. |
+| `verticals/index.html` | — | The seven use cases and pattern grid moved off the homepage in 1.2. |
+| `why/index.html` | — | The competitive teardown, trump card and moat, moved off the homepage in 5.5. |
+| `settlements.js` | — | Simulated settlement anatomy data, and the Hacken audit fact. |
+| `fonts/` | — | Three self-hosted variable woff2 files, 94KB total. |
 
 **Implication for the rebuild plan:** several prompts assume a build step
 ("fail the build rather than shipping an empty claim", "read from a Base RPC at build
