@@ -41,7 +41,6 @@
      1. HERO
 ============================================================ -->
 <section class="hero">
-  <div class="hero-glow" aria-hidden="true"></div>
   <div class="container">
     <p class="eyebrow">EURC on Base &middot; whitelabelled setlment infrastructure</p>
     <h1 class="hero-h1">The money arrives the moment the service does.</h1>
@@ -77,7 +76,7 @@
 <!-- ============================================================
      2. WHAT IT IS
 ============================================================ -->
-<section class="section section-tight" id="what">
+<section class="section band" id="what">
   <div class="container">
     <p class="eyebrow">What it is</p>
     <p class="statement reveal">A setlment rail they own, not rent: any payment in, setld in EURC on Base in seconds, split atomically, under your brand.</p>
@@ -89,11 +88,11 @@
       <span class="mono flow-node flow-node-paid">PROVIDER PAID</span>
     </div>
     <p class="mono flow-timing">LEGACY RAILS: DAYS &middot; <span data-brand-upper>SETLZ</span>: ABOUT 11 MINUTES</p>
-    <div class="stat-grid">
-      <div class="stat-card reveal"><span class="mono stat-label">DELIVERY TO PAYOUT</span><span class="stat-value">Minutes</span></div>
-      <div class="stat-card reveal"><span class="mono stat-label">SETLMENT EXECUTION<span class="note-ref"><button class="note-btn" type="button" aria-expanded="false" aria-describedby="note-1" aria-label="Note 1 about this figure">1</button><span class="note-pop" role="tooltip" hidden>This is the stablecoin settlement leg, not the all-in cost of a regulated payment.</span></span></span><span class="stat-value">Cents</span></div>
-      <div class="stat-card reveal"><span class="mono stat-label">OWNERSHIP<span class="note-ref"><button class="note-btn" type="button" aria-expanded="false" aria-describedby="note-2" aria-label="Note 2 about this figure">2</button><span class="note-pop" role="tooltip" hidden>Your own branded rail, not a facilitator's. Our regulated infrastructure sits beneath it, not a processor in front of it.</span></span></span><span class="stat-value">Whitelabel</span></div>
-      <div class="stat-card reveal"><span class="mono stat-label">PRICE VS INCUMBENTS</span><span class="stat-value">40% less</span></div>
+    <div class="group reveal">
+      <div class="grow grow-lv"><span class="glabel">Delivery to payout</span><span class="gval-lg">Minutes</span></div>
+      <div class="grow grow-lv"><span class="glabel">Setlment execution<span class="note-ref"><button class="note-btn" type="button" aria-expanded="false" aria-describedby="note-1" aria-label="Note 1 about this figure">1</button><span class="note-pop" role="tooltip" hidden>This is the stablecoin settlement leg, not the all-in cost of a regulated payment.</span></span></span><span class="gval-lg">Cents</span></div>
+      <div class="grow grow-lv"><span class="glabel">Ownership<span class="note-ref"><button class="note-btn" type="button" aria-expanded="false" aria-describedby="note-2" aria-label="Note 2 about this figure">2</button><span class="note-pop" role="tooltip" hidden>Your own branded rail, not a facilitator's. Our regulated infrastructure sits beneath it, not a processor in front of it.</span></span></span><span class="gval-lg">Whitelabel</span></div>
+      <div class="grow grow-lv"><span class="glabel">Price vs incumbents</span><span class="gval-lg">40% less</span></div>
     </div>
   </div>
 </section>
@@ -101,72 +100,48 @@
 <!-- ============================================================
      4. HOW IT WORKS
 ============================================================ -->
-<section class="section" id="how">
+<section class="section band" id="how">
   <div class="container">
     <p class="eyebrow">How it works</p>
     <h2 class="h2">Fiat in. Stablecoin speed.<br>Fiat out. Owned end to end.</h2>
 
-    <div class="steps">
-      <div class="step reveal">
-        <span class="mono step-num">01</span>
-        <h3>Pay in</h3>
-        <p>Cards, Apple Pay, bank transfer. Your customer sees your brand, never ours.</p>
-      </div>
-      <div class="step-arrow mono" aria-hidden="true">&rarr;</div>
-      <div class="step reveal">
-        <span class="mono step-num">02</span>
-        <h3>Setl to escrow</h3>
-        <p>EURC on Base, final in seconds.</p>
-      </div>
-      <div class="step-arrow mono" aria-hidden="true">&rarr;</div>
-      <div class="step reveal">
-        <span class="mono step-num">03</span>
-        <h3>Hold by rule</h3>
-        <p>Programmable, API-defined per customer: check-in, proof of delivery, milestone.</p>
-      </div>
-      <div class="step-arrow mono" aria-hidden="true">&rarr;</div>
-      <div class="step reveal">
-        <span class="mono step-num">04</span>
-        <h3>Split</h3>
-        <p>Atomic: payout, margin, budgets. No reconciliation.</p>
-      </div>
-      <div class="step-arrow mono" aria-hidden="true">&rarr;</div>
-      <div class="step reveal">
-        <span class="mono step-num">05</span>
-        <h3>Pay out</h3>
-        <p>Near-instant, with native on and off ramps.</p>
-      </div>
+    <div class="group reveal">
+      <div class="grow grow-def"><span class="glabel">01 &middot; Pay in</span><p>Cards, Apple Pay, bank transfer. Your customer sees your brand, never ours.</p></div>
+      <div class="grow grow-def"><span class="glabel">02 &middot; Setl to escrow</span><p>EURC on Base, final in seconds.</p></div>
+      <div class="grow grow-def"><span class="glabel">03 &middot; Hold by rule</span><p>Programmable, API-defined per customer: check-in, proof of delivery, milestone.</p></div>
+      <div class="grow grow-def"><span class="glabel">04 &middot; Split</span><p>Atomic: payout, margin, budgets. No reconciliation.</p></div>
+      <div class="grow grow-def"><span class="glabel">05 &middot; Pay out</span><p>Near-instant, with native on and off ramps.</p></div>
     </div>
 
     <!-- "ON-CHAIN WALLETS": upgrade to a stronger custody claim pending wallet architecture verification (v2.9 claim gate). -->
-    <div class="tech-strip mono reveal">
-      <span>BASE NETWORK</span><span>EURC</span><span>ON-CHAIN WALLETS</span><span>KYC/AML INTEGRATED</span><span>EU GEO-RING-FENCING</span><span>IDLE-BALANCE TREASURY ROUTING</span><span>PROGRAMMABLE ESCROW</span>
-    </div>
+    <ul class="ilist reveal">
+      <li>Base network</li><li>EURC</li><li>On-chain wallets</li><li>KYC/AML integrated</li><li>EU geo-ring-fencing</li><li>Idle-balance treasury routing</li><li>Programmable escrow</li>
+    </ul>
 
     <!-- Multi-coin strip (change order v2.5). Compact, not a numbered section. -->
-    <div class="coin-strip reveal">
+    <div class="block reveal">
       <h3>One engine, every currency.</h3>
-      <p class="coin-lead">The engine is coin-agnostic. The currency is a corridor decision.</p>
-      <div class="coin-chips">
-        <span class="mono coin-chip"><span class="coin-name">EURC</span><span class="coin-tag coin-tag-live">LIVE</span></span>
-        <span class="mono coin-chip"><span class="coin-name">USDC</span><span class="coin-tag coin-tag-live">LIVE</span></span>
-        <span class="mono coin-chip"><span class="coin-name">GBP AND OTHER LOCAL-CURRENCY STABLECOINS<span class="note-ref"><button class="note-btn" type="button" aria-expanded="false" aria-describedby="note-7" aria-label="Note 7 about local-currency stablecoins">7</button><span class="note-pop" role="tooltip" hidden>Example: tGBP, issued by an FCA-registered firm and live on Base. An ecosystem example, not a partnership. "Integration-ready" describes stack effort, not market depth.</span></span></span><span class="coin-tag">INTEGRATION-READY</span></span>
-        <span class="mono coin-chip"><span class="coin-name">A NEW COIN IS CONFIGURATION, NOT A REBUILD</span></span>
-      </div>
+      <p class="block-lead">The engine is coin-agnostic. The currency is a corridor decision.</p>
+      <ul class="ilist">
+        <li>EURC <strong>live</strong></li>
+        <li>USDC <strong>live</strong></li>
+        <li>GBP and other local-currency stablecoins<span class="note-ref"><button class="note-btn" type="button" aria-expanded="false" aria-describedby="note-7" aria-label="Note 7 about local-currency stablecoins">7</button><span class="note-pop" role="tooltip" hidden>Example: tGBP, issued by an FCA-registered firm and live on Base. An ecosystem example, not a partnership. "Integration-ready" describes stack effort, not market depth.</span></span> <strong>integration-ready</strong></li>
+        <li>A new coin is configuration, not a rebuild</li>
+      </ul>
     </div>
 
     <!-- Compliance modules (change order v2.9). Frame: your policy, executable on
          our rails. Never "we handle compliance", never "we perform KYC for you". -->
-    <div class="coin-strip reveal">
+    <div class="block reveal">
       <h3>Compliance: obligation yours, tooling ours.</h3>
-      <p class="coin-lead">Your policy, executable on our rails.</p>
-      <div class="coin-chips">
-        <span class="mono coin-chip"><span class="coin-name">PLUGGABLE KYC: BRING YOUR PROVIDER OR USE THE PRE-WIRED INTEGRATION</span></span>
-        <span class="mono coin-chip"><span class="coin-name">AML SCREENING HOOKS</span></span>
-        <span class="mono coin-chip"><span class="coin-name">JURISDICTION GEO-FENCING</span></span>
-        <span class="mono coin-chip"><span class="coin-name">TRANSACTION-LEVEL REPORTING</span></span>
-      </div>
-      <p class="coin-support">Screening as a release condition: an escrow can be programmed not to release until your own checks pass.</p>
+      <p class="block-lead">Your policy, executable on our rails.</p>
+      <ul class="ilist">
+        <li>Pluggable KYC: bring your provider or use the pre-wired integration</li>
+        <li>AML screening hooks</li>
+        <li>Jurisdiction geo-fencing</li>
+        <li>Transaction-level reporting</li>
+      </ul>
+      <p class="block-support">Screening as a release condition: an escrow can be programmed not to release until your own checks pass.</p>
     </div>
   </div>
 </section>
@@ -174,7 +149,7 @@
 <!-- ============================================================
      5. THE HOLD
 ============================================================ -->
-<section class="section section-tint" id="hold">
+<section class="section band" id="hold">
   <div class="container">
     <p class="eyebrow">The hold</p>
     <h2 class="h2">Instant does not mean reckless.</h2>
@@ -284,10 +259,10 @@
          surviving demo. -->
     <p class="race-caption"><span data-brand>Setlz</span> is not a concept. The rail, escrow, delivery triggers and integrations are built and tested end to end, across repeated runs with AtlasOra: our first reference customer.</p>
 
-    <div class="tech-strip mono reveal">
-      <span>UNDER 30 MIN &middot; DELIVERY TO PROVIDER PAID &middot; LIVE RUNS</span>
-      <span>11 MIN &middot; FIAT TO STABLECOIN TO FIAT ROUND TRIP<span class="note-ref"><button class="note-btn" type="button" aria-expanded="false" aria-describedby="note-4" aria-label="Note 4 about this figure">4</button><span class="note-pop" role="tooltip" hidden>Bounded by our own 20-minute settlement cron job, not a rail limit. It can be reduced significantly.</span></span></span>
-      <span>99.9% &middot; SETLMENT UPTIME</span>
+    <div class="group reveal">
+      <div class="grow grow-lv"><span class="glabel">Delivery to provider paid &middot; measured across runs</span><span class="gval-lg">Under 30 min</span></div>
+      <div class="grow grow-lv"><span class="glabel">Fiat to stablecoin to fiat round trip<span class="note-ref"><button class="note-btn" type="button" aria-expanded="false" aria-describedby="note-4" aria-label="Note 4 about this figure">4</button><span class="note-pop" role="tooltip" hidden>Bounded by our own 20-minute settlement cron job, not a rail limit. It can be reduced significantly.</span></span></span><span class="gval-lg">11 min</span></div>
+      <div class="grow grow-lv"><span class="glabel">Setlment uptime</span><span class="gval-lg">99.9%</span></div>
     </div>
   </div>
 </section>
@@ -295,7 +270,7 @@
 <!-- ============================================================
      6. WHY TRADITIONAL RAILS LOSE
 ============================================================ -->
-<section class="section" id="compare">
+<section class="section band-support" id="compare">
   <div class="container">
     <p class="eyebrow">The comparison</p>
     <h2 class="h2">Why traditional rails lose.</h2>
@@ -368,12 +343,12 @@
     <p class="compare-close reveal">Every row above is money. Faster setlment is working capital. Lower cost is margin. No chargebacks is fewer write-offs.</p>
 
     <!-- Business model strip (from the deck). Revenue projections stay off the site. -->
-    <div class="coin-strip reveal">
+    <div class="block reveal">
       <h3>Two lines. One rail.</h3>
-      <p class="coin-lead">Licence at cost. Transactions for profit.</p>
-      <p class="coin-support"><strong>Licence, at cost:</strong> onboarding, integration, support. We make money only when you transact.</p>
-      <p class="coin-support"><strong>Transaction fee:</strong> a thin fee per transaction setld, 40% under card processors. The customer keeps the difference.</p>
-      <p class="coin-support"><strong>What you are paying for:</strong> not the rail, which costs cents, but the whitelabelled vertical product on top: the escrow, the delivery triggers and the structure you would otherwise build yourself. Incumbents charge 2 to 6% for less.</p>
+      <p class="block-lead">Licence at cost. Transactions for profit.</p>
+      <p class="block-support"><strong>Licence, at cost:</strong> onboarding, integration, support. We make money only when you transact.</p>
+      <p class="block-support"><strong>Transaction fee:</strong> a thin fee per transaction setld, 40% under card processors. The customer keeps the difference.</p>
+      <p class="block-support"><strong>What you are paying for:</strong> not the rail, which costs cents, but the whitelabelled vertical product on top: the escrow, the delivery triggers and the structure you would otherwise build yourself. Incumbents charge 2 to 6% for less.</p>
     </div>
   </div>
 </section>
@@ -381,19 +356,19 @@
 <!-- ============================================================
      6. WHY SETLZ WINS
 ============================================================ -->
-<section class="section" id="why">
+<section class="section band" id="why">
   <div class="container">
     <p class="eyebrow">Why <span data-brand>Setlz</span> wins</p>
     <h2 class="h2">Crypto rails exist. Almost nobody has built commerce on them. We did.</h2>
     <p class="section-lede reveal">Three camps: accounts that hold your money, rails that move it, orchestrators that dress up the old system. None of them setl a transaction end to end. We built the layer that does. Everyone sells the plumbing. We sell the appliance.</p>
 
-    <div class="camps">
+    <div class="group camps reveal">
 
-      <article class="camp reveal">
+      <article class="grow grow-prose">
         <div class="camp-head">
-          <span class="mono camp-label">CAMP ONE</span>
+          <span class="glabel">Camp one</span>
           <h3>Crypto neobanks</h3>
-          <p class="mono camp-names">REVOLUT &middot; NEXO &middot; THE CRYPTO-ACCOUNT CROWD</p>
+          <p class="camp-names">REVOLUT &middot; NEXO &middot; THE CRYPTO-ACCOUNT CROWD</p>
         </div>
         <p class="camp-attack">They are accounts, not engines. An account cannot take a payment, setl it, split it four ways, and hold it against a condition, in the same breath.</p>
         <ul class="camp-lines">
@@ -402,11 +377,11 @@
         </ul>
       </article>
 
-      <article class="camp reveal">
+      <article class="grow grow-prose">
         <div class="camp-head">
-          <span class="mono camp-label">CAMP TWO</span>
+          <span class="glabel">Camp two</span>
           <h3>Stablecoin setlment layers and rails</h3>
-          <p class="mono camp-names">BRIDGE &middot; BVNK &middot; ZERO HASH &middot; PEERS</p>
+          <p class="camp-names">BRIDGE &middot; BVNK &middot; ZERO HASH &middot; PEERS</p>
         </div>
         <p class="camp-attack">They built the pipe and called it plumbing done. A transfer leg is maybe 20% of what a transaction needs. The other 80% is the hard part: escrow, triggers, compliance hooks, ramps, treasury, atomic splits.</p>
         <ul class="camp-lines">
@@ -417,11 +392,11 @@
         <p class="camp-punch">Rails are a feature. Setlment is a system. We sell the system.</p>
       </article>
 
-      <article class="camp reveal">
+      <article class="grow grow-prose">
         <div class="camp-head">
-          <span class="mono camp-label">CAMP THREE</span>
+          <span class="glabel">Camp three</span>
           <h3>Platform-payment orchestrators</h3>
-          <p class="mono camp-names">STRIPE CONNECT &middot; ADYEN FOR PLATFORMS &middot; MANGOPAY &middot; WISE PLATFORM</p>
+          <p class="camp-names">STRIPE CONNECT &middot; ADYEN FOR PLATFORMS &middot; MANGOPAY &middot; WISE PLATFORM</p>
         </div>
         <p class="camp-attack">World-class orchestration of legacy rails. Payouts still ride T+2 banking, percentage-based costs, and banking-hours cut-offs.</p>
       </article>
@@ -458,27 +433,27 @@
 
   <div class="container">
     <!-- Moat (from the deck): the assembly, not the pieces. -->
-    <div class="coin-strip reveal">
+    <div class="block reveal">
       <h3>Not one feature. Compounding defensibility.</h3>
-      <p class="coin-lead">We do not claim no one else could build the pieces. The moat is that we assemble them into a whitelabelled, vertical-specific setlment appliance the horizontal players are structurally disinclined to build, and it deepens with every vertical we complete.</p>
-      <p class="coin-support"><strong>Regulatory position:</strong> the per-vertical liability and merchant-of-record posture, plus regulated partnerships. Legal work, time and capital to rebuild.</p>
-      <p class="coin-support"><strong>Integration depth:</strong> wired into the customer's PMS, TMS or dispatch system. Removing us means re-plumbing operations.</p>
-      <p class="coin-support"><strong>Trigger and dispute library:</strong> every completed vertical is edge-case data the next entrant does not have.</p>
-      <p class="coin-support"><strong>Why they will not follow us down:</strong> the rail providers are horizontal by design, and their moat is serving every use case shallowly. Building deep vertical products fragments that model. We go where their architecture will not let them: one vertical at a time, owning the whole flow.</p>
+      <p class="block-lead">We do not claim no one else could build the pieces. The moat is that we assemble them into a whitelabelled, vertical-specific setlment appliance the horizontal players are structurally disinclined to build, and it deepens with every vertical we complete.</p>
+      <p class="block-support"><strong>Regulatory position:</strong> the per-vertical liability and merchant-of-record posture, plus regulated partnerships. Legal work, time and capital to rebuild.</p>
+      <p class="block-support"><strong>Integration depth:</strong> wired into the customer's PMS, TMS or dispatch system. Removing us means re-plumbing operations.</p>
+      <p class="block-support"><strong>Trigger and dispute library:</strong> every completed vertical is edge-case data the next entrant does not have.</p>
+      <p class="block-support"><strong>Why they will not follow us down:</strong> the rail providers are horizontal by design, and their moat is serving every use case shallowly. Building deep vertical products fragments that model. We go where their architecture will not let them: one vertical at a time, owning the whole flow.</p>
     </div>
 
     <!-- Why now (from the deck). -->
-    <div class="coin-strip reveal">
+    <div class="block reveal">
       <h3>Why now. The stablecoin rails finally exist.</h3>
-      <p class="coin-lead">In the last 18 months the rails became legal, wanted and cheap, and the volume across them became the largest of any payment network on earth.</p>
-      <div class="coin-chips">
-        <span class="mono coin-chip"><span class="coin-name">REGULATION LIVE &middot; MiCA AND THE US GENIUS ACT</span></span>
-        <span class="mono coin-chip"><span class="coin-name">DEMAND IS PULL &middot; 77% OF CORPORATES WANT CROSS-BORDER SETLMENT ON STABLECOINS<span class="note-ref"><button class="note-btn" type="button" aria-expanded="false" aria-describedby="note-8" aria-label="Note 8 about this figure">8</button><span class="note-pop" role="tooltip" hidden>EY-Parthenon, 2025.</span></span></span></span>
-        <span class="mono coin-chip"><span class="coin-name">RAILS COMMODITISED &middot; SETLMENT COST DROPPED TO CENTS</span></span>
-        <span class="mono coin-chip"><span class="coin-name">$33TN SETLD IN STABLECOINS IN 2025 &middot; MORE THAN VISA AND MASTERCARD COMBINED</span></span>
-        <span class="mono coin-chip"><span class="coin-name">43% OF SOUTHEAST ASIA B2B CROSS-BORDER PAYMENTS ALREADY SETL IN STABLECOINS</span></span>
-        <span class="mono coin-chip"><span class="coin-name">$50TN+ PROJECTED FOR 2026 &middot; REGULATED GROWTH, NOT FRINGE</span></span>
-      </div>
+      <p class="block-lead">In the last 18 months the rails became legal, wanted and cheap, and the volume across them became the largest of any payment network on earth.</p>
+      <ul class="ilist">
+        <li>REGULATION LIVE &middot; MiCA AND THE US GENIUS ACT</li>
+        <li>DEMAND IS PULL &middot; 77% OF CORPORATES WANT CROSS-BORDER SETLMENT ON STABLECOINS<span class="note-ref"><button class="note-btn" type="button" aria-expanded="false" aria-describedby="note-8" aria-label="Note 8 about this figure">8</button><span class="note-pop" role="tooltip" hidden>EY-Parthenon, 2025.</span></span></li>
+        <li>RAILS COMMODITISED &middot; SETLMENT COST DROPPED TO CENTS</li>
+        <li>$33TN SETLD IN STABLECOINS IN 2025 &middot; MORE THAN VISA AND MASTERCARD COMBINED</li>
+        <li>43% of southeast asia b2b cross-border payments already setl in stablecoins</li>
+        <li>$50TN+ PROJECTED FOR 2026 &middot; REGULATED GROWTH, NOT FRINGE</li>
+      </ul>
     </div>
 
     <p class="circle-line reveal">Built on Circle's EURC. Native today, engineered for every currency that follows.</p>
@@ -491,44 +466,42 @@
 <!-- STRUCTURAL NOTE (internal): all setlment-as-a-service patterns beyond the
      current MoR model raise MiCA CASP classification questions. The site may show
      patterns; productising any of them is a Gavin decision first. -->
-<section class="section" id="cases">
+<section class="section band" id="cases">
   <div class="container">
     <p class="eyebrow">Use cases</p>
     <h2 class="h2">Proven on one marketplace. Built for many.</h2>
     <p class="section-lede reveal">The common thread is a float between payment and delivery. The same rail setlz freight, fintech, escrow and any marketplace holding customer funds before it delivers. Identical mechanics, different trigger event.</p>
 
-    <article class="case-banner reveal">
-      <span class="mono case-tag case-tag-live">BUILT AND TESTED WITH ATLASORA</span>
-      <h3>Short-term rental marketplaces</h3>
+    <div class="group reveal">
+      <article class="grow grow-prose">
+        <span class="glabel">Built and tested with AtlasOra</span>
+        <h3>Short-term rental marketplaces</h3>
       <p>A property manager on the Costa del Sol waits days for payouts and loses 15.5% to the incumbent's mandatory host commission. On rails like <span data-brand>Setlz</span>, a marketplace can run at 10% all-in and pay hosts in minutes, not days.</p>
-      <p class="case-payoff">That 5.5-point gap is the difference between renting your rails and owning them.</p>
-    </article>
+        <p class="case-payoff">That 5.5-point gap is the difference between renting your rails and owning them.</p>
+      </article>
 
-    <div class="case-grid">
-
-      <article class="case-card reveal">
+      <article class="grow grow-prose">
         <h3>Logistics and freight</h3>
         <p>Shipper, forwarder, and carrier splits release on proof of delivery. Carriers stop waiting 30 to 90 days and stop factoring invoices at 1 to 5%.</p>
       </article>
 
-      <article class="case-card reveal">
+      <article class="grow grow-prose">
         <h3>Marketplace payouts</h3>
         <p>A platform paying 5,000 sellers across 12 countries reconciles bank files every Friday. On <span data-brand>Setlz</span> the split executes the moment the buyer pays.</p>
       </article>
-
     </div>
 
     <p class="cases-more reveal">The same mechanics run travel supply, property management, fintech and PSPs, commodities and documentary trade, creator campaigns, ticketing, and platform treasury. <a href="/verticals/">See all verticals</a>.</p>
 
     <!-- Where we are (from the deck): one vertical deployed, the next in reach. -->
-    <div class="coin-strip reveal">
+    <div class="block reveal">
       <h3>Where we are. One vertical deployed, the next in reach.</h3>
-      <div class="coin-chips">
-        <span class="mono coin-chip"><span class="coin-name">ATLASORA &middot; TRAVEL</span><span class="coin-tag coin-tag-live">LIVE</span></span>
-        <span class="mono coin-chip"><span class="coin-name">FREIGHT AND FINTECH PILOTS</span><span class="coin-tag">NEXT</span></span>
-        <span class="mono coin-chip"><span class="coin-name">STABLECOIN INFRASTRUCTURE PARTNERS</span><span class="coin-tag">EXPLORATORY</span></span>
-      </div>
-      <p class="coin-support"><strong>Live:</strong> the rail is built and tested end to end, running with AtlasOra as our first reference customer. <strong>Next:</strong> once the marketplace launch validates the rail publicly, a freight and a fintech deployment extend the proof across float profiles. <strong>Exploratory:</strong> stablecoin infrastructure partner conversations open once there is a live public reference.</p>
+      <ul class="ilist">
+        <li>AtlasOra &middot; travel <strong>live</strong></li>
+        <li>Freight and fintech pilots <strong>next</strong></li>
+        <li>Stablecoin infrastructure partners <strong>exploratory</strong></li>
+      </ul>
+      <p class="block-support"><strong>Live:</strong> the rail is built and tested end to end, running with AtlasOra as our first reference customer. <strong>Next:</strong> once the marketplace launch validates the rail publicly, a freight and a fintech deployment extend the proof across float profiles. <strong>Exploratory:</strong> stablecoin infrastructure partner conversations open once there is a live public reference.</p>
     </div>
 
   </div>
@@ -538,42 +511,36 @@
      9. TEAM (from the deck; roles are Setlz-specific, several
      shared with AtlasOra, our reference customer)
 ============================================================ -->
-<section class="section section-tint" id="team">
+<section class="section band" id="team">
   <div class="container">
     <p class="eyebrow">Team</p>
     <h2 class="h2">Built the rail. Tested end to end.</h2>
     <p class="section-lede reveal"><span data-brand>Setlz</span> is built by the team that designed, shipped and runs the setlment rail for AtlasOra, our reference customer. Real infrastructure, not a slide.</p>
 
-    <div class="team-grid">
-      <div class="team-card reveal">
-        <span class="team-name">Samuel Dreier</span>
-        <span class="mono team-role">CEO &middot; BUILD AND COMMERCIAL</span>
-        <p>Serial entrepreneur: three ventures across fintech, commodities and logistics, the first at 18. Cross-jurisdiction operations and deal-closing.</p>
+    <div class="group reveal">
+      <div class="grow grow-def">
+        <span class="glabel">CEO &Middot; Build And Commercial</span>
+        <div><h3>Samuel Dreier</h3><p>Serial entrepreneur: three ventures across fintech, commodities and logistics, the first at 18. Cross-jurisdiction operations and deal-closing.</p></div>
       </div>
-      <div class="team-card reveal">
-        <span class="team-name">Jake Crocker</span>
-        <span class="mono team-role">CTO &middot; THE RAIL ITSELF</span>
-        <p>Built the setlment rail, escrow system, Experience Wallet and live PMS integrations. Shipped and in production.</p>
+      <div class="grow grow-def">
+        <span class="glabel">CTO &Middot; The Rail Itself</span>
+        <div><h3>Jake Crocker</h3><p>Built the setlment rail, escrow system, Experience Wallet and live PMS integrations. Shipped and in production.</p></div>
       </div>
-      <div class="team-card reveal">
-        <span class="team-name">Adam Bates</span>
-        <span class="mono team-role">CMO &middot; GO-TO-MARKET</span>
-        <p>Ran global marketing for Cardano (IOHK), one of the largest blockchain networks by market cap. Ex-BBDO partner: Virgin, Emirates, London 2012.</p>
+      <div class="grow grow-def">
+        <span class="glabel">CMO &Middot; Go-To-Market</span>
+        <div><h3>Adam Bates</h3><p>Ran global marketing for Cardano (IOHK), one of the largest blockchain networks by market cap. Ex-BBDO partner: Virgin, Emirates, London 2012.</p></div>
       </div>
-      <div class="team-card reveal">
-        <span class="team-name">Andrew Deighan</span>
-        <span class="mono team-role">CPO &middot; PRODUCT AND SETLMENT</span>
-        <p>Co-founder and product lead. Fintech founder; CEO of AtlasOra, the rail's first and proving customer.</p>
+      <div class="grow grow-def">
+        <span class="glabel">CPO &Middot; Product And Setlment</span>
+        <div><h3>Andrew Deighan</h3><p>Co-founder and product lead. Fintech founder; CEO of AtlasOra, the rail's first and proving customer.</p></div>
       </div>
-      <div class="team-card reveal">
-        <span class="team-name">Edison Dalani</span>
-        <span class="mono team-role">CFO &middot; FINANCE</span>
-        <p>Ex-Expedia finance leader: treasury, controls and the numbers behind a regulated payments business.</p>
+      <div class="grow grow-def">
+        <span class="glabel">CFO &Middot; Finance</span>
+        <div><h3>Edison Dalani</h3><p>Ex-Expedia finance leader: treasury, controls and the numbers behind a regulated payments business.</p></div>
       </div>
-      <div class="team-card reveal">
-        <span class="team-name">Mark Mosley</span>
-        <span class="mono team-role">COO &middot; OPERATIONS</span>
-        <p>Scales onboarding, operations and the integration pipeline that brings each new client live.</p>
+      <div class="grow grow-def">
+        <span class="glabel">COO &Middot; Operations</span>
+        <div><h3>Mark Mosley</h3><p>Scales onboarding, operations and the integration pipeline that brings each new client live.</p></div>
       </div>
     </div>
     <p class="team-advisors reveal">Founders build and sell, reinforced by senior fintech and regulated-payments advisors we are bringing on.</p>
@@ -647,7 +614,7 @@
      individual component. The numbers match the inline note references,
      so a figure can be checked in place or read in full here.
 ============================================================ -->
-<section class="notes-section" id="notes">
+<section class="notes-section band-support" id="notes">
   <div class="container">
     <div class="notes">
       <h2>Notes and methodology</h2>
