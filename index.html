@@ -380,8 +380,8 @@
         </thead>
         <tbody>
           <tr><td>Settlement</td><td class="cell-win">Seconds</td><td>T+2 or worse</td></tr>
-          <tr><td>Cost</td><td class="cell-win">Near zero on-chain</td><td>2 to 6% plus FX spread</td></tr>
-          <tr><td>Fx</td><td class="cell-win">Transparent on-chain swap, basis-point spreads on deep pools</td><td>1 to 4% margin hidden in the exchange rate</td></tr>
+          <tr><td>Cost</td><td class="cell-win">Near zero on-chain</td><td>2 to 6% plus FX spread<span class="note-ref"><button class="note-btn" type="button" aria-expanded="false" aria-describedby="note-9" aria-label="Note 9 about incumbent costs">9</button><span class="note-pop" role="tooltip" hidden>Typical published card and correspondent-banking rates. They vary by acquirer, region and card mix, so treat them as a range rather than a quote.</span></span></td></tr>
+          <tr><td>FX</td><td class="cell-win">Transparent on-chain swap, basis-point spreads on deep pools</td><td>1 to 4% margin hidden in the exchange rate<span class="note-ref"><button class="note-btn" type="button" aria-expanded="false" aria-describedby="note-9" aria-label="Note 9 about incumbent costs">9</button><span class="note-pop" role="tooltip" hidden>Typical published card and correspondent-banking rates. They vary by acquirer, region and card mix, so treat them as a range rather than a quote.</span></span></td></tr>
           <tr><td>Cross-border</td><td class="cell-win">Native</td><td>Correspondent banking</td></tr>
           <tr><td>Splits</td><td class="cell-win">Atomic and programmable</td><td>Manual reconciliation</td></tr>
           <tr><td>Chargebacks</td><td class="cell-win">None on-chain</td><td>Weeks of exposure</td></tr>
@@ -427,7 +427,7 @@
       </div>
     </div>
 
-    <p class="block-support reveal"><strong>Where the number comes from.</strong> Card processors charge roughly 2 to 6% for less. At the mid-market tier our blended fee is about 150 bps against a typical card cost near 250 bps, which is the 40% gap the rest of this page refers to. Arithmetic on two figures, not a slogan.</p>
+    <p class="block-support reveal"><strong>Where the number comes from.</strong> Card processors charge roughly 2 to 6%<span class="note-ref"><button class="note-btn" type="button" aria-expanded="false" aria-describedby="note-9" aria-label="Note 9 about incumbent costs">9</button><span class="note-pop" role="tooltip" hidden>Typical published card and correspondent-banking rates. They vary by acquirer, region and card mix, so treat them as a range rather than a quote.</span></span> for less. At the mid-market tier our blended fee is about 150 bps against a typical card cost near 250 bps, which is the 40% gap the rest of this page refers to. Arithmetic on two figures, not a slogan.</p>
     <p class="block-support reveal"><strong>What you are paying for.</strong> Not the rail, which costs cents, but the whitelabelled vertical product on top: the escrow, the delivery triggers and the structure you would otherwise build yourself.</p>
     <p class="mono anat-foot reveal">Indicative. Priced per corridor and settled volume, and confirmed in writing before onboarding.</p>
   </div>
@@ -525,14 +525,11 @@
     <!-- Why now (from the deck). -->
     <div class="block reveal">
       <h3>Why now. The stablecoin rails finally exist.</h3>
-      <p class="block-lead">In the last 18 months the rails became legal, wanted and cheap, and the volume across them became the largest of any payment network on earth.</p>
+      <p class="block-lead">In the last 18 months the rails became legal, wanted and cheap. Those three things are what changed, and each of them is checkable.</p>
       <ul class="ilist">
         <li>Regulation live &middot; MiCA and the US GENIUS Act</li>
         <li>Demand is pull &middot; 77% of corporates want cross-border settlement on stablecoins<span class="note-ref"><button class="note-btn" type="button" aria-expanded="false" aria-describedby="note-8" aria-label="Note 8 about this figure">8</button><span class="note-pop" role="tooltip" hidden>EY-Parthenon, 2025.</span></span></li>
         <li>Rails commoditised &middot; settlement cost dropped to cents</li>
-        <li>$33tn settled in stablecoins in 2025 &middot; more than Visa and Mastercard combined</li>
-        <li>43% of southeast asia b2b cross-border payments already settle in stablecoins</li>
-        <li>$50tn+ projected for 2026 &middot; regulated growth, not fringe</li>
       </ul>
     </div>
 
@@ -707,6 +704,7 @@
         <li id="note-6">Wire fees shown are typical international wire charges. An FX margin of 1 to 4%, taken in the exchange rate, applies on top of those fees.</li>
         <li id="note-7">tGBP is issued by an FCA-registered firm and is live on Base. It is named as an ecosystem example, not a partnership. "Integration-ready" describes the engineering effort to add a coin, not the market depth available in it.</li>
         <li id="note-8">The 77% figure is from EY-Parthenon, 2025.</li>
+        <li id="note-9">Incumbent cost figures (card processing at roughly 2 to 6%, correspondent-banking FX margins of 1 to 4%, wire fees of $30 to 40) are typical published rates. They vary by acquirer, region, corridor and card mix, and are used here as ranges rather than quotes.</li>
         <li>Both interactive demonstrations on this page, the escrow simulator and the corridor map, use simulated transactions and simulated timestamps. Transaction hashes shown in them are deliberately fake and labelled as such.</li>
       </ol>
     </div>
