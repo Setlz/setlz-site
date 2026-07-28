@@ -1944,6 +1944,114 @@ h3 {
   .reveal { opacity: 1; transform: none; transition: none; }
 }
 
+
+/* ============================================================
+   MOBILE PASS (Phase 7.1)
+   Decisions per component, rather than one global squeeze.
+============================================================ */
+
+/* Tap targets. Every control reaches 44px without changing how it looks:
+   the note reference keeps its 16px badge and gains an invisible 44px hit
+   area, which is the only way to hit 44 without a badge the size of the
+   text it annotates. */
+.note-btn { position: relative; }
+.note-btn::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 44px;
+  height: 44px;
+  transform: translate(-50%, -50%);
+}
+
+@media (max-width: 760px) {
+  /* --- tap targets --- */
+  .btn { min-height: 44px; display: inline-flex; align-items: center; justify-content: center; }
+  .hero-link { min-height: 44px; display: inline-flex; align-items: center; }
+  .logo { min-height: 44px; }
+  .esc-scenario-btn,
+  .esc-rail-btn,
+  .wm-corridor-btn { min-height: 44px; padding: var(--space-3) var(--space-4); }
+  .esc-actions .btn { width: 100%; }
+  .footer-col a, .footer-fine a { min-height: 44px; display: inline-flex; align-items: center; }
+  /* Form controls were 36 to 38px. Inline links inside a sentence are left
+     alone: WCAG 2.5.8 exempts targets in a line of text, and forcing 44px
+     there would break the paragraph's leading. */
+  .demo-field input,
+  .demo-field select,
+  .demo-field textarea { min-height: 44px; }
+  .proof-copy, .anat-head { min-height: 44px; }
+  .nav-inner { min-height: 44px; }
+
+  /* --- ledger rows: STACK ---
+     .grow-lv held two columns down to 320px, which left a 113px label beside
+     a 134px value. Label above value reads properly and the hairline still
+     separates rows. */
+  .grow-lv {
+    grid-template-columns: 1fr;
+    gap: var(--space-1);
+  }
+  .grow-lv .gval,
+  .grow-lv .gval-lg { text-align: left; }
+  .grow-def { grid-template-columns: 1fr; gap: var(--space-2); }
+
+  /* --- comparison table: STACK, not scroll ---
+     Chosen deliberately. A 3-column comparison is the one table where
+     stacking preserves the argument; horizontal scroll hides the column the
+     whole point depends on. Each row becomes its own labelled block. */
+  .compare-table { min-width: 0; width: 100%; }
+  .compare-table thead { display: none; }
+  .compare-table tbody,
+  .compare-table tr,
+  .compare-table td { display: block; width: auto; }
+  .compare-table tr {
+    border-top: var(--rule-w) solid var(--rule);
+    padding: var(--space-4) 0;
+  }
+  .compare-table tr td:first-child {
+    font-family: var(--font-display);
+    font-weight: var(--display-w-semi);
+    font-size: var(--display-3);
+    padding: 0 0 var(--space-2);
+    border: 0;
+  }
+  .compare-table td[data-c] {
+    padding: var(--space-2) 0 0;
+    border: 0;
+    display: grid;
+    grid-template-columns: 11ch 1fr;
+    gap: var(--space-3);
+    align-items: baseline;
+  }
+  .compare-table td[data-c]::before {
+    content: attr(data-c);
+    font-family: var(--font-mono);
+    font-size: var(--mono-label);
+    letter-spacing: var(--mono-label-track);
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+  /* The table no longer overflows, so the scroll container must not imply it can. */
+  .table-scroll { overflow-x: visible; }
+
+  /* --- map: DROP the hop labels ---
+     The corridor viewBox narrows on mobile, which scaled the SVG wire labels
+     to about 5px. Illegible, so they are dropped rather than shrunk. The
+     route, the pins and the city names still carry the comparison, and the
+     meters below state every figure in text. */
+  .wm-wire-label { display: none; }
+
+  /* --- anatomy rows --- */
+  .anat-cells { gap: var(--space-3); }
+}
+
+@media (max-width: 420px) {
+  /* The hero figure is the largest numeral on the page and must not force
+     the row wider than the viewport at the smallest sizes. */
+  .hrow-figure { font-size: clamp(44px, 14vw, 64px); }
+}
+
 /* ---------- responsive ---------- */
 
 @media (max-width: 980px) {

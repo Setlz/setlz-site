@@ -379,13 +379,13 @@
           </tr>
         </thead>
         <tbody>
-          <tr><td>Settlement</td><td class="cell-win">Seconds</td><td>T+2 or worse</td></tr>
-          <tr><td>Cost</td><td class="cell-win">Near zero on-chain</td><td>2 to 6% plus FX spread<span class="note-ref"><button class="note-btn" type="button" aria-expanded="false" aria-describedby="note-9" aria-label="Note 9 about incumbent costs">9</button><span class="note-pop" role="tooltip" hidden>Typical published card and correspondent-banking rates. They vary by acquirer, region and card mix, so treat them as a range rather than a quote.</span></span></td></tr>
-          <tr><td>FX</td><td class="cell-win">Transparent on-chain swap, basis-point spreads on deep pools</td><td>1 to 4% margin hidden in the exchange rate<span class="note-ref"><button class="note-btn" type="button" aria-expanded="false" aria-describedby="note-9" aria-label="Note 9 about incumbent costs">9</button><span class="note-pop" role="tooltip" hidden>Typical published card and correspondent-banking rates. They vary by acquirer, region and card mix, so treat them as a range rather than a quote.</span></span></td></tr>
-          <tr><td>Cross-border</td><td class="cell-win">Native</td><td>Correspondent banking</td></tr>
-          <tr><td>Splits</td><td class="cell-win">Atomic and programmable</td><td>Manual reconciliation</td></tr>
-          <tr><td>Chargebacks</td><td class="cell-win">None on-chain</td><td>Weeks of exposure</td></tr>
-          <tr><td>Uptime</td><td class="cell-win">24/7</td><td>Banking hours</td></tr>
+          <tr><td>Settlement</td><td class="cell-win" data-c="Setlz">Seconds</td><td data-c="Cards + bank payouts">T+2 or worse</td></tr>
+          <tr><td>Cost</td><td class="cell-win" data-c="Setlz">Near zero on-chain</td><td data-c="Cards + bank payouts">2 to 6% plus FX spread<span class="note-ref"><button class="note-btn" type="button" aria-expanded="false" aria-describedby="note-9" aria-label="Note 9 about incumbent costs">9</button><span class="note-pop" role="tooltip" hidden>Typical published card and correspondent-banking rates. They vary by acquirer, region and card mix, so treat them as a range rather than a quote.</span></span></td></tr>
+          <tr><td>FX</td><td class="cell-win" data-c="Setlz">Transparent on-chain swap, basis-point spreads on deep pools</td><td data-c="Cards + bank payouts">1 to 4% margin hidden in the exchange rate<span class="note-ref"><button class="note-btn" type="button" aria-expanded="false" aria-describedby="note-9" aria-label="Note 9 about incumbent costs">9</button><span class="note-pop" role="tooltip" hidden>Typical published card and correspondent-banking rates. They vary by acquirer, region and card mix, so treat them as a range rather than a quote.</span></span></td></tr>
+          <tr><td>Cross-border</td><td class="cell-win" data-c="Setlz">Native</td><td data-c="Cards + bank payouts">Correspondent banking</td></tr>
+          <tr><td>Splits</td><td class="cell-win" data-c="Setlz">Atomic and programmable</td><td data-c="Cards + bank payouts">Manual reconciliation</td></tr>
+          <tr><td>Chargebacks</td><td class="cell-win" data-c="Setlz">None on-chain</td><td data-c="Cards + bank payouts">Weeks of exposure</td></tr>
+          <tr><td>Uptime</td><td class="cell-win" data-c="Setlz">24/7</td><td data-c="Cards + bank payouts">Banking hours</td></tr>
         </tbody>
       </table>
     </div>
