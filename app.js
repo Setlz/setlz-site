@@ -97,22 +97,22 @@ if (hrow) {
 
 const ESCROW_CONFIG = {
   amountIn: "€1,000",
-  lockedLabel: "LOCKED: €1,000 EURC",
+  lockedLabel: "Locked: €1,000 EURC",
   splits: [
     { wallet: "seller", amount: "€880" },
     { wallet: "partner", amount: "€20" },
     { wallet: "platform", amount: "€100" },
   ],
-  finalityCopy: "SETTLED ON BASE · ABOUT 2 SECONDS", // speed harmonised site-wide (v2.9)
+  finalityCopy: "Settled on Base · about 2 seconds", // speed harmonised site-wide (v2.9)
   // Hash is deliberately fake: SIM prefix, DEMO suffix, labelled simulated.
   hashText: () => "TX 0xSIM" + randomHash(4).toUpperCase() + "…DEMO · SIMULATED",
   stageLabels: {
-    idle: "01 PAYMENT",
-    paid_settling: "01 PAYMENT",
-    held: "02 HOLD",
-    dispute: "02 HOLD · DISPUTE WINDOW",
-    releasing: "03 RELEASE",
-    settled: "04 SETTLED",
+    idle: "01 Payment",
+    paid_settling: "01 Payment",
+    held: "02 Hold",
+    dispute: "02 Hold · dispute window",
+    releasing: "03 Release",
+    settled: "04 Settled",
   },
   announce: {
     idle: "Escrow demo ready. Press the simulate button.",
@@ -131,12 +131,12 @@ const ESCROW_CONFIG = {
   scenarios: [
     {
       key: "marketplace",
-      label: "MARKETPLACE",
-      payer: "PAYER",
-      wallets: { seller: "SELLER", partner: "PARTNER", platform: "PLATFORM" },
-      views: ["PAYER VIEW", "SELLER VIEW"],
-      rule: "RELEASE RULE: DELIVERY CONFIRMED, THEN RELEASE",
-      cond: "DELIVERY",
+      label: "Marketplace",
+      payer: "Payer",
+      wallets: { seller: "Seller", partner: "Partner", platform: "Platform" },
+      views: ["Payer view", "Seller view"],
+      rule: "Release rule: delivery confirmed, then release",
+      cond: "Delivery",
       simulate: "Simulate a purchase",
       confirm: "Confirm delivery",
       refund: "Refund payer",
@@ -144,12 +144,12 @@ const ESCROW_CONFIG = {
     },
     {
       key: "str",
-      label: "SHORT-TERM RENTAL",
-      payer: "GUEST",
-      wallets: { seller: "HOST", partner: "SERVICE PARTNER", platform: "PLATFORM" },
-      views: ["GUEST VIEW", "HOST VIEW"],
-      rule: "RELEASE RULE: CHECK-IN CONFIRMED, THEN RELEASE",
-      cond: "CHECK-IN",
+      label: "Short-term rental",
+      payer: "Guest",
+      wallets: { seller: "Host", partner: "Service partner", platform: "Platform" },
+      views: ["Guest view", "Host view"],
+      rule: "Release rule: check-in confirmed, then release",
+      cond: "Check-in",
       simulate: "Simulate a booking",
       confirm: "Confirm check-in",
       refund: "Refund guest",
@@ -157,13 +157,13 @@ const ESCROW_CONFIG = {
     },
     {
       key: "b2b",
-      label: "B2B TRADE",
-      tag: "EXPLORATORY",
-      payer: "PAYER",
-      wallets: { seller: "SUPPLIER", partner: "PARTNER", platform: "PLATFORM" },
-      views: ["PAYER VIEW", "SUPPLIER VIEW"],
-      rule: "RELEASE RULE: MILESTONE CONFIRMED, THEN RELEASE",
-      cond: "MILESTONE",
+      label: "B2B trade",
+      tag: "Exploratory",
+      payer: "Payer",
+      wallets: { seller: "Supplier", partner: "Partner", platform: "Platform" },
+      views: ["Payer view", "Supplier view"],
+      rule: "Release rule: milestone confirmed, then release",
+      cond: "Milestone",
       simulate: "Simulate a trade",
       confirm: "Confirm milestone",
       refund: "Refund payer",
@@ -259,8 +259,8 @@ if (esc) {
     busy = true;
     setEscState("paid_settling");
     el.primary.hidden = true;
-    el.chip.textContent = "SETTLING…";
-    el.payerStatus.textContent = "PAID · SIMULATED";
+    el.chip.textContent = "Settling…";
+    el.payerStatus.textContent = "Paid · simulated";
     el.payer.classList.add("is-stamped");
 
     streamDots(el.payer, el.vault, ESCROW_CONFIG.paymentMs).then(() => {
@@ -284,7 +284,7 @@ if (esc) {
 
   function runSplit(stampText) {
     busy = true;
-    el.cond.textContent = scenario.cond + ": MET ✓";
+    el.cond.textContent = scenario.cond + ": met ✓";
     el.cond.classList.add("is-met");
     el.primary.hidden = true;
     el.disputeBtn.hidden = true;
@@ -299,10 +299,10 @@ if (esc) {
       const t = ((performance.now() - pressAt) / 1000).toFixed(1) + "s";
       el.wallets.forEach((w) => {
         w.classList.add("is-settled");
-        w.querySelector(".esc-node-status").textContent = "SETTLED · " + t;
+        w.querySelector(".esc-node-status").textContent = "Settled ·" + t;
       });
       el.vaultAmt.textContent = "€0";
-      el.chip.textContent = "RELEASED · SPLIT EXECUTED";
+      el.chip.textContent = "Released · split executed";
       el.views.hidden = true;
       el.viewsCaption.hidden = true;
       el.compare.hidden = true;
@@ -336,9 +336,9 @@ if (esc) {
     setEscState("releasing");
 
     streamDots(el.vault, el.payer, ESCROW_CONFIG.releaseMs).then(() => {
-      el.payerStatus.textContent = "REFUNDED · " + ESCROW_CONFIG.amountIn;
+      el.payerStatus.textContent = "Refunded ·" + ESCROW_CONFIG.amountIn;
       el.vaultAmt.textContent = "€0";
-      el.chip.textContent = "RELEASED · FULL REFUND";
+      el.chip.textContent = "Released · full refund";
       el.views.hidden = true;
       el.viewsCaption.hidden = true;
       el.compare.hidden = true;
@@ -355,14 +355,14 @@ if (esc) {
 
   function resetDemo() {
     el.payer.classList.remove("is-stamped");
-    el.payerStatus.textContent = "READY";
+    el.payerStatus.textContent = "Ready";
     el.vaultAmt.textContent = "€0";
-    el.chip.textContent = "AWAITING PAYMENT";
+    el.chip.textContent = "Awaiting payment";
     el.chip.classList.remove("is-live");
     el.hash.hidden = true;
     el.beat.hidden = true;
     el.rule.hidden = true;
-    el.cond.textContent = scenario.cond + ": PENDING";
+    el.cond.textContent = scenario.cond + ": pending";
     el.cond.classList.remove("is-met");
     el.views.hidden = true;
     el.viewsCaption.hidden = true;
@@ -372,7 +372,7 @@ if (esc) {
     el.receipt.hidden = true;
     el.wallets.forEach((w) => {
       w.classList.remove("is-settled");
-      w.querySelector(".esc-node-status").textContent = "AWAITING";
+      w.querySelector(".esc-node-status").textContent = "Awaiting";
     });
     el.disputeBtn.hidden = true;
     el.refundBtn.hidden = true;
@@ -428,7 +428,7 @@ if (esc) {
     btn.addEventListener("click", () => {
       document.querySelectorAll(".esc-rail-btn").forEach((b) => b.classList.remove("is-on"));
       btn.classList.add("is-on");
-      el.payerSub.textContent = "PAYS VIA " + btn.dataset.rail.toUpperCase();
+      el.payerSub.textContent = "Pays via " + btn.dataset.rail.toLowerCase();
     });
   });
 
@@ -464,71 +464,71 @@ const WM_CONFIG = {
   wirePauseMs: 550,     // dwell at each intermediate hop
   wireStallMs: 2600,    // extra stall with the banking hours label
   lapseMs: 2600,        // stage 2 time-lapse duration
-  feeTicks: ["~$9", "~$18", "~$27", "$30 TO 40 TYPICAL"],
+  feeTicks: ["~$9", "~$18", "~$27", "$30 to 40 typical"],
   corridors: [
     {
       key: "detroit-paris",
-      label: "DETROIT → PARIS",
+      label: "Detroit → Paris",
       viewBox: [85, 18, 440, 176],
       viewBoxMobile: [105, 25, 380, 165],
       dotR: 1.15,
-      from: { name: "DETROIT", lat: 42.33, lon: -83.05, la: [-6, -8, "end"] },
-      to: { name: "PARIS", lat: 48.86, lon: 2.35, la: [6, -8, "start"] },
+      from: { name: "Detroit", lat: 42.33, lon: -83.05, la: [-6, -8, "end"] },
+      to: { name: "Paris", lat: 48.86, lon: 2.35, la: [6, -8, "start"] },
       pulseStart: "$1,000 · USDC",
       pulseEnd: "EURC",
       flip: true,
       midCaption: "The FX event: USDC to EURC, transparent on-chain rate, executed in the same second.",
       wireHops: [
-        { name: "DETROIT BANK", lat: 42.33, lon: -83.05, lbl: false },
-        { name: "US CORRESPONDENT · NEW YORK", lat: 40.71, lon: -74.0, la: [7, 15, "start"] },
-        { name: "SWIFT NETWORK", lat: 38.0, lon: -38.0, la: [0, 16, "middle"] },
-        { name: "EU CORRESPONDENT · FRANKFURT", lat: 50.11, lon: 8.68, la: [8, 15, "end"] },
-        { name: "PARIS BANK", lat: 48.86, lon: 2.35, lbl: false },
+        { name: "Detroit bank", lat: 42.33, lon: -83.05, lbl: false },
+        { name: "US correspondent · New York", lat: 40.71, lon: -74.0, la: [7, 15, "start"] },
+        { name: "SWIFT network", lat: 38.0, lon: -38.0, la: [0, 16, "middle"] },
+        { name: "EU correspondent · Frankfurt", lat: 50.11, lon: 8.68, la: [8, 15, "end"] },
+        { name: "Paris bank", lat: 48.86, lon: 2.35, lbl: false },
       ],
       stallHop: 3,
       payoff: "The money is in Paris before the wire form is finished.",
     },
     {
       key: "malaga-dublin",
-      label: "MALAGA → DUBLIN",
+      label: "Malaga → Dublin",
       viewBox: [340, 28, 175, 105],
       viewBoxMobile: [372, 32, 130, 102],
       dotR: 0.62,
-      from: { name: "MALAGA", lat: 36.72, lon: -4.42, la: [7, 11, "start"] },
-      to: { name: "DUBLIN", lat: 53.35, lon: -6.26, la: [7, -6, "start"] },
+      from: { name: "Malaga", lat: 36.72, lon: -4.42, la: [7, 11, "start"] },
+      to: { name: "Dublin", lat: 53.35, lon: -6.26, la: [7, -6, "start"] },
       pulseStart: "EURC",
       pulseEnd: "EURC",
       flip: false,
       midCaption: "EU internal: EURC end to end, no coin flip needed.",
       wireHops: [
-        { name: "MALAGA BANK", lat: 36.72, lon: -4.42, lbl: false },
-        { name: "ES CORRESPONDENT · MADRID", lat: 40.42, lon: -3.7, la: [7, 4, "start"] },
-        { name: "SWIFT NETWORK", lat: 46.0, lon: -14.0, la: [-7, 4, "end"] },
-        { name: "IE CORRESPONDENT", lat: 52.3, lon: -8.6, la: [-7, 10, "end"] },
-        { name: "DUBLIN BANK", lat: 53.35, lon: -6.26, lbl: false },
+        { name: "Malaga bank", lat: 36.72, lon: -4.42, lbl: false },
+        { name: "ES correspondent · Madrid", lat: 40.42, lon: -3.7, la: [7, 4, "start"] },
+        { name: "SWIFT network", lat: 46.0, lon: -14.0, la: [-7, 4, "end"] },
+        { name: "IE correspondent", lat: 52.3, lon: -8.6, la: [-7, 10, "end"] },
+        { name: "Dublin bank", lat: 53.35, lon: -6.26, lbl: false },
       ],
       stallHop: 3,
       payoff: "The money is in Dublin before the wire form is finished.",
     },
     {
       key: "accra-rotterdam",
-      label: "ACCRA → ROTTERDAM",
-      tag: "EXPLORATORY · B2B CORRIDOR",
+      label: "Accra → Rotterdam",
+      tag: "Exploratory · B2B corridor",
       viewBox: [330, 28, 245, 238],
       viewBoxMobile: [372, 30, 165, 236],
       dotR: 0.85,
-      from: { name: "ACCRA", lat: 5.6, lon: -0.19, la: [8, 4, "start"] },
-      to: { name: "ROTTERDAM", lat: 51.92, lon: 4.48, la: [8, -6, "start"] },
+      from: { name: "Accra", lat: 5.6, lon: -0.19, la: [8, 4, "start"] },
+      to: { name: "Rotterdam", lat: 51.92, lon: 4.48, la: [8, -6, "start"] },
       pulseStart: "USDC",
       pulseEnd: "EURC",
       flip: true,
       midCaption: "The FX event: USDC to EURC, transparent on-chain rate, executed in the same second.",
       wireHops: [
-        { name: "ACCRA BANK", lat: 5.6, lon: -0.19, lbl: false },
-        { name: "REGIONAL CORRESPONDENT", lat: 14.7, lon: -17.5, la: [7, 14, "start"] },
-        { name: "SWIFT NETWORK", lat: 30.0, lon: -22.0, la: [7, -7, "start"] },
-        { name: "EU CORRESPONDENT · FRANKFURT", lat: 50.11, lon: 8.68, la: [7, 14, "end"] },
-        { name: "ROTTERDAM BANK", lat: 51.92, lon: 4.48, lbl: false },
+        { name: "Accra bank", lat: 5.6, lon: -0.19, lbl: false },
+        { name: "Regional correspondent", lat: 14.7, lon: -17.5, la: [7, 14, "start"] },
+        { name: "SWIFT network", lat: 30.0, lon: -22.0, la: [7, -7, "start"] },
+        { name: "EU correspondent · Frankfurt", lat: 50.11, lon: 8.68, la: [7, 14, "end"] },
+        { name: "Rotterdam bank", lat: 51.92, lon: 4.48, lbl: false },
       ],
       stallHop: 3,
       payoff: "The money is in Rotterdam before the wire form is finished.",
@@ -559,7 +559,7 @@ if (wm && typeof MAP_DOTS !== "undefined") {
     live: document.getElementById("wm-live"),
     brand: document.getElementById("wm-lane-brand"),
   };
-  wEl.brand.textContent = BRAND_NAME.toUpperCase();
+  wEl.brand.textContent = BRAND_NAME;
 
   const proj = (lat, lon) => ({
     x: (lon - MAP_GRID.lonMin) * MAP_GRID.scale,
@@ -737,8 +737,8 @@ if (wm && typeof MAP_DOTS !== "undefined") {
 
   function resetPanels() {
     wEl.fin.textContent = "0.0s";
-    wEl.credit.textContent = "SEPA INSTANT · PENDING";
-    wEl.elapsed.textContent = "NOT STARTED";
+    wEl.credit.textContent = "SEPA instant · pending";
+    wEl.elapsed.textContent = "Not started";
     wEl.fees.textContent = "$0";
     wEl.daybox.hidden = true;
     wEl.stall.hidden = true;
@@ -803,15 +803,15 @@ if (wm && typeof MAP_DOTS !== "undefined") {
     layer.arc.setAttribute("stroke-dashoffset", 0);
     layer.wireTrail.setAttribute("stroke-dashoffset", 0);
     wEl.fin.textContent = "2.0s";
-    wEl.credit.textContent = "TYPICALLY UNDER 30 MIN · PROVIDER DEPENDENT";
-    wEl.elapsed.textContent = "1 TO 5 BUSINESS DAYS";
-    wEl.fees.textContent = "$30 TO 40 TYPICAL";
+    wEl.credit.textContent = "Typically under 30 min · provider dependent";
+    wEl.elapsed.textContent = "1 to 5 business days";
+    wEl.fees.textContent = "$30 to 40 typical";
     wEl.daybox.hidden = false;
-    wEl.daybox.textContent = "WIRE · STILL SUBJECT TO BANKING HOURS";
+    wEl.daybox.textContent = "Wire · still subject to banking hours";
     wEl.dest.hidden = false;
-    wEl.settled.textContent = "SETTLED ON BASE · 2.0s · SIMULATED";
+    wEl.settled.textContent = "Settled on Base · 2.0s · simulated";
     wEl.stage2.hidden = false;
-    wEl.stage2.innerHTML = '<span class="is-strong">EURC → EUR · SEPA INSTANT</span><span>BANK ACCOUNT CREDITED</span><span>TYPICALLY UNDER 30 MIN · PROVIDER DEPENDENT</span>';
+    wEl.stage2.innerHTML = '<span class="is-strong">EURC → EUR · SEPA Instant</span><span>Bank account credited</span><span>Typically under 30 min · provider dependent</span>';
     wEl.payoff.textContent = c.payoff;
     wEl.payoff.hidden = false;
   }
@@ -880,7 +880,7 @@ if (wm && typeof MAP_DOTS !== "undefined") {
         wEl.flipcap.hidden = true; // declutter: the destination card takes over
         wEl.fin.textContent = "2.0s";
         wEl.dest.hidden = false;
-        wEl.settled.textContent = "SETTLED ON BASE · 2.0s · SIMULATED";
+        wEl.settled.textContent = "Settled on Base · 2.0s · simulated";
         wEl.live.textContent = BRAND_NAME + " settled on Base in about 2 seconds. Wire still in transit.";
       }
 
@@ -890,11 +890,11 @@ if (wm && typeof MAP_DOTS !== "undefined") {
         wEl.stage2.hidden = false;
         if (lf < 1) {
           const eased = 1 - Math.pow(1 - lf, 2);
-          wEl.stage2.innerHTML = '<span class="is-strong">EURC → EUR · SEPA INSTANT</span><span>TIME-LAPSE · ' + fmtLapse(eased * 28 * 60) + "</span>";
+          wEl.stage2.innerHTML = '<span class="is-strong">EURC → EUR · SEPA Instant</span><span>Time-lapse · ' + fmtLapse(eased * 28 * 60) + "</span>";
         } else {
           lapseDone = true;
-          wEl.stage2.innerHTML = '<span class="is-strong">EURC → EUR · SEPA INSTANT</span><span>BANK ACCOUNT CREDITED</span><span>TYPICALLY UNDER 30 MIN · PROVIDER DEPENDENT</span>';
-          wEl.credit.textContent = "TYPICALLY UNDER 30 MIN · PROVIDER DEPENDENT";
+          wEl.stage2.innerHTML = '<span class="is-strong">EURC → EUR · SEPA Instant</span><span>Bank account credited</span><span>Typically under 30 min · provider dependent</span>';
+          wEl.credit.textContent = "Typically under 30 min · provider dependent";
           wEl.live.textContent = "Bank account credited, typically under 30 minutes via SEPA Instant, provider dependent.";
         }
       }
@@ -909,8 +909,8 @@ if (wm && typeof MAP_DOTS !== "undefined") {
 
         const frac = Math.min(ms / plan.total, 1);
         const day = Math.min(3, 1 + Math.floor(frac * 3));
-        wEl.daybox.textContent = "WIRE · DAY " + day + " · IN TRANSIT";
-        wEl.elapsed.textContent = "DAY " + day + " (1 TO 5 TYPICAL)";
+        wEl.daybox.textContent = "Wire · day " + day + " · in transit";
+        wEl.elapsed.textContent = "Day " + day + " (1 to 5 typical)";
 
         const hopReached = ws.entry && ws.entry.kind === "dwell" ? ws.entry.hop : ws.entry && ws.entry.kind === "move" ? ws.entry.endHop - 1 : layer.hops.length - 1;
         const feeIdx = Math.min(hopReached, WM_CONFIG.feeTicks.length) - 1;
@@ -924,9 +924,9 @@ if (wm && typeof MAP_DOTS !== "undefined") {
         if (ms >= plan.total) {
           wireDone = true;
           layer.wirePulse.setAttribute("opacity", 0);
-          wEl.daybox.textContent = "WIRE · CREDITED · DAY 3";
-          wEl.elapsed.textContent = "1 TO 5 BUSINESS DAYS";
-          wEl.fees.textContent = "$30 TO 40 TYPICAL";
+          wEl.daybox.textContent = "Wire · credited · day 3";
+          wEl.elapsed.textContent = "1 to 5 business days";
+          wEl.fees.textContent = "$30 to 40 typical";
           wEl.payoff.textContent = c.payoff;
           wEl.payoff.hidden = false;
           wEl.live.textContent = c.payoff;
@@ -1022,11 +1022,11 @@ if (wm && typeof MAP_DOTS !== "undefined") {
 
 const DEMO_CONFIG = {
   labels: {
-    name: "NAME",
-    email: "WORK EMAIL",
-    company: "COMPANY",
-    settling: "WHAT ARE YOU SETTLING?",
-    notes: "ANYTHING WE SHOULD KNOW? (OPTIONAL)",
+    name: "Name",
+    email: "Work email",
+    company: "Company",
+    settling: "What are you settling?",
+    notes: "Anything we should know? (optional)",
   },
   options: ["Marketplace payouts", "Travel supply", "Property management", "Cross-border B2B", "Other"],
   submitLabel: "Request a demo",
@@ -1037,8 +1037,8 @@ const DEMO_CONFIG = {
   // Placeholder must look like a placeholder until a real address exists.
   emailDisplay: () => "demo@[" + BRAND_NAME.toLowerCase() + "-domain-pending].example",
   emailHref: () => "mailto:demo@" + BRAND_NAME.toLowerCase() + "-domain-pending.example",
-  fine: "DEMO SITE. FORM NOT YET CONNECTED. NO DATA IS STORED OR TRANSMITTED.",
-  errors: { required: "REQUIRED", email: "ENTER A VALID EMAIL ADDRESS" },
+  fine: "Demo site. Form not yet connected. No data is stored or transmitted.",
+  errors: { required: "Required", email: "Enter a valid email address" },
 };
 
 const demoForm = document.getElementById("demo-form");

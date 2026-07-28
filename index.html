@@ -113,13 +113,13 @@
     <p class="eyebrow">What it is</p>
     <p class="statement reveal">A settlement rail they own, not rent: any payment in, settled in EURC on Base in seconds, split atomically, under your brand.</p>
     <div class="flow reveal" role="img" aria-label="Customer pays, whitelabelled rail, held in escrow, service delivered, provider paid">
-      <span class="mono flow-node">CUSTOMER PAYS</span><span class="flow-arrow" aria-hidden="true">&rarr;</span>
-      <span class="mono flow-node">WHITELABELLED RAIL</span><span class="flow-arrow" aria-hidden="true">&rarr;</span>
-      <span class="mono flow-node flow-node-hold">HELD IN ESCROW</span><span class="flow-arrow" aria-hidden="true">&rarr;</span>
-      <span class="mono flow-node">SERVICE DELIVERED</span><span class="flow-arrow" aria-hidden="true">&rarr;</span>
-      <span class="mono flow-node flow-node-paid">PROVIDER PAID</span>
+      <span class="mono flow-node">Customer pays</span><span class="flow-arrow" aria-hidden="true">&rarr;</span>
+      <span class="mono flow-node">Whitelabelled rail</span><span class="flow-arrow" aria-hidden="true">&rarr;</span>
+      <span class="mono flow-node flow-node-hold">Held in escrow</span><span class="flow-arrow" aria-hidden="true">&rarr;</span>
+      <span class="mono flow-node">Service delivered</span><span class="flow-arrow" aria-hidden="true">&rarr;</span>
+      <span class="mono flow-node flow-node-paid">Provider paid</span>
     </div>
-    <p class="mono flow-timing">LEGACY RAILS: DAYS &middot; <span data-brand-upper>SETLZ</span>: ABOUT 11 MINUTES</p>
+    <p class="mono flow-timing">Legacy rails: days &middot; <span data-brand>Setlz</span>: about 11 minutes</p>
     <div class="group reveal">
       <div class="grow grow-lv"><span class="glabel">Delivery to payout</span><span class="gval-lg">Minutes</span></div>
       <div class="grow grow-lv"><span class="glabel">Settlement execution<span class="note-ref"><button class="note-btn" type="button" aria-expanded="false" aria-describedby="note-1" aria-label="Note 1 about this figure">1</button><span class="note-pop" role="tooltip" hidden>This is the stablecoin settlement leg, not the all-in cost of a regulated payment.</span></span></span><span class="gval-lg">Cents</span></div>
@@ -190,25 +190,25 @@
     <!-- Interactive escrow simulator (change order v2.2). All values in ESCROW_CONFIG in app.js. -->
     <div class="esc reveal" id="esc" data-state="idle">
       <div class="esc-top">
-        <span class="mono esc-stage-label" id="esc-stage">01 PAYMENT</span>
+        <span class="mono esc-stage-label" id="esc-stage">01 payment</span>
         <div class="esc-scenarios" id="esc-scenarios" role="group" aria-label="Scenario presets"></div>
         <div class="esc-rail" role="group" aria-label="Payment rail (cosmetic)">
-          <button class="mono esc-rail-btn is-on" type="button" data-rail="card">CARD</button>
+          <button class="mono esc-rail-btn is-on" type="button" data-rail="card">Card</button>
           <button class="mono esc-rail-btn" type="button" data-rail="eurc">EURC</button>
           <button class="mono esc-rail-btn" type="button" data-rail="usdc">USDC</button>
-          <span class="mono esc-rail-ghost">+ ANY BASE STABLECOIN</span>
+          <span class="mono esc-rail-ghost">+ any Base stablecoin</span>
         </div>
-        <span class="mono esc-sim-note">INTERACTIVE DEMO &middot; SIMULATED TRANSACTIONS</span>
+        <span class="mono esc-sim-note">Interactive demo &middot; simulated transactions</span>
       </div>
 
       <div class="esc-board" id="esc-board">
 
         <div class="esc-col">
           <div class="esc-node" id="esc-payer">
-            <span class="mono esc-node-label" id="esc-payer-label">PAYER</span>
+            <span class="mono esc-node-label" id="esc-payer-label">Payer</span>
             <span class="mono esc-node-amt" id="esc-payer-amt">&euro;1,000</span>
-            <span class="mono esc-node-sub" id="esc-payer-sub">PAYS VIA CARD</span>
-            <span class="mono esc-node-status" id="esc-payer-status">READY</span>
+            <span class="mono esc-node-sub" id="esc-payer-sub">Pays via card</span>
+            <span class="mono esc-node-status" id="esc-payer-status">Ready</span>
           </div>
         </div>
 
@@ -216,33 +216,33 @@
           <div class="esc-vault" id="esc-vault">
             <div class="esc-vault-head">
               <svg class="esc-lock" viewBox="0 0 16 16" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><rect x="2.5" y="7" width="11" height="7" rx="1.5"/><path d="M5 7V5a3 3 0 0 1 6 0v2"/></svg>
-              <span class="mono">ESCROW &middot; ON-CHAIN</span>
-              <span class="mono esc-chip" id="esc-chip">AWAITING PAYMENT</span>
+              <span class="mono">Escrow &middot; on-chain</span>
+              <span class="mono esc-chip" id="esc-chip">Awaiting payment</span>
             </div>
             <div class="esc-vault-amt mono" id="esc-vault-amt">&euro;0</div>
             <div class="mono esc-hash" id="esc-hash" hidden></div>
             <p class="esc-beat" id="esc-beat" hidden>Settled. Final. Held by rule, not by banks.</p>
             <div class="esc-rule" id="esc-rule" hidden>
-              <div class="mono esc-rule-line" id="esc-rule-line">RELEASE RULE: DELIVERY CONFIRMED, THEN RELEASE</div>
-              <div class="mono esc-cond" id="esc-cond">DELIVERY: PENDING</div>
+              <div class="mono esc-rule-line" id="esc-rule-line">Release rule: delivery confirmed, then release</div>
+              <div class="mono esc-cond" id="esc-cond">Delivery: pending</div>
             </div>
           </div>
 
           <div class="esc-views" id="esc-views" hidden>
             <div class="esc-view">
-              <span class="mono esc-view-label" id="esc-view-a">PAYER VIEW</span>
-              <span class="mono esc-view-amt">LOCKED &middot; &euro;1,000 EURC</span>
+              <span class="mono esc-view-label" id="esc-view-a">Payer view</span>
+              <span class="mono esc-view-amt">Locked &middot; &euro;1,000 EURC</span>
             </div>
             <div class="esc-view">
-              <span class="mono esc-view-label" id="esc-view-b">SELLER VIEW</span>
-              <span class="mono esc-view-amt">LOCKED &middot; &euro;1,000 EURC</span>
+              <span class="mono esc-view-label" id="esc-view-b">Seller view</span>
+              <span class="mono esc-view-amt">Locked &middot; &euro;1,000 EURC</span>
             </div>
           </div>
           <p class="esc-views-caption" id="esc-views-caption" hidden>Visible to both sides. Verifiable by both sides.</p>
 
           <p class="esc-compare" id="esc-compare" hidden>On card rails this money would still be in flight, and clawable for up to 120 days.</p>
 
-          <div class="esc-banner mono" id="esc-banner" hidden>FUNDS REMAIN SECURED WHILE THE WINDOW RUNS</div>
+          <div class="esc-banner mono" id="esc-banner" hidden>Funds remain secured while the window runs</div>
 
           <div class="esc-actions" id="esc-actions">
             <button class="btn btn-primary" id="esc-primary" type="button">Simulate a purchase</button>
@@ -253,27 +253,27 @@
 
           <p class="esc-stamp" id="esc-stamp" hidden></p>
           <div class="mono esc-receipt" id="esc-receipt" hidden>
-            <span>RELEASE TO FINAL: SECONDS</span>
-            <span>CHARGEBACKS ON-CHAIN: NONE</span>
-            <span>BANKING HOURS CONSULTED: ZERO</span>
+            <span>Release to final: seconds</span>
+            <span>Chargebacks on-chain: none</span>
+            <span>Banking hours consulted: Zero</span>
           </div>
         </div>
 
         <div class="esc-col">
           <div class="esc-node esc-wallet" data-wallet="seller">
-            <span class="mono esc-node-label">SELLER</span>
+            <span class="mono esc-node-label">Seller</span>
             <span class="mono esc-node-amt">&euro;880</span>
-            <span class="mono esc-node-status">AWAITING</span>
+            <span class="mono esc-node-status">Awaiting</span>
           </div>
           <div class="esc-node esc-wallet" data-wallet="partner">
-            <span class="mono esc-node-label">PARTNER</span>
+            <span class="mono esc-node-label">Partner</span>
             <span class="mono esc-node-amt">&euro;20</span>
-            <span class="mono esc-node-status">AWAITING</span>
+            <span class="mono esc-node-status">Awaiting</span>
           </div>
           <div class="esc-node esc-wallet" data-wallet="platform">
-            <span class="mono esc-node-label">PLATFORM</span>
+            <span class="mono esc-node-label">Platform</span>
             <span class="mono esc-node-amt">&euro;100</span>
-            <span class="mono esc-node-status">AWAITING</span>
+            <span class="mono esc-node-status">Awaiting</span>
           </div>
         </div>
 
@@ -330,13 +330,13 @@
       <div class="wm-top">
         <div class="wm-corridors" id="wm-corridors" role="group" aria-label="Corridor presets"></div>
         <button class="btn btn-ghost btn-sm" id="wm-replay" type="button">Replay</button>
-        <span class="mono wm-note">CAPABILITY DEMONSTRATION &middot; SIMULATED</span>
+        <span class="mono wm-note">Capability demonstration &middot; simulated</span>
       </div>
 
       <div class="wm-map" id="wm-map">
         <svg id="wm-svg" preserveAspectRatio="xMidYMid meet" aria-hidden="true"></svg>
         <div class="wm-ov wm-daybox mono" id="wm-daybox" hidden></div>
-        <div class="wm-ov wm-stall mono" id="wm-stall" hidden>BANKING HOURS</div>
+        <div class="wm-ov wm-stall mono" id="wm-stall" hidden>Banking hours</div>
         <div class="wm-ov wm-flipcap" id="wm-flipcap" hidden></div>
         <div class="wm-ov wm-dest" id="wm-dest" hidden>
           <!-- id and class keep normal spelling per the README identifier rule;
@@ -349,19 +349,19 @@
 
       <div class="wm-meters">
         <div class="wm-lane wm-lane-setlz">
-          <span class="mono wm-lane-title" id="wm-lane-brand">SETLZ</span>
-          <div class="mono wm-row"><span>ON-CHAIN FINALITY</span><span id="wm-fin">0.0s</span></div>
-          <div class="mono wm-row"><span>BANK CREDIT</span><span id="wm-credit">SEPA INSTANT · PENDING</span></div>
-          <div class="mono wm-row"><span>NETWORK COST</span><span>UNDER $0.01<span class="note-ref"><button class="note-btn" type="button" aria-expanded="false" aria-describedby="note-5" aria-label="Note 5 about this figure">5</button><span class="note-pop" role="tooltip" hidden>The on-chain settlement cost only. An off-ramp provider fee applies on top.</span></span></span></div>
-          <div class="mono wm-row"><span>FX</span><span>BASIS-POINT SPREAD ON DEEP POOLS</span></div>
+          <span class="mono wm-lane-title" id="wm-lane-brand">Setlz</span>
+          <div class="mono wm-row"><span>On-chain finality</span><span id="wm-fin">0.0s</span></div>
+          <div class="mono wm-row"><span>Bank credit</span><span id="wm-credit">SEPA instant · pending</span></div>
+          <div class="mono wm-row"><span>Network cost</span><span>Under $0.01<span class="note-ref"><button class="note-btn" type="button" aria-expanded="false" aria-describedby="note-5" aria-label="Note 5 about this figure">5</button><span class="note-pop" role="tooltip" hidden>The on-chain settlement cost only. An off-ramp provider fee applies on top.</span></span></span></div>
+          <div class="mono wm-row"><span>FX</span><span>Basis-point spread on deep pools</span></div>
         </div>
         <div class="wm-lane">
-          <span class="mono wm-lane-title">INTERNATIONAL WIRE</span>
-          <div class="mono wm-row"><span>ELAPSED</span><span id="wm-elapsed">NOT STARTED</span></div>
-          <div class="mono wm-row"><span>FEES</span><span><span id="wm-fees">$0</span><span class="note-ref"><button class="note-btn" type="button" aria-expanded="false" aria-describedby="note-6" aria-label="Note 6 about this figure">6</button><span class="note-pop" role="tooltip" hidden>Typical international wire charges. An FX margin of 1 to 4% applies on top of the fees shown.</span></span></span></div>
-          <div class="mono wm-row"><span>HOPS</span><span>4 TO 5 INTERMEDIARIES</span></div>
-          <div class="mono wm-row"><span>FX MARGIN</span><span>1 TO 4% HIDDEN IN THE RATE</span></div>
-          <div class="mono wm-row"><span>AVAILABILITY</span><span>BANKING HOURS ONLY</span></div>
+          <span class="mono wm-lane-title">International wire</span>
+          <div class="mono wm-row"><span>Elapsed</span><span id="wm-elapsed">Not started</span></div>
+          <div class="mono wm-row"><span>Fees</span><span><span id="wm-fees">$0</span><span class="note-ref"><button class="note-btn" type="button" aria-expanded="false" aria-describedby="note-6" aria-label="Note 6 about this figure">6</button><span class="note-pop" role="tooltip" hidden>Typical international wire charges. An FX margin of 1 to 4% applies on top of the fees shown.</span></span></span></div>
+          <div class="mono wm-row"><span>Hops</span><span>4 to 5 intermediaries</span></div>
+          <div class="mono wm-row"><span>Fx margin</span><span>1 to 4% hidden in the rate</span></div>
+          <div class="mono wm-row"><span>Availability</span><span>Banking hours only</span></div>
         </div>
       </div>
 
@@ -375,13 +375,13 @@
           <tr>
             <th class="mono"></th>
             <th class="mono th-setlz" data-brand>Setlz</th>
-            <th class="mono">CARDS + BANK PAYOUTS</th>
+            <th class="mono">Cards + bank payouts</th>
           </tr>
         </thead>
         <tbody>
           <tr><td>Settlement</td><td class="cell-win">Seconds</td><td>T+2 or worse</td></tr>
           <tr><td>Cost</td><td class="cell-win">Near zero on-chain</td><td>2 to 6% plus FX spread</td></tr>
-          <tr><td>FX</td><td class="cell-win">Transparent on-chain swap, basis-point spreads on deep pools</td><td>1 to 4% margin hidden in the exchange rate</td></tr>
+          <tr><td>Fx</td><td class="cell-win">Transparent on-chain swap, basis-point spreads on deep pools</td><td>1 to 4% margin hidden in the exchange rate</td></tr>
           <tr><td>Cross-border</td><td class="cell-win">Native</td><td>Correspondent banking</td></tr>
           <tr><td>Splits</td><td class="cell-win">Atomic and programmable</td><td>Manual reconciliation</td></tr>
           <tr><td>Chargebacks</td><td class="cell-win">None on-chain</td><td>Weeks of exposure</td></tr>
@@ -448,7 +448,7 @@
         <div class="camp-head">
           <span class="glabel">Camp one</span>
           <h3>Crypto neobanks</h3>
-          <p class="camp-names">REVOLUT &middot; NEXO &middot; THE CRYPTO-ACCOUNT CROWD</p>
+          <p class="camp-names">Revolut &middot; Nexo &middot; the crypto-account crowd</p>
         </div>
         <p class="camp-attack">They are accounts, not engines. An account cannot take a payment, settle it, split it four ways, and hold it against a condition, in the same breath.</p>
         <ul class="camp-lines">
@@ -461,7 +461,7 @@
         <div class="camp-head">
           <span class="glabel">Camp two</span>
           <h3>Stablecoin settlement layers and rails</h3>
-          <p class="camp-names">BRIDGE &middot; BVNK &middot; ZERO HASH &middot; PEERS</p>
+          <p class="camp-names">Bridge &middot; BVNK &middot; Zero Hash &middot; peers</p>
         </div>
         <p class="camp-attack">They built the pipe and called it plumbing done. A transfer leg is maybe 20% of what a transaction needs. The other 80% is the hard part: escrow, triggers, compliance hooks, ramps, treasury, atomic splits.</p>
         <ul class="camp-lines">
@@ -476,7 +476,7 @@
         <div class="camp-head">
           <span class="glabel">Camp three</span>
           <h3>Platform-payment orchestrators</h3>
-          <p class="camp-names">STRIPE CONNECT &middot; ADYEN FOR PLATFORMS &middot; MANGOPAY &middot; WISE PLATFORM</p>
+          <p class="camp-names">Stripe Connect &middot; Adyen for Platforms &middot; Mangopay &middot; Wise Platform</p>
         </div>
         <p class="camp-attack">World-class orchestration of legacy rails. Payouts still ride T+2 banking, percentage-based costs, and banking-hours cut-offs.</p>
       </article>
@@ -487,7 +487,7 @@
   <!-- The trump card: full-bleed blue -->
   <div class="trump">
     <div class="container">
-      <p class="mono trump-label">THE PART THEY CANNOT COPY FROM A WHITEPAPER</p>
+      <p class="mono trump-label">The part they cannot copy from a whitepaper</p>
       <p class="trump-text">Every competitor above shares one trait: their settlement engine was never built underneath a real marketplace by the team that runs it. Ours was. Every feature exists because a real booking, a real host payout, or a real dispute demanded it.</p>
       <p class="trump-punch">Infrastructure built from a whitepaper guesses. Infrastructure built from a working marketplace knows.</p>
     </div>
@@ -504,7 +504,7 @@
 
   <div class="container">
     <div class="trust-center reveal">
-      <p class="mono trust-label">VERIFIED TRUST ARCHITECTURE</p>
+      <p class="mono trust-label">Verified trust architecture</p>
       <p class="trust-text">No admin keys. No upgrade path. No pause switch. Published contract addresses.</p>
       <p class="trust-punch">If we disappeared tomorrow, your money does not.</p>
     </div>
@@ -527,12 +527,12 @@
       <h3>Why now. The stablecoin rails finally exist.</h3>
       <p class="block-lead">In the last 18 months the rails became legal, wanted and cheap, and the volume across them became the largest of any payment network on earth.</p>
       <ul class="ilist">
-        <li>REGULATION LIVE &middot; MiCA AND THE US GENIUS ACT</li>
-        <li>DEMAND IS PULL &middot; 77% OF CORPORATES WANT CROSS-BORDER SETTLEMENT ON STABLECOINS<span class="note-ref"><button class="note-btn" type="button" aria-expanded="false" aria-describedby="note-8" aria-label="Note 8 about this figure">8</button><span class="note-pop" role="tooltip" hidden>EY-Parthenon, 2025.</span></span></li>
-        <li>RAILS COMMODITISED &middot; SETTLEMENT COST DROPPED TO CENTS</li>
-        <li>$33TN SETTLED IN STABLECOINS IN 2025 &middot; MORE THAN VISA AND MASTERCARD COMBINED</li>
+        <li>Regulation live &middot; MiCA and the US GENIUS Act</li>
+        <li>Demand is pull &middot; 77% of corporates want cross-border settlement on stablecoins<span class="note-ref"><button class="note-btn" type="button" aria-expanded="false" aria-describedby="note-8" aria-label="Note 8 about this figure">8</button><span class="note-pop" role="tooltip" hidden>EY-Parthenon, 2025.</span></span></li>
+        <li>Rails commoditised &middot; settlement cost dropped to cents</li>
+        <li>$33tn settled in stablecoins in 2025 &middot; more than Visa and Mastercard combined</li>
         <li>43% of southeast asia b2b cross-border payments already settle in stablecoins</li>
-        <li>$50TN+ PROJECTED FOR 2026 &middot; REGULATED GROWTH, NOT FRINGE</li>
+        <li>$50tn+ projected for 2026 &middot; regulated growth, not fringe</li>
       </ul>
     </div>
 
@@ -624,7 +624,7 @@
       </div>
     </div>
     <p class="team-advisors reveal">Founders build and sell, reinforced by senior fintech and regulated-payments advisors we are bringing on.</p>
-    <p class="mono team-fine">ROLES SHOWN ARE SETLZ-SPECIFIC; SEVERAL ARE SHARED WITH ATLASORA, OUR REFERENCE CUSTOMER.</p>
+    <p class="mono team-fine">Roles shown are Setlz-specific; several are shared with AtlasOra, our reference customer.</p>
   </div>
 </section>
 
@@ -639,41 +639,41 @@
       <h2 class="demo-h2">See it settle on your numbers.</h2>
       <p class="demo-sub">Twenty minutes, your flows, live on Base testnet. We will run your payout split through the engine while you watch.</p>
       <div class="demo-chips mono">
-        <span>BUILT AND TESTED ON BASE</span>
-        <span>EURC-NATIVE</span>
-        <span>ESCROW HELD BY RULE</span>
+        <span>Built and tested on Base</span>
+        <span>EURC-native</span>
+        <span>Escrow held by rule</span>
       </div>
     </div>
 
     <div class="demo-card">
       <form id="demo-form" novalidate>
         <div class="demo-field">
-          <label class="mono" for="demo-name" data-demo-label="name">NAME</label>
+          <label class="mono" for="demo-name" data-demo-label="name">Name</label>
           <input id="demo-name" name="name" type="text" required autocomplete="name">
           <span class="mono demo-error" id="demo-name-err" hidden></span>
         </div>
         <div class="demo-field">
-          <label class="mono" for="demo-email" data-demo-label="email">WORK EMAIL</label>
+          <label class="mono" for="demo-email" data-demo-label="email">Work email</label>
           <input id="demo-email" name="email" type="email" required autocomplete="email">
           <span class="mono demo-error" id="demo-email-err" hidden></span>
         </div>
         <div class="demo-field">
-          <label class="mono" for="demo-company" data-demo-label="company">COMPANY</label>
+          <label class="mono" for="demo-company" data-demo-label="company">Company</label>
           <input id="demo-company" name="company" type="text" required autocomplete="organization">
           <span class="mono demo-error" id="demo-company-err" hidden></span>
         </div>
         <div class="demo-field">
-          <label class="mono" for="demo-settling" data-demo-label="settling">WHAT ARE YOU SETTLING?</label>
+          <label class="mono" for="demo-settling" data-demo-label="settling">What are you settling?</label>
           <select id="demo-settling" name="settling"></select>
         </div>
         <div class="demo-field">
-          <label class="mono" for="demo-notes" data-demo-label="notes">ANYTHING WE SHOULD KNOW? (OPTIONAL)</label>
+          <label class="mono" for="demo-notes" data-demo-label="notes">Anything we should know? (optional)</label>
           <textarea id="demo-notes" name="notes" rows="3"></textarea>
         </div>
         <!-- WIRING SLOT (mandatory the moment this form is connected):
              consent checkbox + privacy policy link go here. -->
         <button class="btn btn-primary demo-submit" id="demo-submit" type="submit">Request a demo</button>
-        <p class="mono demo-fine">DEMO SITE. FORM NOT YET CONNECTED. NO DATA IS STORED OR TRANSMITTED.</p>
+        <p class="mono demo-fine">Demo site. Form not yet connected. No data is stored or transmitted.</p>
       </form>
 
       <div class="demo-confirm" id="demo-confirm" hidden>
@@ -728,25 +728,25 @@
         <p class="footer-parent">A product of Setlz HoldCo LTD.</p>
       </div>
       <div class="footer-col">
-        <span class="mono footer-head">PRODUCT</span>
+        <span class="mono footer-head">Product</span>
         <a href="#" class="dead">Settlement engine</a>
         <a href="#" class="dead">Programmable splits</a>
         <a href="#" class="dead">Treasury routing</a>
       </div>
       <div class="footer-col">
-        <span class="mono footer-head">DEVELOPERS</span>
+        <span class="mono footer-head">Developers</span>
         <a href="#" class="dead">Documentation</a>
         <a href="#" class="dead">API reference</a>
         <a href="#" class="dead">Status</a>
       </div>
       <div class="footer-col">
-        <span class="mono footer-head">COMPANY</span>
+        <span class="mono footer-head">Company</span>
         <a href="#" class="dead">About</a>
         <a href="#" class="dead">Compliance</a>
         <a href="#" class="dead">Contact</a>
       </div>
     </div>
-    <p class="mono footer-fine">DEMO SITE</p>
+    <p class="mono footer-fine">Demo site</p>
   </div>
 </footer>
 

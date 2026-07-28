@@ -368,7 +368,6 @@ h3 {
   font-size: var(--mono-label);
   font-weight: var(--mono-label-w);
   letter-spacing: var(--mono-label-track);
-  text-transform: uppercase;
   color: var(--ink-soft);
   padding: var(--space-2) 0;
   display: inline-flex;
@@ -388,7 +387,6 @@ h3 {
 .istatus {
   font-weight: var(--display-w-semi);
   color: var(--ink);
-  letter-spacing: var(--mono-label-track);
 }
 .band-dark .ilist li { color: var(--on-dark-soft); }
 .band-dark .ilist li::before { background: var(--on-dark-line); }
@@ -535,8 +533,8 @@ h3 {
    gutter stays quiet and the state is readable without a legend. */
 .rail-lbl {
   font-family: var(--font-mono);
-  font-size: 10px;
-  letter-spacing: 0.06em;
+  font-size: var(--mono-label);
+  letter-spacing: var(--mono-label-track);
   text-transform: uppercase;
   color: var(--ink-soft);
   white-space: nowrap;
@@ -755,7 +753,6 @@ h3 {
   font-size: var(--mono-label);
   font-weight: var(--mono-label-w);
   letter-spacing: var(--mono-label-track);
-  text-transform: uppercase;
   color: var(--ink-soft);
 }
 /* Settled is the one non-CTA green: ink text, signal marker. */
@@ -1851,7 +1848,7 @@ h3 {
 .anat-hash {
   font-family: var(--font-mono);
   font-size: var(--mono-label);
-  letter-spacing: 0.04em;
+  letter-spacing: var(--mono-label-track);
   color: var(--ink);
   text-decoration: underline;
   text-underline-offset: 3px;
