@@ -1091,6 +1091,17 @@ h3 {
 .case-card p { color: var(--ink-soft); font-size: 16px; }
 .case-card p + p { margin-top: 10px; }
 
+/* Trailing prose line replacing the deleted cards and tag cloud (Phase 1.2).
+   Full list lives on /verticals. */
+.cases-more {
+  margin-top: 28px;
+  font-size: 17px;
+  color: var(--ink-soft);
+  max-width: 70ch;
+}
+.cases-more a { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
+.cases-more a:hover { color: var(--accent-dark); }
+
 .case-payoff {
   margin-top: 14px;
   font-family: var(--font-display);

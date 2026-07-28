@@ -7,7 +7,9 @@ const BRAND_NAME = "Setlz"; // pending clearance: swap here to rename the whole 
 
 document.querySelectorAll("[data-brand]").forEach((el) => (el.textContent = BRAND_NAME));
 document.querySelectorAll("[data-brand-upper]").forEach((el) => (el.textContent = BRAND_NAME.toUpperCase()));
-document.title = BRAND_NAME;
+// Only fill the title if the page did not set one. Pages carry a real static
+// <title> so crawlers and no-JS clients see it; this is the fallback only.
+if (!document.title) document.title = BRAND_NAME;
 
 // Logo lockup: lowercase wordmark with the final letter in brand green,
 // matching the Setlz logo. Runs after the generic injection above.
