@@ -255,6 +255,136 @@ Inter Tight and JetBrains Mono from `fonts.googleapis.com`. Phase 2.2 must self-
 
 ## Conventions
 
-_To be filled in by Phase 7.3, once the rebuild has settled. Do not add rules here
-speculatively — this section is the contract that stops a future session undoing the
-work, so it should describe what was actually built._
+**These are load-bearing. Each one was arrived at by measurement, and several
+replaced something that looked fine but failed a check. Do not quietly revert
+them; if you disagree, say so and get a decision.**
+
+### Layout
+
+1. **No bordered cards.** The page had 34 of them and they were its dominant
+   unit. Grouping is done with a 2px top rule (`.group`) and hairline-separated
+   rows (`.grow`), never a box. If you are reaching for a card, you want a
+   `.group`.
+2. **No tag pills, no badge labels.** 33 were removed. Status is a weight
+   change, not a coloured capsule. Use `.ilist` for what used to be chip rows.
+3. **Containment budget: one level.** A band is *ground*, not containment, so
+   it has no border, radius or shadow. Inside a band, `.group` is the only
+   permitted level. Nothing inside a group paints its own box. Verify in the
+   browser, not by eye.
+4. **`--radius: 0`.** One exception exists, the note popover at 4px, because it
+   floats above the page. Do not add a second without a reason that good.
+5. **Banding is semantic, not rhythmic.** `--ground` is default; `--ground-alt`
+   marks supporting material only (the comparison, the notes). Do not alternate
+   grounds for visual rhythm. Exactly one dark section, the closing CTA.
+6. **Three spacing tiers**, `.tier-primary` / `-standard` / `-compressed`. They
+   are restated inside the mobile media block on purpose: it sits after them
+   and `.section` would otherwise flatten all three back to one value.
+
+### Colour
+
+7. **Green is reserved, and contrast decided it, not taste.**
+   `--signal-deep` (#0A6E48, 6.03:1 on paper) is the CTA colour and appears on
+   calls to action and nowhere else. `--signal` (#1CA964) measures 2.91:1 on
+   paper and therefore **never carries text**; it survives only as the settled
+   state and as money-in-motion graphics.
+   The rule in one line: **green means money landed, or click here.**
+8. Data values, eyebrows, links, hovers, active states, borders and focus rings
+   are ink or a muted tone. Error states are not green.
+9. **Settled state is ink on `--signal-wash`** (16:1), never paper on
+   `--signal`, which is 2.91:1 and fails.
+10. **Two text greys only**, `--ink` and `--ink-soft`, matching the deck. There
+    is deliberately no third; fine print is `--ink-soft` at a smaller size.
+    Adding one means inventing a tint.
+11. **On the dark band, use the `--on-dark-*` tokens.** Phase 2.3 flattened the
+    demo card and left ink text on ink at 2.15:1, with one heading at 1:1.
+    Anything placed on that band must be rechecked for contrast, not just for
+    containment.
+
+### Type
+
+12. **Mono appears in exactly two registers: data, and the hero figure.** It is
+    deliberately NOT used for eyebrows. Promoting it to display scale is the
+    site's main differentiator and spending it on every label dilutes that.
+13. **Eyebrows are Inter, 13px, sentence case**, preceded by the deck's
+    22x1.5px rule. This is a deliberate deviation from the deck's mono-uppercase
+    eyebrow, approved in Phase 2.1.
+14. **Uppercase survives only on data-column labels (`.glabel`) and the rail's
+    node labels.** It was 144 text nodes and is now 43. Do not reintroduce
+    wide-tracked uppercase for supporting lines, footnotes, status labels or
+    list items.
+15. **Tracking on uppercase comes from `var(--mono-label-track)`.** There are
+    zero literal `em` letter-spacing values in the stylesheet. Keep it that way.
+16. **Tabular figures wherever a numeral sits in a data position**, via both
+    `font-variant-numeric` and `font-feature-settings`.
+17. **No raw values in component rules.** Zero hex, zero rgba, zero spacing px
+    above 3px, zero untokenised font sizes. Hairlines and rule widths at 1 to
+    3px stay literal on purpose: snapping them to a spacing step blurs them.
+
+### Copy
+
+18. **Correct English for the settle word-family.** `Setlz` is the brand and
+    never changes, including brand-derived identifiers (`.wm-pulse-setlz`,
+    `.th-setlz`, `.wm-lane-setlz`). Everything else is settle, settles, settled,
+    settling, settlement. The old deliberate misspelling is dead: it read as a
+    typo to a payments buyer and the word "settlement" appeared zero times on a
+    settlement infrastructure site.
+19. **Never use the brand as a verb.** Rewrite so `Setlz` is a noun.
+20. **Every external statistic carries its source inline** via the note
+    affordance. Three were cut in 5.3 rather than sourced. Do not reinstate the
+    $33tn stablecoin volume figure without an ADJUSTED number and a named
+    provider: the raw figure includes bots, MEV and rehypothecation, which is
+    why it cannot be compared to Visa and Mastercard settlement.
+21. **The v2.9 claim gate still stands.** `non-custodial`, `immutable`, `no
+    admin keys`, `trustless`, `we cannot alter`, `if we disappeared tomorrow`
+    require the wallet-architecture memo AND a third-party audit AND sign-off.
+    Only the Hacken audit has landed, so none of that language may appear.
+22. **Four aphorism kickers, page-wide maximum.** There were 19.
+
+### Behaviour
+
+23. **No scroll listeners.** There are zero in the codebase. Use
+    IntersectionObserver, and never read geometry inside its callback.
+24. **Scroll-driven state maps to named sections, never pixel offsets.** See
+    `RAIL_STAGES`. A new section needs adding there or its stage never fires.
+25. **Animation timing accumulates per-frame deltas clamped to 50ms**, never
+    wall clock. Wall clock makes a backgrounded tab jump straight to the end
+    state; this bit both the map race and the hero row.
+26. **Nothing loops forever.** The hero row runs once. The old settlement
+    stream looped on a `setInterval` and read as a screensaver.
+27. **`prefers-reduced-motion` is honoured in both CSS and JS** — 3 CSS blocks
+    and 8 JS branches. New motion needs both.
+28. **Zero third-party requests at runtime.** Fonts are three self-hosted
+    variable woff2 files, preloaded. Do not add a CDN.
+
+### Accessibility
+
+29. **One deterministic `:focus-visible` ring**, ink on light grounds and paper
+    on the dark band. Do not set `outline: none` without replacing it.
+30. **44px minimum tap targets.** The note badge keeps a 16px look with a 44px
+    `::after` hit area. Inline links inside a sentence are exempt per WCAG
+    2.5.8 and are deliberately left alone.
+31. **UI boundaries need 3:1**, which axe does not check. Form fields use
+    `--on-dark-edge` for this reason. Rail dots are the one accepted exception:
+    aria-hidden decoration where an inactive dot is *meant* to read as not-yet.
+32. **Single h1, no skipped heading levels.**
+33. **The rail is decorative**: `aria-hidden`, no focusable children,
+    `pointer-events: none`. It duplicates what the page states in text.
+
+### Verify by measuring, not by reading
+
+The recurring lesson of this rebuild. Bugs that a diff read would not have
+caught, all found by measuring in a browser:
+
+- The map race **never completed**: `id="wm-setld"` versus a `wm-settled`
+  lookup, throwing at the exact moment the arc finished.
+- The rail's dots **painted on top of the headline** at 1126px. Every earlier
+  check measured the rail's own state, never its position relative to content.
+- The demo form was **ink on ink** after the shells were flattened, with one
+  heading at 1:1.
+- A blanket string-replace **ate trailing spaces** in three concatenations,
+  producing "Wire · day3".
+- Mobile spacing tiers were **silently flattened** by a later media block of
+  equal specificity.
+
+Before claiming something works: exercise it, measure it, and check the state
+you did not change as well as the one you did.

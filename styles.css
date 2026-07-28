@@ -867,28 +867,10 @@ h3 {
   margin-bottom: var(--space-7);
 }
 
-.flow {
-  display: flex;
-  align-items: center;
-  gap: var(--space-3);
-  flex-wrap: wrap;
-  margin-bottom: var(--space-3);
-}
 
-.flow-node {
-  border: 1px solid var(--line);
-  background: var(--paper);
-  border-radius: var(--radius);
-  padding: var(--space-3) var(--space-4);
-  font-weight: var(--display-w-semi);
-}
 
-.flow-node-hold { border-color: var(--ink); box-shadow: 0 0 0 3px var(--mist); }
-.flow-node-paid { background: var(--signal-wash); border-color: var(--signal); color: var(--ink); }
 
-.flow-arrow { color: var(--ink); font-size: var(--body-lede); }
 
-.flow-timing { color: var(--ink-soft); margin-bottom: var(--space-7); }
 
 
 

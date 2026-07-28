@@ -1,0 +1,83 @@
+{
+  "note": "Post-rebuild numbers, to be read against baseline/metrics.json. Phase 0.2 could not produce pixel screenshots in this environment, so the baseline is numeric and so is this. See design/README.md.",
+  "capturedAt": "2026-07-28",
+  "commit": "2ab8085",
+  "widths": {
+    "1440": {
+      "viewport": { "w": 1440, "h": 900 },
+      "documentHeight": 13826,
+      "screens": 15.4,
+      "overflowX": false,
+      "railVisible": true,
+      "sections": {
+        "hero": 895, "what": 1039, "how": 1289, "hold": 1723, "anatomy": 752,
+        "compare": 1527, "pricing": 1089, "why": 989, "cases": 1316,
+        "team": 1299, "request-demo": 822, "notes": 720, "footer": 302
+      }
+    },
+    "768": {
+      "viewport": { "w": 768, "h": 1024 },
+      "documentHeight": 13350,
+      "screens": 13.0,
+      "overflowX": false,
+      "railVisible": false,
+      "sections": {
+        "hero": 737, "what": 911, "how": 1348, "hold": 1649, "anatomy": 739,
+        "compare": 1458, "pricing": 966, "why": 935, "cases": 1290,
+        "team": 1309, "request-demo": 856, "notes": 718, "footer": 348
+      }
+    },
+    "390": {
+      "viewport": { "w": 390, "h": 844 },
+      "documentHeight": 18208,
+      "screens": 21.6,
+      "overflowX": false,
+      "railVisible": false,
+      "sections": {
+        "hero": 870, "what": 1163, "how": 1729, "hold": 2340, "anatomy": 912,
+        "compare": 2567, "pricing": 1231, "why": 1166, "cases": 1772,
+        "team": 1631, "request-demo": 1188, "notes": 999, "footer": 573
+      }
+    }
+  },
+  "inventory": {
+    "indexHtmlLines": 720,
+    "stylesCssLines": 2130,
+    "appJsLines": 1450,
+    "pages": 3,
+    "demoWidgets": 2,
+    "borderedCardInstances": 0,
+    "tagPillInstances": 0,
+    "badgeLabelInstances": 0,
+    "aphorismKickers": 4,
+    "uppercaseTextNodes": 43,
+    "numberedEyebrows": 0,
+    "rawHexLiteralsInCssComponentRules": 0,
+    "rawRgbaLiteralsInCssComponentRules": 0,
+    "untokenisedFontSizes": 0,
+    "borderRadiusNonZero": 1,
+    "domNodes": 721,
+    "thirdPartyRequests": 0,
+    "axeViolations": 0,
+    "textContrastFailures": 0,
+    "tapTargetsUnder44": 0
+  },
+  "vsBaseline": {
+    "domNodes": "6813 -> 721 (-89%)",
+    "documentHeight390": "26332 -> 18208 (-31%)",
+    "screens390": "31.2 -> 21.6",
+    "borderedCards": "34 -> 0",
+    "pillsAndBadges": "33 -> 0",
+    "aphorismKickers": "19 -> 4",
+    "uppercaseTextNodes": "144 -> 43 (-70%)",
+    "rawHexInComponentRules": "61 -> 0",
+    "thirdPartyRequests": "3 -> 0",
+    "settlementSpelling": "0 correct instances -> 25"
+  },
+  "openItems": [
+    "Page height at 390px is 21.6 screens against the plan's ~12 target.",
+    "Lighthouse scores not captured: this environment cannot foreground a tab, so paint timing is an artefact.",
+    "Phase 4.2 (custody model, uptime SLA, escalation path) unwritten. Hacken audit is recorded; multisig and insurance deliberately absent.",
+    "Phase 6 (form wiring, footer links, indexing) deferred while the site is a demo."
+  ]
+}
