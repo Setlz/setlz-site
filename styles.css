@@ -902,7 +902,9 @@ h3 {
 
 #wm-svg { display: block; width: 100%; height: auto; }
 
-.wm-dot { fill: #D9DDDF; r: var(--wm-dot-r, 1.15px); }
+/* Land grid is one path of circular subpaths (see app.js). Radius is baked
+   into the path data, so there is no r property here. */
+.wm-dots { fill: #D9DDDF; }
 
 .wm-pin { fill: var(--ink); }
 .wm-pin-label {

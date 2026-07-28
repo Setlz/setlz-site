@@ -314,7 +314,10 @@
         <div class="wm-ov wm-stall mono" id="wm-stall" hidden>BANKING HOURS</div>
         <div class="wm-ov wm-flipcap" id="wm-flipcap" hidden></div>
         <div class="wm-ov wm-dest" id="wm-dest" hidden>
-          <div class="mono wm-setld" id="wm-setld"></div>
+          <!-- id and class keep normal spelling per the README identifier rule;
+               only the rendered text uses the brand spelling. Renaming these to
+               "setld" silently broke the JS hook and the CSS. -->
+          <div class="mono wm-settled" id="wm-settled"></div>
           <div class="mono wm-stage2" id="wm-stage2" hidden></div>
         </div>
       </div>

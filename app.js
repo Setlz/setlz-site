@@ -626,15 +626,39 @@ if (wm && typeof MAP_DOTS !== "undefined") {
 
   const pathD = (pts) => pts.map((p, i) => (i ? "L" : "M") + p.x.toFixed(1) + " " + p.y.toFixed(1)).join("");
 
-  // Dots are drawn once; viewBox changes just re-crop them.
-  const gDots = elNS("g", { id: "map-dots-g" }, svg);
+  // Land grid: one <path> of circular subpaths rather than 6,216 <circle>
+  // elements. Same rendering, but the dots were 91% of the document's DOM
+  // nodes, so every style recalc on the page was walking them. The radius
+  // is per-corridor, so the path is rebuilt on change and cached by radius
+  // (three corridors, so at most three builds).
   const step = MAP_GRID.step * MAP_GRID.scale;
-  for (let i = 0; i < MAP_DOTS.length; i += 2) {
-    elNS("circle", {
-      class: "wm-dot",
-      cx: ((MAP_DOTS[i] + 0.5) * step).toFixed(1),
-      cy: ((MAP_DOTS[i + 1] + 0.5) * step).toFixed(1),
-    }, gDots);
+  const dotPathCache = new Map();
+
+  function dotPathFor(r) {
+    if (dotPathCache.has(r)) return dotPathCache.get(r);
+    const d = new Array(MAP_DOTS.length / 2);
+    const dia = (r * 2).toFixed(2);
+    const rr = r.toFixed(2);
+    for (let i = 0, n = 0; i < MAP_DOTS.length; i += 2, n++) {
+      const cx = (MAP_DOTS[i] + 0.5) * step;
+      const cy = (MAP_DOTS[i + 1] + 0.5) * step;
+      // Two half-arcs make a full circle, matching the old <circle r>.
+      d[n] = "M" + (cx - r).toFixed(1) + " " + cy.toFixed(1) +
+        "a" + rr + " " + rr + " 0 1 0 " + dia + " 0" +
+        "a" + rr + " " + rr + " 0 1 0 -" + dia + " 0";
+    }
+    const out = d.join("");
+    dotPathCache.set(r, out);
+    return out;
+  }
+
+  const dotsPath = elNS("path", { id: "map-dots-g", class: "wm-dots" }, svg);
+  let dotsRadius = null;
+
+  function setDotRadius(r) {
+    if (r === dotsRadius) return;
+    dotsRadius = r;
+    dotsPath.setAttribute("d", dotPathFor(r));
   }
 
   const gDyn = elNS("g", {}, svg);
@@ -658,7 +682,7 @@ if (wm && typeof MAP_DOTS !== "undefined") {
     const vb = isMobileMap() && c.viewBoxMobile ? c.viewBoxMobile : c.viewBox;
     svg.setAttribute("viewBox", vb.join(" "));
     const u = vb[2] / 440; // proportional unit so widths/labels stay screen-constant
-    svg.style.setProperty("--wm-dot-r", c.dotR + "px");
+    setDotRadius(c.dotR);
     gDyn.innerHTML = "";
 
     const A = proj(c.from.lat, c.from.lon);
@@ -830,7 +854,6 @@ if (wm && typeof MAP_DOTS !== "undefined") {
     }
 
     const plan = buildWireSchedule(c);
-    const start = performance.now();
     let flipped = false, settledArc = false, lapseStart = 0, lapseDone = false, wireDone = false;
     let lastFeeIdx = -1;
     wEl.live.textContent = "Race started: " + c.label + ".";
@@ -840,9 +863,19 @@ if (wm && typeof MAP_DOTS !== "undefined") {
     layer.wirePulse.setAttribute("opacity", 1);
     layer.badge.setAttribute("opacity", 1);
 
+    // Elapsed time accumulates from per-frame deltas rather than wall clock.
+    // requestAnimationFrame stops while the tab is hidden, so a wall-clock
+    // race jumped straight to its finished state when the visitor came back,
+    // skipping the whole animation. Deltas are clamped so a long gap costs
+    // one frame, not the race.
+    let ms = 0;
+    let prev = null;
+    const MAX_FRAME_MS = 50;
+
     function frame(now) {
       if (id !== raceId) return;
-      const ms = now - start;
+      ms += prev === null ? 0 : Math.min(now - prev, MAX_FRAME_MS);
+      prev = now;
 
       // Setlz arc.
       const p = Math.min(ms / WM_CONFIG.arcMs, 1);
@@ -931,15 +964,21 @@ if (wm && typeof MAP_DOTS !== "undefined") {
     requestAnimationFrame(frame);
   }
 
-  // Corridor preset chips.
+  // Corridor preset chips. A toggle group, so the selected state is exposed
+  // via aria-pressed and not left to the visual is-on class alone.
   WM_CONFIG.corridors.forEach((c, i) => {
     const btn = document.createElement("button");
     btn.type = "button";
     btn.className = "wm-corridor-btn" + (i === 0 ? " is-on" : "");
+    btn.setAttribute("aria-pressed", i === 0 ? "true" : "false");
     btn.textContent = c.tag ? c.label + " · " + c.tag : c.label;
     btn.addEventListener("click", () => {
-      wEl.corridors.querySelectorAll(".wm-corridor-btn").forEach((b) => b.classList.remove("is-on"));
+      wEl.corridors.querySelectorAll(".wm-corridor-btn").forEach((b) => {
+        b.classList.remove("is-on");
+        b.setAttribute("aria-pressed", "false");
+      });
       btn.classList.add("is-on");
+      btn.setAttribute("aria-pressed", "true");
       active = c;
       runRaceMap(c);
     });
@@ -948,9 +987,38 @@ if (wm && typeof MAP_DOTS !== "undefined") {
 
   wEl.replay.addEventListener("click", () => runRaceMap(active));
 
+  // Re-render on a breakpoint change. Each corridor carries a separate mobile
+  // crop, chosen at render time, so without this a rotation or window resize
+  // left the map framed for the wrong width.
+  const mapBreakpoint = window.matchMedia("(max-width: 760px)");
+  const onBreakpoint = () => {
+    renderCorridor(active);
+    if (prefersReducedMotion) finishState(active);
+    else runRaceMap(active);
+  };
+  if (mapBreakpoint.addEventListener) mapBreakpoint.addEventListener("change", onBreakpoint);
+  else mapBreakpoint.addListener(onBreakpoint); // Safari < 14
+
   // Draw the idle map immediately; race auto-plays on scroll into view.
   renderCorridor(active);
   resetPanels();
+
+  // Start only when the document is actually visible. Autoplaying into a
+  // hidden tab used to burn the one-shot observer, so a visitor who opened
+  // the page in a background tab never saw the race at all.
+  function startWhenVisible() {
+    if (!document.hidden) {
+      runRaceMap(active);
+      return;
+    }
+    const onVisible = () => {
+      if (document.hidden) return;
+      document.removeEventListener("visibilitychange", onVisible);
+      runRaceMap(active);
+    };
+    document.addEventListener("visibilitychange", onVisible);
+  }
+
   if (prefersReducedMotion) {
     finishState(active);
   } else if ("IntersectionObserver" in window) {
@@ -959,7 +1027,7 @@ if (wm && typeof MAP_DOTS !== "undefined") {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             wmIO.disconnect();
-            runRaceMap(active);
+            startWhenVisible();
           }
         });
       },
@@ -967,7 +1035,7 @@ if (wm && typeof MAP_DOTS !== "undefined") {
     );
     wmIO.observe(wm);
   } else {
-    runRaceMap(active);
+    startWhenVisible();
   }
 }
 
