@@ -1166,6 +1166,66 @@ if (demoForm) {
 }
 
 /* ============================================================
+   NOTE AFFORDANCES (change order: Phase 1.3)
+   Replaces the per-component asterisked footnotes. CSS handles
+   hover and focus-within; this adds the tap path, dismissal, and
+   edge pinning so a popover never runs off screen.
+============================================================ */
+
+document.querySelectorAll(".note-ref").forEach((ref) => {
+  const btn = ref.querySelector(".note-btn");
+  const pop = ref.querySelector(".note-pop");
+  if (!btn || !pop) return;
+
+  function close() {
+    pop.classList.remove("is-open");
+    btn.setAttribute("aria-expanded", "false");
+  }
+
+  function open() {
+    // Pin to whichever edge keeps it on screen. Measured after showing,
+    // since a hidden element has no box.
+    pop.classList.remove("pin-left", "pin-right");
+    pop.classList.add("is-open");
+    btn.setAttribute("aria-expanded", "true");
+    const r = pop.getBoundingClientRect();
+    if (r.left < 8) pop.classList.add("pin-left");
+    else if (r.right > window.innerWidth - 8) pop.classList.add("pin-right");
+  }
+
+  btn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    if (pop.classList.contains("is-open")) close();
+    else {
+      document.querySelectorAll(".note-pop.is-open").forEach((p) => {
+        p.classList.remove("is-open");
+        p.closest(".note-ref").querySelector(".note-btn").setAttribute("aria-expanded", "false");
+      });
+      open();
+    }
+  });
+
+  btn.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") { close(); btn.blur(); }
+  });
+
+  // Same edge pinning for the hover and focus paths, which CSS drives.
+  ref.addEventListener("pointerenter", () => {
+    pop.classList.remove("pin-left", "pin-right");
+    const r = pop.getBoundingClientRect();
+    if (r.left < 8) pop.classList.add("pin-left");
+    else if (r.right > window.innerWidth - 8) pop.classList.add("pin-right");
+  });
+});
+
+document.addEventListener("click", () => {
+  document.querySelectorAll(".note-pop.is-open").forEach((p) => {
+    p.classList.remove("is-open");
+    p.closest(".note-ref").querySelector(".note-btn").setAttribute("aria-expanded", "false");
+  });
+});
+
+/* ============================================================
    REVEAL ON SCROLL
 ============================================================ */
 

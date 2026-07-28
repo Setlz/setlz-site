@@ -122,6 +122,37 @@ CTA-only, which touches most component blocks.
 
 ---
 
+## 4a. Primitive re-inventory after Phase 1 (1.4)
+
+Phase 1 was subtraction. It did **not** meaningfully reduce the primitive count,
+because the deletions removed *instances of content*, not the primitives themselves.
+This is what Phase 2.3 has to replace:
+
+| | Before Phase 1 | After Phase 1 |
+|---|---|---|
+| Bordered-card containers | 34 | **27** |
+| Tag pills and badge labels | 33 | **24** |
+| Aphorism kickers | 19 | **4** |
+| `.mono` micro-text instances | 161 | **132** |
+| `.reveal` wrappers | 52 | 44 |
+| Numbered eyebrows | 8 | **0** |
+| Asterisked footnotes | 4 visible | **0** |
+| Visible "simulated" labels | 3 section-level | **2** (one per demo) |
+
+Container breakdown after Phase 1: `coin-strip` 6, `team-card` 6, `step` 5,
+`stat-card` 4, `camp` 3, `case-card` 2, `case-banner` 1.
+
+The headline: **`.coin-strip` is now the single most-used container on the page at 6
+instances**, ahead of every card type. It is a tinted panel with a heading, a lede, a
+chip row and support paragraphs, and it carries the multi-coin strip, compliance,
+business model, moat, why-now and where-we-are blocks. Phase 2.3's ledger-banding
+replacement has to absorb all six.
+
+Kickers went from 19 to 4, and those 4 now use **4 different classes** (`pullquote`,
+`camp-punch`, `trump-punch`, `case-payoff`) — one primitive each. Phase 2.3 should
+collapse them to one. `.comp-punch` and `.pattern-grid` reached zero uses and their
+CSS was deleted.
+
 ## 4. Reusable primitives
 
 No JS components, so a "primitive" here is a CSS class contract. Counts are instances in

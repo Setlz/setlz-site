@@ -2,6 +2,8 @@
 
 Demo marketing site for Setlz, whitelabelled delivery-triggered setlment infrastructure.
 
+See `CLAUDE.md` for the structural map, the component inventory and the rebuild status.
+
 **Demo site. Not an offer of services. Do not deploy.**
 
 ## Run it
