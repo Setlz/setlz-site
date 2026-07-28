@@ -415,6 +415,23 @@ h3 {
   font-feature-settings: "tnum" 1;
 }
 
+
+/* ---------- content measure (Phase 2.4) ----------
+   One token governs prose line length everywhere, so no passage runs past
+   roughly 70 characters. The container and the measure derive from the same
+   token set, which keeps the banding and the text column on one grid. */
+.section-lede,
+.statement,
+.grow p,
+.block-lead,
+.block-support,
+.case-payoff,
+.camp-attack,
+.camp-lines li,
+.notes li,
+.race-caption,
+.cases-more { max-width: var(--measure); }
+
 /* ---------- buttons ---------- */
 
 .btn {
@@ -527,7 +544,7 @@ h3 {
 
 .hero {
   position: relative;
-  padding: var(--space-9) 0 var(--space-9);
+  padding: var(--section-primary) 0;
   overflow: hidden;
 }
 
@@ -663,8 +680,16 @@ h3 {
 
 /* ---------- sections ---------- */
 
-.section { padding: var(--space-9) 0; }
-.section-tight { padding: var(--space-9) 0; background: var(--ground-alt); }
+/* ---------- vertical rhythm (Phase 2.4) ----------
+   Section padding used to be var(--space-9) everywhere, including the hero,
+   so the page read as one continuous strip and nothing signalled importance.
+   Three tiers now carry that signal. Padding is the only thing they set;
+   ground is a separate axis, chosen semantically by .band / .band-support. */
+.section { padding: var(--section-standard) 0; }
+
+.tier-primary     { padding: var(--section-primary) 0; }
+.tier-standard    { padding: var(--section-standard) 0; }
+.tier-compressed  { padding: var(--section-compressed) 0; }
 
 .race-caption {
   margin-top: var(--space-5);
@@ -1421,7 +1446,7 @@ h3 {
   background:
     radial-gradient(700px 340px at 12% 100%, var(--shadow-ink), transparent 70%),
     linear-gradient(150deg, var(--ground-dark), var(--ink));
-  padding: var(--space-9) 0;
+  padding: var(--section-primary) 0;
   color: var(--paper);
 }
 
@@ -1652,7 +1677,7 @@ h3 {
   margin-bottom: var(--space-2);
 }
 .notes li:last-child { margin-bottom: 0; }
-.notes-section { padding: var(--space-7) 0 var(--space-8); }
+.notes-section { padding: var(--section-compressed) 0; }
 
 /* ---------- reveal on scroll ---------- */
 
@@ -1708,6 +1733,13 @@ h3 {
   .demo-grid { grid-template-columns: 1fr; gap: var(--space-6); }
   .demo-card { order: -1; } /* mobile: form above copy */
   .footer-grid { grid-template-columns: 1fr 1fr; }
+  /* The tiers must be restated here: this media block sits after the tier
+     rules, and .section on its own would otherwise flatten all three back
+     to one value at narrow widths. Tiers compress but stay distinct. */
   .section { padding: var(--space-8) 0; }
+  .tier-standard    { padding: var(--space-7) 0; }
+  .tier-primary     { padding: var(--space-8) 0; }
+  .tier-compressed  { padding: var(--space-6) 0; }
+  .notes-section    { padding: var(--space-6) 0; }
   .camp { padding: var(--space-5) var(--space-5); }
 }
