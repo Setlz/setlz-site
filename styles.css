@@ -470,15 +470,150 @@ h3 {
 
 .btn-sm { padding: var(--space-2) var(--space-4); font-size: var(--body-small); }
 
+/* ============================================================
+   SETTLEMENT RAIL (Phase 3.1)
+   The deck's settlement line, promoted from a static graphic on two slides
+   to the site's spine. Same four nodes, same labels, same dot states
+   (mist -> ink -> signal with a wash ring at settled), same ink segment
+   fill, same gradient sweep on the segment that is currently settling.
+
+   What changes is orientation and that state is driven by scroll position
+   rather than being fixed. The reader moving down the page is the
+   transaction settling.
+
+   One colour deviation from the deck, forced by the reserved accent: the
+   deck's settled LABEL is signal-deep, which is now CTA-only here. The
+   settled label is ink; the settled DOT keeps signal, because that is the
+   "money landed" allowance in the colour rule.
+
+   Decorative: aria-hidden, not focusable, pointer-events none. It
+   duplicates information the page already states in text.
+============================================================ */
+
+.rail {
+  position: fixed;
+  left: var(--space-5);
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 40;
+  pointer-events: none;
+}
+
+.rail-track { display: flex; flex-direction: column; align-items: flex-start; }
+
+.rail-node { display: flex; align-items: center; gap: var(--space-3); }
+
+/* Deck dot, at 11px rather than 14px: it sits in a page gutter, not on a
+   900px-wide slide graphic. */
+.rail-dot {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: var(--mist);
+  border: 2px solid var(--mist);
+  box-sizing: border-box;
+  flex: none;
+  transition: background var(--t-mid) var(--ease), border-color var(--t-mid) var(--ease),
+              box-shadow var(--t-mid) var(--ease);
+}
+.rail-node.is-done .rail-dot,
+.rail-node.is-current .rail-dot {
+  background: var(--ink);
+  border-color: var(--ink);
+}
+/* The current node reads as the frontier: ink, ringed in mist. */
+.rail-node.is-current .rail-dot { box-shadow: 0 0 0 4px var(--mist); }
+/* Settled, per the deck: signal fill and a wash ring. The only non-CTA
+   green on the page, and it is semantic. */
+.rail-node.is-settled .rail-dot {
+  background: var(--signal);
+  border-color: var(--signal);
+  box-shadow: 0 0 0 6px var(--signal-wash);
+}
+
+/* Label follows the deck's spec. Only the current node shows one, so the
+   gutter stays quiet and the state is readable without a legend. */
+.rail-lbl {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity var(--t-mid) var(--ease);
+}
+.rail-node.is-current .rail-lbl { opacity: 1; }
+.rail-node.is-settled .rail-lbl { opacity: 1; color: var(--ink); font-weight: var(--display-w); }
+
+/* Segments: vertical here, aligned to the dot's centre. */
+.rail-seg {
+  width: 2px;
+  height: 40px;
+  background: var(--mist);
+  margin-left: 4.5px;
+  transition: background var(--t-mid) var(--ease);
+}
+.rail-seg.is-filled { background: var(--ink); }
+/* The settling segment: the deck's gradient plus its sweep, rotated. */
+.rail-seg.is-settling {
+  background: linear-gradient(180deg, var(--ink), var(--signal));
+  position: relative;
+  overflow: hidden;
+}
+.rail-seg.is-settling::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent, rgba(28, 169, 100, 0.55), transparent);
+  animation: rail-sweep 2.6s ease-in-out infinite;
+}
+@keyframes rail-sweep {
+  0%        { transform: translateY(-100%); }
+  60%, 100% { transform: translateY(220%); }
+}
+
+/* Below 1200px there is no gutter left once the container takes its width,
+   so the labels would sit over content. Dots and segments still carry the
+   state on their own. */
+@media (max-width: 1200px) {
+  .rail-lbl { display: none; }
+}
+
+
+/* Reduced motion: rendered static in its complete state, no transitions and
+   no sweep. Phase 3.1 requirement. */
+.rail.is-static .rail-dot,
+.rail.is-static .rail-seg,
+.rail.is-static .rail-lbl { transition: none; }
+.rail.is-static .rail-seg.is-settling::after { animation: none; }
+
+/* Below the mobile breakpoint the rail is HIDDEN, not shrunk. It cannot earn
+   a gutter on a 390px viewport, and scaling it down would leave four
+   illegible dots competing with the content for the same 24px. */
+@media (max-width: 760px) {
+  .rail { display: none; }
+}
+
 /* ---------- nav ---------- */
 
+/* Reassessed in 3.1, now that the rail is the page's spine.
+   The blur is gone: a glassmorphic nav is on the banned list, and the
+   translucent ground had also picked up an on-dark token during the 2.2
+   colour sweep, which was wrong on a light nav. Solid paper, one hairline.
+
+   The links stay, but the duplication does not. The rail shows PROGRESS; it
+   does not offer DESTINATIONS, and on a page this long a buyer looking for
+   use cases or the demo should not have to scroll to find them. What was
+   removed is the redundancy: "See it setl" appeared as both a link and the
+   button, and "Get a demo" duplicated the button's job. The button now has
+   a distinct one. */
 .nav {
   position: sticky;
   top: 0;
   z-index: 50;
-  background: var(--on-dark-soft);
-  backdrop-filter: blur(14px);
-  border-bottom: 1px solid var(--line);
+  background: var(--ground);
+  border-bottom: var(--hair-w) solid var(--hair);
 }
 
 .nav-inner {

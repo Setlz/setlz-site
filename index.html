@@ -16,6 +16,25 @@
 <body>
 
 <!-- ============================================================
+     SETTLEMENT RAIL (Phase 3.1)
+     The deck's settlement line, vertical and scroll-driven. Node labels and
+     sequence are the deck's, unchanged. Decorative only: aria-hidden, no
+     focusable children, pointer-events none. Everything it conveys is also
+     stated in the page text.
+============================================================ -->
+<div class="rail" id="rail" aria-hidden="true">
+  <div class="rail-track">
+    <div class="rail-node" data-node="0"><span class="rail-dot"></span><span class="rail-lbl">Customer pays</span></div>
+    <div class="rail-seg" data-seg="0"></div>
+    <div class="rail-node" data-node="1"><span class="rail-dot"></span><span class="rail-lbl">Held in escrow</span></div>
+    <div class="rail-seg" data-seg="1"></div>
+    <div class="rail-node" data-node="2"><span class="rail-dot"></span><span class="rail-lbl">Stablecoin service delivered</span></div>
+    <div class="rail-seg" data-seg="2"></div>
+    <div class="rail-node" data-node="3"><span class="rail-dot"></span><span class="rail-lbl">Provider paid</span></div>
+  </div>
+</div>
+
+<!-- ============================================================
      NAV
 ============================================================ -->
 <header class="nav">
@@ -29,9 +48,8 @@
       <a href="#hold">See it setl</a>
       <a href="#why">Why we win</a>
       <a href="#cases">Use cases</a>
-      <a href="#request-demo">Get a demo</a>
     </nav>
-    <a class="btn btn-primary btn-sm" href="#hold">See it setl</a>
+    <a class="btn btn-primary btn-sm" href="#request-demo">Request a demo</a>
   </div>
 </header>
 
@@ -40,7 +58,7 @@
 <!-- ============================================================
      1. HERO
 ============================================================ -->
-<section class="hero">
+<section class="hero" id="hero">
   <div class="container">
     <p class="eyebrow">EURC on Base &middot; whitelabelled setlment infrastructure</p>
     <h1 class="hero-h1">The money arrives the moment the service does.</h1>

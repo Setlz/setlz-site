@@ -1166,6 +1166,83 @@ if (demoForm) {
 }
 
 /* ============================================================
+   SETTLEMENT RAIL (Phase 3.1)
+
+   State is mapped to NAMED SECTIONS, never to pixel offsets, so editing or
+   reordering content cannot silently break it. A section that disappears
+   simply drops out of the map.
+
+   Driven by IntersectionObserver with a rootMargin that collapses the
+   viewport to a thin band at 42% height, so exactly one section is
+   "current" at a time and no ratio arithmetic is needed. There is no
+   scroll listener, and no geometry is read during the callback, so the rail
+   cannot cause layout thrash. Work per stage change is a handful of class
+   toggles on eight elements, and it only runs when the stage actually
+   changes.
+============================================================ */
+
+const rail = document.getElementById("rail");
+
+if (rail) {
+  // Node order and labels are the deck's. Each stage lists the sections that
+  // belong to it; unknown ids are ignored, missing ones are harmless.
+  const RAIL_STAGES = [
+    ["hero", "what"],                             // Customer pays
+    ["how", "hold"],                              // Held in escrow
+    ["compare", "why"],                           // Stablecoin service delivered
+    ["cases", "team", "request-demo", "notes"],   // Provider paid
+  ];
+  const LAST = RAIL_STAGES.length - 1;
+
+  const nodes = Array.from(rail.querySelectorAll(".rail-node"));
+  const segs = Array.from(rail.querySelectorAll(".rail-seg"));
+
+  function paint(stage) {
+    nodes.forEach((n, i) => {
+      n.classList.toggle("is-done", i < stage);
+      n.classList.toggle("is-current", i === stage && stage < LAST);
+      // The final node only turns green once the reader actually arrives.
+      n.classList.toggle("is-settled", i === LAST && stage === LAST);
+    });
+    segs.forEach((sg, i) => {
+      sg.classList.toggle("is-filled", i < stage);
+      sg.classList.toggle("is-settling", i === stage && stage < LAST);
+    });
+  }
+
+  if (prefersReducedMotion) {
+    // Static, complete, no transitions: every node done and the last settled.
+    rail.classList.add("is-static");
+    paint(LAST);
+  } else {
+    let current = -1;
+    const stageOf = new Map();
+    RAIL_STAGES.forEach((ids, i) => ids.forEach((id) => stageOf.set(id, i)));
+
+    paint(0);
+
+    const railIO = new IntersectionObserver(
+      (entries) => {
+        // The band is thin enough that at most one section reports in.
+        for (const entry of entries) {
+          if (!entry.isIntersecting) continue;
+          const stage = stageOf.get(entry.target.id);
+          if (stage === undefined || stage === current) continue;
+          current = stage;
+          paint(stage);
+        }
+      },
+      { rootMargin: "-42% 0px -56% 0px", threshold: 0 }
+    );
+
+    stageOf.forEach((_stage, id) => {
+      const el = document.getElementById(id);
+      if (el) railIO.observe(el);
+    });
+  }
+}
+
+/* ============================================================
    NOTE AFFORDANCES (change order: Phase 1.3)
    Replaces the per-component asterisked footnotes. CSS handles
    hover and focus-within; this adds the tap path, dismissal, and
