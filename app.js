@@ -1140,6 +1140,149 @@ if (demoForm) {
 }
 
 /* ============================================================
+   ANATOMY OF A SETTLEMENT (Phase 4.1, reworked)
+
+   Replaces the decorative random hash. A hash on its own proves nothing and
+   says nothing about the product; opening a row shows one payment becoming
+   one transaction with several payouts, released on a condition.
+
+   Simulated, and it says so. Hashes are prefixed 0xsim in settlements.js and
+   are never linked, because a link that 404s is worse than no link. The same
+   renderer will link them to the block explorer the moment real 66-character
+   hashes replace them and `simulated` is dropped.
+
+   Rows are real buttons: keyboard operable, aria-expanded, aria-controls.
+============================================================ */
+
+const anatRows = document.getElementById("anat-rows");
+
+if (anatRows && typeof SETTLEMENTS !== "undefined") {
+  const foot = document.getElementById("anat-foot");
+  const live = document.getElementById("anat-live");
+  const HASH_RE = /^0x[0-9a-fA-F]{64}$/;
+  const isReal = SETTLEMENTS.simulated !== true;
+
+  function cell(cls, text) {
+    const s = document.createElement("span");
+    s.className = cls;
+    s.textContent = text;
+    return s;
+  }
+
+  (SETTLEMENTS.entries || []).forEach((e, i) => {
+    const wrap = document.createElement("div");
+    wrap.className = "grow anat";
+
+    const panelId = "anat-panel-" + i;
+
+    // ---- collapsed header: the ledger row ----
+    const head = document.createElement("button");
+    head.className = "anat-head";
+    head.type = "button";
+    head.setAttribute("aria-expanded", "false");
+    head.setAttribute("aria-controls", panelId);
+
+    head.appendChild(cell("glabel", e.trigger + " · " + e.date));
+
+    const cells = document.createElement("span");
+    cells.className = "anat-cells";
+    cells.appendChild(cell("gval", e.amount));
+    cells.appendChild(cell("anat-elapsed", e.elapsed));
+
+    // The hash links only when it is genuinely a chain record.
+    if (isReal && HASH_RE.test(e.hash)) {
+      const a = document.createElement("a");
+      a.className = "anat-hash";
+      a.href = SETTLEMENTS.explorer + e.hash;
+      a.target = "_blank";
+      a.rel = "noopener";
+      a.textContent = e.hash.slice(0, 10) + "…" + e.hash.slice(-8);
+      cells.appendChild(a);
+    } else {
+      cells.appendChild(cell("anat-hash is-sim", e.hash + " · sim"));
+    }
+    cells.appendChild(cell("anat-toggle", "+"));
+    head.appendChild(cells);
+    wrap.appendChild(head);
+
+    // ---- expanded panel: what actually happened ----
+    const panel = document.createElement("div");
+    panel.className = "anat-panel";
+    panel.id = panelId;
+    panel.hidden = true;
+
+    (e.steps || []).forEach((st) => {
+      const r = document.createElement("div");
+      r.className = "anat-step";
+      r.appendChild(cell("anat-t", st.t));
+      const w = document.createElement("span");
+      w.className = "anat-what";
+      w.appendChild(cell("anat-what-main", st.what));
+      if (st.detail) w.appendChild(cell("anat-detail", st.detail));
+      r.appendChild(w);
+      r.appendChild(cell("anat-amt", st.amount || ""));
+      panel.appendChild(r);
+    });
+
+    if (e.legs && e.legs.length) {
+      const legs = document.createElement("div");
+      legs.className = "anat-legs";
+      legs.appendChild(cell("glabel", "Paid out, same transaction"));
+      e.legs.forEach((lg) => {
+        const r = document.createElement("div");
+        r.className = "anat-leg";
+        r.appendChild(cell("anat-leg-to", lg.to));
+        r.appendChild(cell("anat-amt", lg.amount));
+        legs.appendChild(r);
+      });
+      panel.appendChild(legs);
+
+      const stamp = document.createElement("p");
+      stamp.className = "anat-stamp";
+      stamp.textContent = "One transaction. " + e.legs.length + " payouts. Zero reconciliation.";
+      panel.appendChild(stamp);
+    }
+
+    wrap.appendChild(panel);
+    anatRows.appendChild(wrap);
+
+    head.addEventListener("click", () => {
+      const open = head.getAttribute("aria-expanded") === "true";
+      head.setAttribute("aria-expanded", open ? "false" : "true");
+      panel.hidden = open;
+      wrap.classList.toggle("is-open", !open);
+      live.textContent = open
+        ? e.trigger + " collapsed."
+        : e.trigger + " expanded. " + (e.legs ? e.legs.length + " payouts in one transaction." : "");
+    });
+  });
+
+  // Footnote states what these are, and the audit fact if one is recorded.
+  const bits = [];
+  bits.push(isReal
+    ? "Recorded on " + SETTLEMENTS.network + ". Follow any hash to verify it."
+    : "Illustrative setlments, not chain records. Every hash is prefixed 0xsim and is not linked.");
+  if (SETTLEMENTS.audit && SETTLEMENTS.audit.firm) {
+    let a = "Setlment contracts audited by " + SETTLEMENTS.audit.firm;
+    if (SETTLEMENTS.audit.date) a += ", " + SETTLEMENTS.audit.date;
+    bits.push(a + ".");
+  }
+  foot.textContent = bits.join(" ");
+
+  // Link the audit report only once a URL exists.
+  if (SETTLEMENTS.audit && SETTLEMENTS.audit.firm && SETTLEMENTS.audit.reportUrl) {
+    const a = document.createElement("a");
+    a.className = "anat-audit-link";
+    a.href = SETTLEMENTS.audit.reportUrl;
+    a.target = "_blank";
+    a.rel = "noopener";
+    a.textContent = "Read the " + SETTLEMENTS.audit.firm + " report";
+    foot.appendChild(document.createTextNode(" "));
+    foot.appendChild(a);
+  }
+}
+
+/* ============================================================
    SETTLEMENT RAIL (Phase 3.1)
 
    State is mapped to NAMED SECTIONS, never to pixel offsets, so editing or
@@ -1162,7 +1305,7 @@ if (rail) {
   // belong to it; unknown ids are ignored, missing ones are harmless.
   const RAIL_STAGES = [
     ["hero", "what"],                             // Customer pays
-    ["how", "hold"],                              // Held in escrow
+    ["how", "hold", "anatomy"],                   // Held in escrow
     ["compare", "why"],                           // Stablecoin service delivered
     ["cases", "team", "request-demo", "notes"],   // Provider paid
   ];

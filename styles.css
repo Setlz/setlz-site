@@ -1811,6 +1811,128 @@ h3 {
 .notes li:last-child { margin-bottom: 0; }
 .notes-section { padding: var(--section-compressed) 0; }
 
+
+/* ---------- anatomy of a settlement (Phase 4.1) ----------
+   No panel, no card: the expanded detail is indented hairline rows, so the
+   whole thing stays inside the one-level containment budget. */
+
+.anat { padding: 0; }
+
+.anat-head {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: var(--space-4);
+  align-items: baseline;
+  padding: var(--space-4) 0;
+  background: none;
+  border: 0;
+  border-radius: var(--radius);
+  text-align: left;
+  cursor: pointer;
+  font: inherit;
+}
+.anat-head:hover .anat-toggle { color: var(--ink); }
+.anat-head:focus-visible { outline: var(--focus-ring) solid var(--ink); outline-offset: var(--focus-offset); }
+
+.anat-cells {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+.anat-elapsed {
+  font-family: var(--font-mono);
+  font-size: var(--mono-row);
+  color: var(--ink-soft);
+  font-variant-numeric: tabular-nums;
+}
+.anat-hash {
+  font-family: var(--font-mono);
+  font-size: var(--mono-label);
+  letter-spacing: 0.04em;
+  color: var(--ink);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+/* Simulated hashes are not links and must not look like one. */
+.anat-hash.is-sim {
+  text-decoration: none;
+  color: var(--ink-soft);
+  border-bottom: 1px dashed var(--line);
+}
+.anat-toggle {
+  font-family: var(--font-mono);
+  font-size: var(--body-lede);
+  line-height: 1;
+  color: var(--ink-soft);
+  width: 1ch;
+  transition: transform var(--t-fast) var(--ease), color var(--t-fast) var(--ease);
+}
+.anat.is-open .anat-toggle { transform: rotate(45deg); color: var(--ink); }
+
+/* Expanded: a timeline, then the payout legs. Indented, hairline-separated,
+   no ground of its own. */
+.anat-panel { padding: 0 0 var(--space-5); }
+
+.anat-step,
+.anat-leg {
+  display: grid;
+  grid-template-columns: 8ch 1fr auto;
+  gap: var(--space-4);
+  align-items: baseline;
+  padding: var(--space-2) 0;
+  border-top: var(--hair-w) solid var(--hair);
+}
+.anat-leg { grid-template-columns: 8ch 1fr auto; }
+
+.anat-t {
+  font-family: var(--font-mono);
+  font-size: var(--mono-label);
+  letter-spacing: var(--mono-label-track);
+  color: var(--ink-soft);
+  font-variant-numeric: tabular-nums;
+}
+.anat-what { display: flex; flex-direction: column; gap: 2px; }
+.anat-what-main { font-size: var(--body-small); color: var(--ink); font-weight: var(--body-w-strong); }
+.anat-detail { font-size: var(--body-small); color: var(--ink-soft); }
+.anat-amt {
+  font-family: var(--font-mono);
+  font-size: var(--mono-row);
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+  text-align: right;
+}
+
+.anat-legs { margin-top: var(--space-4); }
+.anat-legs > .glabel { padding-bottom: var(--space-2); }
+.anat-leg-to { grid-column: 2; font-size: var(--body-small); color: var(--ink); }
+
+.anat-stamp {
+  font-family: var(--font-display);
+  font-size: var(--body);
+  font-weight: var(--display-w-semi);
+  color: var(--ink);
+  margin-top: var(--space-4);
+}
+
+.anat-foot { color: var(--ink-soft); margin-top: var(--space-5); max-width: var(--measure); }
+.anat-audit-link { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .anat-toggle { transition: none; }
+}
+
+@media (max-width: 760px) {
+  .anat-head { grid-template-columns: 1fr; }
+  .anat-cells { justify-content: flex-start; margin-top: var(--space-2); }
+  .anat-step, .anat-leg { grid-template-columns: 7ch 1fr; }
+  .anat-amt { grid-column: 2; text-align: left; }
+  .anat-leg-to { grid-column: 2; }
+}
+
 /* ---------- reveal on scroll ---------- */
 
 .reveal {

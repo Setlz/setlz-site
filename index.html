@@ -299,6 +299,24 @@
 </section>
 
 <!-- ============================================================
+     ANATOMY OF A SETTLEMENT (Phase 4.1, reworked)
+     Replaces the decorative random hash. The hash is not the point: opening
+     a row shows one payment becoming one transaction with several payouts,
+     released on a condition. Data and copy live in settlements.js.
+     Simulated, and labelled as such on the section and on every hash.
+============================================================ -->
+<section class="section band tier-standard" id="anatomy">
+  <div class="container">
+    <p class="eyebrow">Anatomy of a setlment</p>
+    <h2 class="h2">One payment in.<br>One transaction out.</h2>
+    <p class="section-lede reveal">Open any setlment to see what actually happened: capture, escrow, the rule that held it, and the split that fired the moment the condition was met. Three payouts, one transaction, no reconciliation afterwards.</p>
+    <div class="group reveal" id="anat-rows"></div>
+    <p class="anat-foot mono" id="anat-foot"></p>
+    <div class="sr-only" aria-live="polite" id="anat-live"></div>
+  </div>
+</section>
+
+<!-- ============================================================
      6. WHY TRADITIONAL RAILS LOSE
 ============================================================ -->
 <section class="section band-support tier-compressed" id="compare">
@@ -703,6 +721,7 @@
 
 </main>
 
+<script src="settlements.js"></script>
 <script src="map-dots.js"></script>
 <script src="app.js"></script>
 </body>
