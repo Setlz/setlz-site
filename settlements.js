@@ -37,7 +37,7 @@ const SETTLEMENTS = {
       elapsed: "11m 04s",
       steps: [
         { t: "00.00s", what: "Payment captured", detail: "Card, guest-facing", amount: "€1,240.00" },
-        { t: "00.42s", what: "Setld to escrow", detail: "EURC on " + "Base" },
+        { t: "00.42s", what: "Settled to escrow", detail: "EURC on " + "Base" },
         { t: "—", what: "Held by rule", detail: "Release on check-in confirmation" },
         { t: "11m 04s", what: "Condition met, released", detail: "Split executed atomically" },
       ],
@@ -55,7 +55,7 @@ const SETTLEMENTS = {
       elapsed: "09m 51s",
       steps: [
         { t: "00.00s", what: "Payment captured", detail: "Bank transfer, shipper", amount: "€8,410.00" },
-        { t: "00.38s", what: "Setld to escrow", detail: "EURC on Base" },
+        { t: "00.38s", what: "Settled to escrow", detail: "EURC on Base" },
         { t: "—", what: "Held by rule", detail: "Release on signed proof of delivery" },
         { t: "09m 51s", what: "Condition met, released", detail: "Split executed atomically" },
       ],
@@ -73,7 +73,7 @@ const SETTLEMENTS = {
       elapsed: "12m 17s",
       steps: [
         { t: "00.00s", what: "Payment captured", detail: "Bank transfer, buyer", amount: "€26,000.00" },
-        { t: "00.51s", what: "Setld to escrow", detail: "EURC on Base" },
+        { t: "00.51s", what: "Settled to escrow", detail: "EURC on Base" },
         { t: "—", what: "Held by rule", detail: "Release against shipping documents" },
         { t: "12m 17s", what: "Condition met, released", detail: "Split executed atomically" },
       ],

@@ -605,7 +605,7 @@ h3 {
    The links stay, but the duplication does not. The rail shows PROGRESS; it
    does not offer DESTINATIONS, and on a page this long a buyer looking for
    use cases or the demo should not have to scroll to find them. What was
-   removed is the redundancy: "See it setl" appeared as both a link and the
+   removed is the redundancy: "See it settle" appeared as both a link and the
    button, and "Get a demo" duplicated the button's job. The button now has
    a distinct one. */
 .nav {
@@ -1424,7 +1424,7 @@ h3 {
   max-width: 48ch;
 }
 
-/* ---------- why setlz wins ---------- */
+/* ---------- why settles wins ---------- */
 
 .camps { display: grid; gap: var(--space-5); }
 

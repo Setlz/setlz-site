@@ -216,10 +216,10 @@ Inter Tight and JetBrains Mono from `fonts.googleapis.com`. Phase 2.2 must self-
 
 ## 6. Things worth knowing before you edit
 
-1. **`README.md` documents a deliberate misspelling.** "Brand verb (Jul 2026)": settle →
-   setl, settled → setld, settlement → setlment, throughout all rendered copy. Phase 5.1
-   reverses this. The README section must be rewritten in the same commit or the next
-   session will helpfully re-break it.
+1. **The `setl` misspelling is REVERSED and must not come back.** Phase 5.1 changed
+   every rendered instance to correct English. `Setlz` is the brand and never changes;
+   brand-derived identifiers (`.wm-pulse-setlz`, `.th-setlz`, `.wm-lane-setlz`) keep
+   their spelling. Never use the brand as a verb. See README's Spelling section.
 
 2. **`README.md` claims the site makes no external requests at runtime.** It does — three
    Google Fonts requests. The claim was true before the fonts were added and was never

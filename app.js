@@ -60,7 +60,7 @@ if (hrow) {
   function settle() {
     hrow.dataset.state = "settled";
     elapsedEl.textContent = (HERO_TARGET_MS / 1000).toFixed(2) + "s";
-    statusEl.textContent = "Setld on Base";
+    statusEl.textContent = "Settled on Base";
   }
 
   if (prefersReducedMotion) {
@@ -103,7 +103,7 @@ const ESCROW_CONFIG = {
     { wallet: "partner", amount: "€20" },
     { wallet: "platform", amount: "€100" },
   ],
-  finalityCopy: "SETLD ON BASE · ABOUT 2 SECONDS", // speed harmonised site-wide (v2.9)
+  finalityCopy: "SETTLED ON BASE · ABOUT 2 SECONDS", // speed harmonised site-wide (v2.9)
   // Hash is deliberately fake: SIM prefix, DEMO suffix, labelled simulated.
   hashText: () => "TX 0xSIM" + randomHash(4).toUpperCase() + "…DEMO · SIMULATED",
   stageLabels: {
@@ -112,15 +112,15 @@ const ESCROW_CONFIG = {
     held: "02 HOLD",
     dispute: "02 HOLD · DISPUTE WINDOW",
     releasing: "03 RELEASE",
-    settled: "04 SETLD",
+    settled: "04 SETTLED",
   },
   announce: {
     idle: "Escrow demo ready. Press the simulate button.",
-    paid_settling: "Payment setling into on-chain escrow.",
+    paid_settling: "Payment settling into on-chain escrow.",
     held: "Funds locked in escrow. Release fires when the condition is met.",
     dispute: "Dispute open. Funds remain secured while the window runs.",
     releasing: "Condition met. Releasing and splitting atomically.",
-    settled: "Setld. One transaction, three payouts, zero reconciliation.",
+    settled: "Settled. One transaction, three payouts, zero reconciliation.",
   },
   stampSplit: "One transaction. Three payouts. Zero reconciliation.",
   stampDispute: "Rule-based outcomes. No chargeback tail.",
@@ -259,7 +259,7 @@ if (esc) {
     busy = true;
     setEscState("paid_settling");
     el.primary.hidden = true;
-    el.chip.textContent = "SETLING…";
+    el.chip.textContent = "SETTLING…";
     el.payerStatus.textContent = "PAID · SIMULATED";
     el.payer.classList.add("is-stamped");
 
@@ -299,7 +299,7 @@ if (esc) {
       const t = ((performance.now() - pressAt) / 1000).toFixed(1) + "s";
       el.wallets.forEach((w) => {
         w.classList.add("is-settled");
-        w.querySelector(".esc-node-status").textContent = "SETLD · " + t;
+        w.querySelector(".esc-node-status").textContent = "SETTLED · " + t;
       });
       el.vaultAmt.textContent = "€0";
       el.chip.textContent = "RELEASED · SPLIT EXECUTED";
@@ -809,7 +809,7 @@ if (wm && typeof MAP_DOTS !== "undefined") {
     wEl.daybox.hidden = false;
     wEl.daybox.textContent = "WIRE · STILL SUBJECT TO BANKING HOURS";
     wEl.dest.hidden = false;
-    wEl.settled.textContent = "SETLD ON BASE · 2.0s · SIMULATED";
+    wEl.settled.textContent = "SETTLED ON BASE · 2.0s · SIMULATED";
     wEl.stage2.hidden = false;
     wEl.stage2.innerHTML = '<span class="is-strong">EURC → EUR · SEPA INSTANT</span><span>BANK ACCOUNT CREDITED</span><span>TYPICALLY UNDER 30 MIN · PROVIDER DEPENDENT</span>';
     wEl.payoff.textContent = c.payoff;
@@ -880,8 +880,8 @@ if (wm && typeof MAP_DOTS !== "undefined") {
         wEl.flipcap.hidden = true; // declutter: the destination card takes over
         wEl.fin.textContent = "2.0s";
         wEl.dest.hidden = false;
-        wEl.settled.textContent = "SETLD ON BASE · 2.0s · SIMULATED";
-        wEl.live.textContent = BRAND_NAME + " setld on Base in about 2 seconds. Wire still in transit.";
+        wEl.settled.textContent = "SETTLED ON BASE · 2.0s · SIMULATED";
+        wEl.live.textContent = BRAND_NAME + " settled on Base in about 2 seconds. Wire still in transit.";
       }
 
       // Stage 2 time-lapse: EURC to EUR, SEPA Instant.
@@ -1025,12 +1025,12 @@ const DEMO_CONFIG = {
     name: "NAME",
     email: "WORK EMAIL",
     company: "COMPANY",
-    settling: "WHAT ARE YOU SETLING?",
+    settling: "WHAT ARE YOU SETTLING?",
     notes: "ANYTHING WE SHOULD KNOW? (OPTIONAL)",
   },
   options: ["Marketplace payouts", "Travel supply", "Property management", "Cross-border B2B", "Other"],
   submitLabel: "Request a demo",
-  settlingLabel: "Setling…",
+  settlingLabel: "Settling…",
   settleMs: 900,
   confirmHead: "Request received.",
   confirmLine: "Demo build note: this form is not connected yet. To reach us now, email the address below.",
@@ -1261,9 +1261,9 @@ if (anatRows && typeof SETTLEMENTS !== "undefined") {
   const bits = [];
   bits.push(isReal
     ? "Recorded on " + SETTLEMENTS.network + ". Follow any hash to verify it."
-    : "Illustrative setlments, not chain records. Every hash is prefixed 0xsim and is not linked.");
+    : "Illustrative settlements, not chain records. Every hash is prefixed 0xsim and is not linked.");
   if (SETTLEMENTS.audit && SETTLEMENTS.audit.firm) {
-    let a = "Setlment contracts audited by " + SETTLEMENTS.audit.firm;
+    let a = "Settlement contracts audited by " + SETTLEMENTS.audit.firm;
     if (SETTLEMENTS.audit.date) a += ", " + SETTLEMENTS.audit.date;
     bits.push(a + ".");
   }
