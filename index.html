@@ -58,35 +58,48 @@
 <!-- ============================================================
      1. HERO
 ============================================================ -->
-<section class="hero" id="hero">
+<section class="hero tier-primary" id="hero">
   <div class="container">
     <p class="eyebrow">EURC on Base &middot; whitelabelled setlment infrastructure</p>
+
+    <!-- ============================================================
+         HERO SETTLEMENT ROW (Phase 3.2)
+         The product demonstration and the headline at the same time. One
+         ledger row: counterparties, amount, split and elapsed time as
+         columns. It executes ONCE on load, in real time, and the elapsed
+         figure lands in the low hundreds of milliseconds.
+
+         The elapsed figure is the largest numeral on the page, but it is the
+         ELAPSED column's value, sitting under that column's own label on the
+         row's baseline. It is a table cell that happens to be 116px, not a
+         stat floating over a caption.
+    ============================================================ -->
+    <div class="hrow" id="hrow" data-state="idle">
+      <div class="hrow-head">
+        <span class="glabel">From</span>
+        <span class="glabel">To</span>
+        <span class="glabel">Amount</span>
+        <span class="glabel">Split</span>
+        <span class="glabel hrow-elapsed-label">Elapsed</span>
+      </div>
+      <div class="hrow-body">
+        <span class="hrow-cell" data-label="From" id="hrow-from">Guest booking</span>
+        <span class="hrow-cell" data-label="To" id="hrow-to">Host &middot; M&aacute;laga</span>
+        <span class="hrow-cell" data-label="Amount" id="hrow-amount">&euro;1,000.00</span>
+        <span class="hrow-cell" data-label="Split" id="hrow-split">3 ways</span>
+        <span class="hrow-figure" id="hrow-elapsed">0.00s</span>
+      </div>
+      <p class="hrow-foot">
+        <span class="hrow-status" id="hrow-status">Settling</span>
+        <span class="hrow-note">Representative of tested runs, not a live feed<span class="note-ref"><button class="note-btn" type="button" aria-expanded="false" aria-describedby="note-3" aria-label="Note 3 about this row">3</button><span class="note-pop" role="tooltip" hidden>An illustrative settlement, not a live feed. Amounts and timings are representative of tested runs.</span></span></span>
+      </p>
+    </div>
+
     <h1 class="hero-h1">The money arrives the moment the service does.</h1>
-    <p class="hero-sub">Every business that takes payment before it delivers sits on a float: cash held in limbo between pay and deliver. <span data-brand>Setlz</span> turns that gap into instant, whitelabelled setlment utilising stablecoins, at 40% below what they pay today.</p>
+    <p class="hero-sub">Every business that takes payment before it delivers sits on a float. <span data-brand>Setlz</span> closes it the moment delivery lands.</p>
     <div class="hero-ctas">
       <a class="btn btn-primary" href="#request-demo">Request a demo</a>
-      <a class="btn btn-ghost" href="#hold">See it setl</a>
-    </div>
-  </div>
-
-  <!-- Live setlment stream -->
-  <div class="container stream-wrap">
-    <div class="stream-card">
-      <div class="stream-head">
-        <span class="mono stream-label"><span class="pulse-dot" aria-hidden="true"></span>SETLMENT STREAM</span>
-        <span class="mono stream-note">RAIL BUILT AND TESTED END TO END<span class="note-ref"><button class="note-btn" type="button" aria-expanded="false" aria-describedby="note-3" aria-label="Note 3 about this stream">3</button><span class="note-pop" role="tooltip" hidden>An illustrative flow, not a live feed. Amounts and timings are representative of tested runs.</span></span></span>
-      </div>
-      <div class="stream-body">
-        <div class="stream-lanes" id="stream-lanes" aria-hidden="true">
-          <div class="lane-line"></div>
-          <div class="lane-line"></div>
-          <div class="lane-line"></div>
-        </div>
-        <div class="ledger">
-          <div class="mono ledger-head">SETLD</div>
-          <ul id="ledger-list" class="ledger-list"></ul>
-        </div>
-      </div>
+      <a class="hero-link" href="#hold">See it setl</a>
     </div>
   </div>
 </section>

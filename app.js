@@ -34,84 +34,58 @@ function randomHash(len = 8) {
   return out;
 }
 
-function shortHash() {
-  return "0x" + randomHash(4) + "…" + randomHash(4);
-}
-
 /* ============================================================
-   SETTLEMENT STREAM (hero)
-   Simulated flow for the demo; amounts are illustrative only.
+   HERO SETTLEMENT ROW (Phase 3.2)
+
+   Replaces the settlement stream, which looped on a setInterval forever and
+   read as a screensaver. This runs ONCE on load and stops.
+
+   The elapsed figure counts in real time and lands in the low hundreds of
+   milliseconds. Driven by requestAnimationFrame with delta accumulation, the
+   same approach the map race uses, so a backgrounded tab cannot make it jump
+   to the end.
 ============================================================ */
 
-const lanesEl = document.getElementById("stream-lanes");
-const ledgerEl = document.getElementById("ledger-list");
+const hrow = document.getElementById("hrow");
 
-const AMOUNTS = [
-  "€1,240.00", "€86.50", "€2,412.00", "€318.75",
-  "€940.00", "€152.20", "€4,080.00", "€67.90",
-  "€512.40", "€1,795.00",
-];
+if (hrow) {
+  const elapsedEl = document.getElementById("hrow-elapsed");
+  const statusEl = document.getElementById("hrow-status");
+  const cells = Array.from(hrow.querySelectorAll(".hrow-cell"));
 
-let amountIdx = Math.floor(Math.random() * AMOUNTS.length);
-const LANE_POSITIONS = [14, 44, 74]; // % from top of the lanes box
-let laneIdx = 0;
+  // Where the figure lands. Low hundreds of ms, per the brief.
+  const HERO_TARGET_MS = 420;
+  const CELL_STAGGER_MS = 70;
 
-function settleToLedger(amount, seconds) {
-  const li = document.createElement("li");
-  const amt = document.createElement("span");
-  amt.className = "ledger-amt";
-  amt.textContent = amount;
-  const time = document.createElement("span");
-  time.className = "ledger-time";
-  time.textContent = seconds.toFixed(1) + "s";
-  const hash = document.createElement("span");
-  hash.className = "ledger-hash";
-  hash.textContent = shortHash();
-  li.append(amt, time, hash);
-  ledgerEl.prepend(li);
-  while (ledgerEl.children.length > 6) ledgerEl.lastElementChild.remove();
-}
-
-function spawnChip() {
-  if (!lanesEl) return;
-  const amount = AMOUNTS[amountIdx % AMOUNTS.length];
-  amountIdx++;
-
-  const travelSeconds = 0.9 + Math.random() * 1.5;
-
-  if (prefersReducedMotion) {
-    settleToLedger(amount, travelSeconds);
-    return;
+  function settle() {
+    hrow.dataset.state = "settled";
+    elapsedEl.textContent = (HERO_TARGET_MS / 1000).toFixed(2) + "s";
+    statusEl.textContent = "Setld on Base";
   }
 
-  const chip = document.createElement("div");
-  chip.className = "chip";
-  chip.innerHTML = '<span class="chip-cur">EURC</span><span>' + amount + "</span>";
-  chip.style.top = LANE_POSITIONS[laneIdx % LANE_POSITIONS.length] + "%";
-  laneIdx++;
-  lanesEl.appendChild(chip);
-
-  const distance = lanesEl.clientWidth + 220;
-  chip.style.transition = "transform " + travelSeconds + "s cubic-bezier(0.3, 0, 0.2, 1)";
-
-  requestAnimationFrame(() => {
-    requestAnimationFrame(() => {
-      chip.style.transform = "translateX(" + distance + "px)";
+  if (prefersReducedMotion) {
+    // Completed row immediately, no execution animation.
+    settle();
+  } else {
+    hrow.dataset.state = "running";
+    // Cells arrive left to right, so the row reads as it fills.
+    cells.forEach((c, i) => {
+      c.style.opacity = "0";
+      setTimeout(() => { c.style.opacity = "1"; }, i * CELL_STAGGER_MS);
     });
-  });
 
-  setTimeout(() => {
-    chip.remove();
-    settleToLedger(amount, travelSeconds);
-  }, travelSeconds * 1000);
-}
+    let ms = 0, prev = null;
+    const MAX_FRAME_MS = 50;
 
-if (lanesEl && ledgerEl) {
-  // Seed the ledger so it never looks empty on load.
-  settleToLedger(AMOUNTS[7], 1.3);
-  settleToLedger(AMOUNTS[3], 2.1);
-  spawnChip();
-  setInterval(spawnChip, 1500);
+    function tick(now) {
+      ms += prev === null ? 0 : Math.min(now - prev, MAX_FRAME_MS);
+      prev = now;
+      if (ms >= HERO_TARGET_MS) { settle(); return; }
+      elapsedEl.textContent = (ms / 1000).toFixed(2) + "s";
+      requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  }
 }
 
 /* ============================================================

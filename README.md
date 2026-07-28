@@ -22,17 +22,44 @@ No Python? Any static file server works:
 npx serve . -l 8231
 ```
 
-There is no build step, no backend, and no tracking. Four files: `index.html`, `styles.css`, `app.js`, and `map-dots.js` (generated dot-matrix land grid; the site makes no external requests at runtime).
+There is no build step, no backend, and no tracking. `index.html`, `verticals/index.html`, `styles.css`, `app.js`, `map-dots.js` (generated dot-matrix land grid) and three self-hosted variable fonts in `fonts/`. The site makes no external requests at runtime, which as of Phase 2.2 is finally true: the Google Fonts links are gone.
 
-## World map race (v2.3)
+## World map race (v2.3, repaired in the v3 rebuild)
 
 The comparison section opens with an animated map race: the same payment sent on Setlz rails (2 second great-circle arc with a mid-Atlantic USDC to EURC coin flip, then a time-lapsed SEPA Instant bank-credit stage) versus a traditional wire crawling through correspondent hops with a day counter, a ticking fee meter, and a banking hours stall. Three corridor presets (Detroit to Paris, Malaga to Dublin, Accra to Rotterdam, the last labelled exploratory). All corridor data (pins, hops, viewBoxes, captions, payoff lines, timings) lives in `WM_CONFIG` at the top of the map block in `app.js`. The dot grid in `map-dots.js` was generated offline from public-domain world polygons (`tools` scratch script); regenerate only if the crop needs to change. Reduced motion renders the completed diagram with meters filled.
 
-## Escrow simulator (v2.2)
+The race never actually finished before the rebuild: the markup carried `id="wm-setld"` while `app.js` looks up `wm-settled`, so the frame loop threw at the moment the arc completed. The brand-spelling rule below applies to rendered strings only, never to ids or classes.
+
+## Escrow simulator (v2.2, flattened in Phase 2.3)
 
 The Hold section centres on an interactive escrow demo: payment streams into on-chain escrow, a visible release rule holds it, the visitor confirms the condition (or opens a dispute) and watches the atomic split fire in under a second. All demo values (amounts, split, rule text, stage labels, copy beats, timings) live in one `ESCROW_CONFIG` object at the top of the simulator block in `app.js`. The tx hash is deliberately fake (`0xSIM…DEMO`, labelled simulated). Reduced motion is respected (fades, no particles) and state changes are announced via aria-live.
 
 v2.4 universalised the labels: the widget defaults to a generic marketplace (Payer, Seller, Partner, Platform, delivery confirmed) with scenario presets for Short-term rental (Guest, Host, check-in) and B2B trade (Supplier, milestone, tagged exploratory). Labels only: amounts and mechanics are identical in every scenario, all defined in `ESCROW_CONFIG.scenarios`. v2.5 added the CARD | EURC | USDC rail chips plus a ghost "+ any Base stablecoin" chip (cosmetic; EURC stays the demo settlement path) and the multi-coin strip after How it works. FX claims are always scoped ("basis-point spreads on deep pools", never a rate promise); tGBP is named once, with the FCA-registered/live-on-Base facts and the not-a-partnership footnote; "integration-ready" describes stack effort, not market depth. The any-stablecoin framing stays off the Circle deck.
+
+## Hero settlement row (v3.2)
+
+The hero is one ledger row: counterparties, amount, split and elapsed time as
+columns. It executes **once** on load and stops; the previous settlement stream
+looped on a `setInterval` forever and read as a screensaver. The elapsed figure
+is the largest numeral on the page but lives inside the row as the ELAPSED
+column's value, under that column's own label, so it is a table cell rather than
+a stat tile. `HERO_TARGET_MS` in `app.js` sets where it lands. Reduced motion
+renders the completed row with no execution animation.
+
+## Settlement rail (v3.1)
+
+A persistent vertical rail in the left gutter, carrying the deck's settlement
+line: four nodes (Customer pays, Held in escrow, Stablecoin service delivered,
+Provider paid) whose dots run mist to ink to signal with a wash ring at settled.
+State advances as the reader scrolls, so the reader moving down the page is the
+transaction settling, and green appears only at the last stage.
+
+State is mapped to **named sections** in `RAIL_STAGES` in `app.js`, never to
+pixel offsets, so content edits cannot silently break it. Driven by an
+IntersectionObserver with a thin rootMargin band; there is no scroll listener
+anywhere in the codebase. Decorative: `aria-hidden`, no focusable children.
+Hidden below 760px (it cannot earn a gutter at 390px) and labels drop below
+1200px. Reduced motion renders it static and complete.
 
 ## Rename in one line
 

@@ -410,7 +410,7 @@ h3 {
 /* Tabular figures wherever a numeral sits in a data position. Martian Mono
    is monospaced so its digits are equal-width by construction; this makes
    the intent explicit and also covers Inter, which is not. */
-.gval, .gval-lg, .ledger-list, .compare-table, .esc, .wm-meters, .notes {
+.gval, .gval-lg, .hrow, .compare-table, .esc, .wm-meters, .notes {
   font-variant-numeric: tabular-nums;
   font-feature-settings: "tnum" 1;
 }
@@ -695,123 +695,120 @@ h3 {
 
 .hero-ctas { display: flex; gap: var(--space-3); flex-wrap: wrap; }
 
-/* ---------- settlement stream ---------- */
+/* ---------- hero settlement row (Phase 3.2) ----------
+   Same ledger grid as .group elsewhere, but one row wide and with the last
+   column carrying the hero figure. The figure is a cell, not a tile. */
 
-.stream-wrap { margin-top: var(--space-8); position: relative; }
-
-/* Flattened in 2.3: was a bordered, shadowed card. Now a ruled group. */
-.stream-card {
+.hrow {
+  margin-top: var(--space-7);
   border-top: var(--rule-w) solid var(--rule);
-  overflow: hidden;
 }
 
-.stream-head {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: var(--space-3);
-  flex-wrap: wrap;
-  padding: var(--space-3) var(--space-4);
-  border-bottom: 1px solid var(--line);
-}
-
-.stream-label { color: var(--ink); display: inline-flex; align-items: center; gap: var(--space-2); }
-.stream-note { color: var(--ink-soft); }
-
-.pulse-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: var(--ink);
-  animation: pulse 1.6s ease-out infinite;
-}
-@keyframes pulse {
-  0% { box-shadow: 0 0 0 0 var(--shadow-ink); }
-  100% { box-shadow: 0 0 0 9px transparent; }
-}
-
-.stream-body {
+.hrow-head,
+.hrow-body {
   display: grid;
-  grid-template-columns: 1fr 300px;
-  min-height: 240px;
+  grid-template-columns: 1.3fr 1.3fr 1fr 0.7fr minmax(28%, 1.6fr);
+  gap: var(--space-5);
+  align-items: baseline;
 }
-
-.stream-lanes {
-  position: relative;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  padding: var(--space-2) 0;
+.hrow-head { padding: var(--space-3) 0 0; }
+.hrow-body {
+  padding: 0 0 var(--space-3);
+  border-bottom: var(--hair-w) solid var(--hair);
 }
+.hrow-elapsed-label { text-align: right; }
 
-.lane-line {
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--line) 12%, var(--line) 88%, transparent);
-}
-
-.chip {
-  position: absolute;
-  left: 0;
-  transform: translateX(-110%);
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-2);
-  padding: var(--space-2) var(--space-3);
-  border-radius: var(--radius);
-  border: 1px solid var(--ink);
-  background: var(--paper);
+.hrow-cell {
   font-family: var(--font-mono);
-  font-size: var(--mono-label);
-  font-weight: var(--display-w-semi);
+  font-size: var(--mono-row);
+  font-weight: var(--mono-row-w);
   color: var(--ink);
-  white-space: nowrap;
-  will-change: transform;
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
 }
 
-.chip::before {
-  content: "";
-  position: absolute;
-  right: 100%;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 90px;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, var(--ink));
-  opacity: 0.55;
+/* The largest numeral on the page. Right-aligned to its own column, on the
+   row's baseline, under the ELAPSED label. */
+.hrow-figure {
+  font-family: var(--font-mono);
+  font-size: var(--mono-hero);
+  font-weight: var(--mono-hero-w);
+  letter-spacing: var(--mono-hero-track);
+  line-height: 0.82;
+  text-align: right;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+  align-self: end;
 }
 
-.chip .chip-cur { color: var(--ink-soft); }
-
-.ledger {
-  border-left: 1px solid var(--line);
-  padding: var(--space-4) var(--space-4);
-  background: var(--ground-alt);
-}
-
-.ledger-head { color: var(--ink-soft); margin-bottom: var(--space-3); }
-
-.ledger-list { list-style: none; }
-
-.ledger-list li {
+.hrow-foot {
   display: flex;
   justify-content: space-between;
-  align-items: baseline;
-  gap: var(--space-2);
+  gap: var(--space-4);
+  flex-wrap: wrap;
+  padding-top: var(--space-3);
+}
+.hrow-status,
+.hrow-note {
   font-family: var(--font-mono);
   font-size: var(--mono-label);
-  padding: var(--space-2) 0;
-  border-bottom: 1px dashed var(--line);
-  animation: ledger-in 0.3s ease;
+  font-weight: var(--mono-label-w);
+  letter-spacing: var(--mono-label-track);
+  text-transform: uppercase;
+  color: var(--ink-soft);
 }
-@keyframes ledger-in {
-  from { opacity: 0; transform: translateY(-6px); }
-  to { opacity: 1; transform: none; }
+/* Settled is the one non-CTA green: ink text, signal marker. */
+.hrow[data-state="settled"] .hrow-status { color: var(--ink); font-weight: var(--display-w-semi); }
+.hrow[data-state="settled"] .hrow-status::before {
+  content: "";
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--signal);
+  margin-right: var(--space-2);
+  vertical-align: 1px;
 }
 
-.ledger-amt { font-weight: var(--display-w-semi); }
-.ledger-time { color: var(--ink); font-weight: var(--display-w-semi); }
-.ledger-hash { color: var(--ink-soft); }
+/* Cells arrive as the row executes. */
+.hrow-cell, .hrow-figure { transition: opacity var(--t-fast) var(--ease); }
+.hrow[data-state="idle"] .hrow-cell,
+.hrow[data-state="idle"] .hrow-figure { opacity: 0; }
+
+@media (prefers-reduced-motion: reduce) {
+  .hrow-cell, .hrow-figure { transition: none; }
+  .hrow[data-state="idle"] .hrow-cell,
+  .hrow[data-state="idle"] .hrow-figure { opacity: 1; }
+}
+
+@media (max-width: 760px) {
+  /* Five columns cannot hold at 390px. The row stacks into label/value
+     pairs, and the figure keeps its own full-width line. */
+  .hrow-head { display: none; }
+  .hrow-body { grid-template-columns: 1fr; gap: var(--space-2); }
+  .hrow-cell::before {
+    content: attr(data-label);
+    display: block;
+    font-size: var(--mono-label);
+    letter-spacing: var(--mono-label-track);
+    color: var(--ink-soft);
+    margin-bottom: 2px;
+  }
+  .hrow-figure { text-align: left; margin-top: var(--space-3); }
+}
+
+/* Hero link beside the primary CTA: a text link, not a second button. */
+.hero-link {
+  font-family: var(--font-display);
+  font-weight: var(--display-w-semi);
+  font-size: var(--body);
+  color: var(--ink);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  align-self: center;
+}
+.hero-link:hover { text-decoration-thickness: 2px; }
 
 /* ---------- sections ---------- */
 
@@ -1826,8 +1823,6 @@ h3 {
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .reveal { opacity: 1; transform: none; transition: none; }
-  .chip { transition: none !important; }
-  .pulse-dot { animation: none; }
 }
 
 /* ---------- responsive ---------- */
@@ -1840,7 +1835,6 @@ h3 {
   .nav-links { display: none; }
   .hero { padding: var(--space-8) 0 var(--space-8); }
   .stream-body { grid-template-columns: 1fr; }
-  .ledger { border-left: none; border-top: 1px solid var(--line); }
   .steps { grid-template-columns: 1fr; }
   .esc-board { grid-template-columns: 1fr; }
   .esc { padding: var(--space-4) var(--space-4) var(--space-5); }
