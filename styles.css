@@ -86,6 +86,9 @@
   --on-dark-soft:  rgba(251, 250, 247, 0.72);
   --on-dark-faint: rgba(251, 250, 247, 0.5);
   --on-dark-line:  rgba(251, 250, 247, 0.16);
+  /* Form-field boundary on the dark ground. Must clear 3:1 per WCAG 1.4.11,
+     which --on-dark-line at 1.61:1 did not. Measured 3.1:1. */
+  --on-dark-edge:  rgba(251, 250, 247, 0.36);
   --on-dark-fill:  rgba(251, 250, 247, 0.06);
 
   /* ---------- faces ---------- */
@@ -429,6 +432,22 @@ h3 {
 .notes li,
 .race-caption,
 .cases-more { max-width: var(--measure); }
+
+
+/* ---------- focus (Phase 7.2) ----------
+   Previously only three components declared a focus style and the form fields
+   actively removed the outline, leaving the rest to browser defaults. This is
+   explicit, contrast-checked, and keyboard-only via :focus-visible so a mouse
+   click does not leave a ring behind. */
+:focus-visible {
+  outline: var(--focus-ring) solid var(--ink);
+  outline-offset: var(--focus-offset);
+}
+/* On the ink ground an ink ring is invisible. */
+.band-dark :focus-visible,
+.demo-band :focus-visible {
+  outline-color: var(--on-dark);
+}
 
 /* ---------- buttons ---------- */
 
@@ -1621,40 +1640,39 @@ h3 {
 }
 
 .demo-card {
-  color: var(--ink);
+  color: var(--on-dark);
   padding: var(--space-5);
-  border-top: var(--rule-w) solid var(--rule);
+  border-top: var(--rule-w) solid var(--on-dark);
 }
 
 .demo-field { display: flex; flex-direction: column; gap: var(--space-2); margin-bottom: var(--space-4); }
 
-.demo-field label { color: var(--ink-soft); }
+.demo-field label { color: var(--on-dark-soft); }
 
 .demo-field input,
 .demo-field select,
 .demo-field textarea {
   font-family: var(--font-body);
   font-size: var(--mono-row);
-  color: var(--ink);
-  border: 1px solid var(--line);
+  color: var(--on-dark);
+  border: 1px solid var(--on-dark-edge);
   border-radius: var(--radius);
   padding: var(--space-2) var(--space-3);
-  background: var(--ground-alt);
+  background: transparent;
   resize: vertical;
 }
 
 .demo-field input:focus,
 .demo-field select:focus,
 .demo-field textarea:focus {
-  outline: none;
-  border-color: var(--ink);
-  box-shadow: 0 0 0 3px var(--mist);
-  background: var(--paper);
+  border-color: var(--on-dark);
+  box-shadow: 0 0 0 3px var(--on-dark-fill);
+  background: var(--on-dark-fill);
 }
 
-.demo-field.is-invalid input { border-color: var(--ink); }
+.demo-field.is-invalid input { border-color: var(--on-dark); }
 
-.demo-error { color: var(--ink); font-weight: var(--display-w-semi); font-size: var(--mono-label); }
+.demo-error { color: var(--on-dark); font-weight: var(--display-w-semi); font-size: var(--mono-label); }
 
 .demo-submit {
   width: 100%;
@@ -1672,10 +1690,10 @@ h3 {
 }
 @keyframes demo-fill { to { background-size: 100% 100%; } }
 
-.demo-fine { margin-top: var(--space-3); color: var(--ink-soft); font-size: var(--mono-label); }
+.demo-fine { margin-top: var(--space-3); color: var(--on-dark-faint); font-size: var(--mono-label); }
 
 .demo-confirm h3 { margin-bottom: var(--space-3); }
-.demo-confirm p { color: var(--ink-soft); font-size: var(--mono-row); margin-bottom: var(--space-4); }
+.demo-confirm p { color: var(--on-dark-soft); font-size: var(--mono-row); margin-bottom: var(--space-4); }
 
 .demo-mailto {
   display: inline-block;
@@ -1687,7 +1705,11 @@ h3 {
   text-decoration: none;
   padding: var(--space-2) var(--space-3);
 }
-.demo-mailto:hover { border-color: var(--ink); }
+.demo-mailto:hover { border-color: var(--on-dark); }
+
+/* The confirmation heading inherited --ink and was therefore invisible on the
+   dark band: measured 1:1 before this. */
+.demo-confirm h3 { color: var(--on-dark); }
 
 /* ---------- footer ---------- */
 
@@ -1746,8 +1768,10 @@ h3 {
   min-height: 15px;
   padding: 2px 3px;
   margin-left: 3px;
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
+  /* --line measured 1.38:1 against paper. This is an interactive control, so
+     its boundary needs 3:1 under WCAG 1.4.11; --ink-soft is 8:1. */
+  border: 1px solid var(--ink-soft);
+  border-radius: 3px;
   background: var(--ground-alt);
   color: var(--ink-soft);
   cursor: help;

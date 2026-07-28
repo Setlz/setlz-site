@@ -61,3 +61,22 @@ problem.
 | `measure.js` | The console snippet that produced `metrics.json`. Paste at each width. |
 | `baseline/metrics.json` | Pre-Phase-1 numbers, at commit `89b1a1b`. |
 | `current/` | Created when a comparison run is made. |
+
+## Accessibility audit (Phase 7.2)
+
+axe-core is used for the audit but deliberately **not committed** — it is a
+553KB dev dependency in a repo whose entire shipped payload is smaller than
+that, and nothing on the site links to it. `design/vendor/` is gitignored.
+
+To re-run:
+
+```bash
+curl -sL https://cdn.jsdelivr.net/npm/axe-core@4.10.2/axe.min.js -o design/vendor/axe.min.js
+```
+
+Then, with the site open, inject `/design/vendor/axe.min.js` and call
+`axe.run(document, {runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21a','wcag21aa','best-practice']}})`.
+
+Force `.reveal` elements visible first (`document.querySelectorAll('.reveal')
+.forEach(e=>e.classList.add('is-visible'))`) or scroll-gated content is
+audited while transparent and contrast checks come back incomplete.
