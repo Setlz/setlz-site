@@ -17,16 +17,16 @@
   iframe{border:0;display:block;transform-origin:0 0}
   /* one scale for all three so the comparison is honest */
   .s1440 .shot{width:432px;height:510px}
-  .s1440 iframe{width:1440px;height:6800px;transform:scale(.3) translateY(-4960px)}
+  .s1440 iframe{width:1440px;height:9100px;transform:scale(.3) translateY(-7240px)}
   .s768  .shot{width:230px;height:510px}
-  .s768  iframe{width:768px;height:6500px;transform:scale(.3) translateY(-4660px)}
+  .s768  iframe{width:768px;height:8800px;transform:scale(.3) translateY(-6880px)}
   .s390  .shot{width:117px;height:510px}
-  .s390  iframe{width:390px;height:7900px;transform:scale(.3) translateY(-6020px)}
+  .s390  iframe{width:390px;height:10500px;transform:scale(.3) translateY(-8590px)}
 </style>
 </head>
 <body>
-<h1>Anatomy of a setlment · Phase 4.1</h1>
-<p class="sub">Live iframes of the real page at 1440, 768 and 390, all at the same 0.30 scale. The interactive settlement anatomy that replaced the decorative hash. First row expanded.</p>
+<h1>Pricing · Phase 4.3</h1>
+<p class="sub">Live iframes of the real page at 1440, 768 and 390, all at the same 0.30 scale. The pricing block: a real basis-point band, tiered by settled volume, and the licence stated at cost.</p>
 <div class="sheet">
   <div class="col s1440"><p class="cap">1440 <span>desktop</span></p><div class="shot"><iframe src="/" data-y="1150"></iframe></div></div>
   <div class="col s768"><p class="cap">768 <span>tablet</span></p><div class="shot"><iframe src="/" data-y="1500"></iframe></div></div>
@@ -40,7 +40,7 @@
       // Only force the reveal animations open. Vertical offset is done with a
       // transform in CSS, because scrolling is pinned in the preview pane.
       const dd=f.contentDocument;dd.querySelectorAll('.reveal').forEach(e=>e.classList.add('is-visible'));
-      const b=dd.querySelector('.anat-head'); if(b) b.click();
+      
     });
   });
 </script>
