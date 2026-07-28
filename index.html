@@ -300,6 +300,49 @@
     <p class="eyebrow mono">06 &middot; THE COMPARISON</p>
     <h2 class="h2">Why traditional rails lose.</h2>
 
+    <!-- Cross-border world map race (change order v2.3). All corridor data in WM_CONFIG in app.js. -->
+    <div class="wm reveal" id="wm">
+      <div class="wm-top">
+        <div class="wm-corridors" id="wm-corridors" role="group" aria-label="Corridor presets"></div>
+        <button class="btn btn-ghost btn-sm" id="wm-replay" type="button">Replay</button>
+        <span class="mono wm-note">CAPABILITY DEMONSTRATION &middot; SIMULATED TRANSACTIONS AND TIMESTAMPS</span>
+      </div>
+
+      <div class="wm-map" id="wm-map">
+        <svg id="wm-svg" preserveAspectRatio="xMidYMid meet" aria-hidden="true"></svg>
+        <div class="wm-ov wm-daybox mono" id="wm-daybox" hidden></div>
+        <div class="wm-ov wm-stall mono" id="wm-stall" hidden>BANKING HOURS</div>
+        <div class="wm-ov wm-flipcap" id="wm-flipcap" hidden></div>
+        <div class="wm-ov wm-dest" id="wm-dest" hidden>
+          <div class="mono wm-setld" id="wm-setld"></div>
+          <div class="mono wm-stage2" id="wm-stage2" hidden></div>
+        </div>
+      </div>
+
+      <div class="wm-meters">
+        <div class="wm-lane wm-lane-setlz">
+          <span class="mono wm-lane-title" id="wm-lane-brand">SETLZ</span>
+          <div class="mono wm-row"><span>ON-CHAIN FINALITY</span><span id="wm-fin">0.0s</span></div>
+          <div class="mono wm-row"><span>BANK CREDIT</span><span id="wm-credit">SEPA INSTANT · PENDING</span></div>
+          <div class="mono wm-row"><span>NETWORK COST</span><span>UNDER $0.01*</span></div>
+          <div class="mono wm-row"><span>FX</span><span>BASIS-POINT SPREAD ON DEEP POOLS</span></div>
+          <p class="mono wm-foot">*ON-CHAIN SETLMENT COST. OFF-RAMP PROVIDER FEE APPLIES.</p>
+        </div>
+        <div class="wm-lane">
+          <span class="mono wm-lane-title">INTERNATIONAL WIRE</span>
+          <div class="mono wm-row"><span>ELAPSED</span><span id="wm-elapsed">NOT STARTED</span></div>
+          <div class="mono wm-row"><span>FEES</span><span id="wm-fees">$0</span></div>
+          <div class="mono wm-row"><span>HOPS</span><span>4 TO 5 INTERMEDIARIES</span></div>
+          <div class="mono wm-row"><span>FX MARGIN</span><span>1 TO 4% HIDDEN IN THE RATE</span></div>
+          <div class="mono wm-row"><span>AVAILABILITY</span><span>BANKING HOURS ONLY</span></div>
+          <p class="mono wm-foot">TYPICAL INTERNATIONAL WIRE CHARGES. FX MARGIN APPLIES ON TOP OF THE $30 TO 40 IN FEES.</p>
+        </div>
+      </div>
+
+      <p class="wm-payoff" id="wm-payoff" hidden></p>
+      <div class="sr-only" aria-live="polite" id="wm-live"></div>
+    </div>
+
     <div class="table-scroll reveal">
       <table class="compare-table">
         <thead>
@@ -645,6 +688,7 @@
 
 </main>
 
+<script src="map-dots.js"></script>
 <script src="app.js"></script>
 </body>
 </html>
