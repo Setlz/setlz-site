@@ -5,9 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
 <title>Verticals &middot; Setlz</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter+Tight:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<!-- Self-hosted variable faces, 94KB total for the latin subset.
+     Preloaded so the stylesheet does not gate first paint on a
+     third-party round trip. -->
+<link rel="preload" href="/fonts/inter-latin-var.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/martian-mono-latin-var.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/space-grotesk-latin-var.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
@@ -47,7 +50,7 @@
 
 <section class="section" id="verticals">
   <div class="container">
-    <p class="eyebrow mono">VERTICALS</p>
+    <p class="eyebrow">Verticals</p>
     <h2 class="h2">Every vertical the rail runs.</h2>
     <p class="section-lede">The mechanics are identical in each: money is captured, held against a condition, and released the moment that condition is met. Only the trigger event changes. Short-term rental is built and tested with AtlasOra; the rest are patterns the same rail supports, not deployments.</p>
 

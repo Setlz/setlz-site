@@ -48,10 +48,10 @@ numbers make the decision for us:
 
 | Pairing | Ratio | Verdict |
 |---|---|---|
-| `--signal` `#1CA964` on paper | **2.9:1** | fails AA for text at any size below 18px bold; also under the 3:1 floor for a meaningful UI boundary |
-| `--signal-deep` `#0A6E48` on paper | **7.4:1** | passes AA and AAA for body text |
-| white on `--signal` | **3.0:1** | fails AA for a 16px button label |
-| white on `--signal-deep` | **6.3:1** | passes AA comfortably |
+| `--signal` `#1CA964` on paper | **2.91:1** | fails AA for text at any size below 18px bold; also under the 3:1 floor for a meaningful UI boundary |
+| `--signal-deep` `#0A6E48` on paper | **6.03:1** | passes AA for body text |
+| paper on `--signal` | **2.91:1** | fails AA for a 16px button label |
+| paper on `--signal-deep` | **6.03:1** | passes AA comfortably |
 
 So `--signal` **cannot** carry a button label, an eyebrow, or a data value regardless of
 what we would prefer. That settles it:
@@ -353,3 +353,32 @@ logo marquee, animated gradient text.
 2. **The eyebrow deviation:** Inter sentence case, or keep the deck's mono uppercase?
 3. **One dark section or two?** I propose one, the closing CTA.
 4. **Radius exception** for the note popover at 4px: allowed or forced to 0?
+
+---
+
+## Addendum: measured contrast (Phase 2.2)
+
+The ratios in section 1 were computed by hand at plan time. Re-measured against the
+rendered page after implementation, one was wrong and is corrected above:
+
+| Pairing | Planned | **Measured** | |
+|---|---|---|---|
+| ink on paper | — | **17.21:1** | ✓ |
+| ink-soft on paper | — | **8.02:1** | ✓ |
+| `--signal` on paper | 2.9 | **2.91:1** | fails as text, as expected |
+| `--signal-deep` on paper | 7.4 | **6.03:1** | **estimate was high**; still passes AA |
+| paper on `--signal-deep` (CTA) | 6.3 | **6.03:1** | ✓ passes AA |
+| ink on `--signal-wash` (settled) | — | **16.01:1** | ✓ |
+| `--signal` on ink (dark ground) | — | **5.91:1** | passes — see note |
+
+The decision is unaffected: `--signal-deep` passes AA for normal text and `--signal` does
+not, so the CTA reservation holds.
+
+One thing the measurement surfaced: **`--signal` passes AA on the dark ground at 5.91:1.**
+So green *could* legitimately carry text in the one dark section. We are declining that
+deliberately, to keep a single rule that is easy to hold — green means money landed or
+click here, on every ground. Recorded here so a future session knows the option exists and
+that it was refused rather than missed.
+
+The only element painting text in `--signal` is the logo's terminal `z`, at 20px/700. That
+is both large text and a logotype, which WCAG 1.4.3 exempts from contrast minimums.

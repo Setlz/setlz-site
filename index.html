@@ -5,9 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
 <title>Setlz</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter+Tight:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<!-- Self-hosted variable faces, 94KB total for the latin subset.
+     Preloaded so the stylesheet does not gate first paint on a
+     third-party round trip. -->
+<link rel="preload" href="fonts/inter-latin-var.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/martian-mono-latin-var.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/space-grotesk-latin-var.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -40,7 +43,7 @@
 <section class="hero">
   <div class="hero-glow" aria-hidden="true"></div>
   <div class="container">
-    <p class="eyebrow mono">EURC ON BASE &middot; WHITELABELLED SETLMENT INFRASTRUCTURE</p>
+    <p class="eyebrow">EURC on Base &middot; whitelabelled setlment infrastructure</p>
     <h1 class="hero-h1">The money arrives the moment the service does.</h1>
     <p class="hero-sub">Every business that takes payment before it delivers sits on a float: cash held in limbo between pay and deliver. <span data-brand>Setlz</span> turns that gap into instant, whitelabelled setlment utilising stablecoins, at 40% below what they pay today.</p>
     <div class="hero-ctas">
@@ -76,7 +79,7 @@
 ============================================================ -->
 <section class="section section-tight" id="what">
   <div class="container">
-    <p class="eyebrow mono">WHAT IT IS</p>
+    <p class="eyebrow">What it is</p>
     <p class="statement reveal">A setlment rail they own, not rent: any payment in, setld in EURC on Base in seconds, split atomically, under your brand.</p>
     <div class="flow reveal" role="img" aria-label="Customer pays, whitelabelled rail, held in escrow, service delivered, provider paid">
       <span class="mono flow-node">CUSTOMER PAYS</span><span class="flow-arrow" aria-hidden="true">&rarr;</span>
@@ -100,7 +103,7 @@
 ============================================================ -->
 <section class="section" id="how">
   <div class="container">
-    <p class="eyebrow mono">HOW IT WORKS</p>
+    <p class="eyebrow">How it works</p>
     <h2 class="h2">Fiat in. Stablecoin speed.<br>Fiat out. Owned end to end.</h2>
 
     <div class="steps">
@@ -173,7 +176,7 @@
 ============================================================ -->
 <section class="section section-tint" id="hold">
   <div class="container">
-    <p class="eyebrow mono">THE HOLD</p>
+    <p class="eyebrow">The hold</p>
     <h2 class="h2">Instant does not mean reckless.</h2>
     <p class="section-lede reveal">Every marketplace needs a gap between payment and payout. On <span data-brand>Setlz</span>, funds setl in seconds into on-chain escrow, fully reserved and lent to no one, and release is a rule you write.</p>
 
@@ -294,7 +297,7 @@
 ============================================================ -->
 <section class="section" id="compare">
   <div class="container">
-    <p class="eyebrow mono">THE COMPARISON</p>
+    <p class="eyebrow">The comparison</p>
     <h2 class="h2">Why traditional rails lose.</h2>
 
     <!-- Cross-border world map race (change order v2.3). All corridor data in WM_CONFIG in app.js. -->
@@ -380,7 +383,7 @@
 ============================================================ -->
 <section class="section" id="why">
   <div class="container">
-    <p class="eyebrow mono">WHY <span class="brand-upper" data-brand-upper>SETLZ</span> WINS</p>
+    <p class="eyebrow">Why <span data-brand>Setlz</span> wins</p>
     <h2 class="h2">Crypto rails exist. Almost nobody has built commerce on them. We did.</h2>
     <p class="section-lede reveal">Three camps: accounts that hold your money, rails that move it, orchestrators that dress up the old system. None of them setl a transaction end to end. We built the layer that does. Everyone sells the plumbing. We sell the appliance.</p>
 
@@ -490,7 +493,7 @@
      patterns; productising any of them is a Gavin decision first. -->
 <section class="section" id="cases">
   <div class="container">
-    <p class="eyebrow mono">USE CASES</p>
+    <p class="eyebrow">Use cases</p>
     <h2 class="h2">Proven on one marketplace. Built for many.</h2>
     <p class="section-lede reveal">The common thread is a float between payment and delivery. The same rail setlz freight, fintech, escrow and any marketplace holding customer funds before it delivers. Identical mechanics, different trigger event.</p>
 
@@ -537,7 +540,7 @@
 ============================================================ -->
 <section class="section section-tint" id="team">
   <div class="container">
-    <p class="eyebrow mono">TEAM</p>
+    <p class="eyebrow">Team</p>
     <h2 class="h2">Built the rail. Tested end to end.</h2>
     <p class="section-lede reveal"><span data-brand>Setlz</span> is built by the team that designed, shipped and runs the setlment rail for AtlasOra, our reference customer. Real infrastructure, not a slide.</p>
 
@@ -585,7 +588,7 @@
   <div class="container demo-grid">
 
     <div class="demo-copy">
-      <p class="eyebrow mono eyebrow-dark">GET A DEMO</p>
+      <p class="eyebrow eyebrow-dark">Get a demo</p>
       <h2 class="demo-h2">See it setl on your numbers.</h2>
       <p class="demo-sub">Twenty minutes, your flows, live on Base testnet. We will run your payout split through the engine while you watch.</p>
       <div class="demo-chips mono">
