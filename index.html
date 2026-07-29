@@ -188,10 +188,6 @@
       <div class="grow grow-def"><span class="glabel">05 &middot; Pay out</span><p>Near-instant, with native on and off ramps.</p></div>
     </div>
 
-<ul class="ilist reveal">
-      <li>Base network</li><li>EURC</li><li>On-chain wallets</li><li>KYC/AML integrated</li><li>EU geo-ring-fencing</li><li>Idle-balance treasury routing</li><li>Programmable escrow</li>
-    </ul>
-
 <!-- Multi-coin strip (change order v2.5). Compact, not a numbered section. -->
     <div class="block reveal">
       <h3>One engine, every currency.</h3>
@@ -297,6 +293,31 @@
       </div>
       <p class="esc-coin-caption">Setlz in EURC today. Engineered for any Base-native fiat stablecoin.</p>
       <div class="sr-only" aria-live="polite" id="esc-live"></div>
+    </div>
+
+    <!-- The three options a platform actually chooses between (Phase 5.5).
+         Factual, no adjectives, no defensibility language. States what each
+         option leaves the platform to do. -->
+    <div class="block reveal">
+      <h3>What you would otherwise be choosing between.</h3>
+      <div class="group">
+        <div class="grow grow-def">
+          <span class="glabel">Stripe Connect or Adyen for Platforms</span>
+          <p>Orchestrates legacy rails. Payouts still ride T+2 banking and banking-hours cut-offs, and the cost is a percentage of every transaction.</p>
+        </div>
+        <div class="grow grow-def">
+          <span class="glabel">A stablecoin rail, Bridge or BVNK</span>
+          <p>Moves the transfer leg. Escrow, conditional release, atomic splits and compliance hooks are left to you to build and operate.</p>
+        </div>
+        <div class="grow grow-def">
+          <span class="glabel">Building it yourself</span>
+          <p>The usual default. That means the escrow contracts, the trigger library, the dispute edge cases, the compliance wiring, the ramps and the reconciliation, then maintaining all of it.</p>
+        </div>
+        <div class="grow grow-def">
+          <span class="glabel"><span data-brand>Setlz</span></span>
+          <p>All of it, under your brand, on one rail. You define the release condition; we settle against it and split the payout in the same transaction.</p>
+        </div>
+      </div>
     </div>
 
 <div class="pullquotes">
@@ -420,6 +441,39 @@
       </ul>
       <p class="block-support">Screening as a release condition: an escrow can be programmed not to release until your own checks pass.</p>
     </div>
+
+    <!-- ============================================================
+         4.2 SAFETY AND CUSTODY
+         Only what can be stated truthfully today. The audit is real (Hacken).
+         Multisig threshold and insurance position are deliberately absent, per
+         instruction, not omitted by oversight.
+
+         TODO, facts required before launch. These are HTML comments rather
+         than visible placeholder text: a reader should never be shown a
+         half-written security claim, and this repo has no build step to fail
+         on an unfilled one.
+           TODO: Hacken report URL and audit date -> settlements.js audit{}
+           TODO: what backs the 99.9% uptime figure. Measurement window,
+                 what counts as downtime, and whether any SLA is contractual.
+           TODO: named incident and dispute escalation path, with response
+                 times. Currently stated only as "a defined window".
+    ============================================================ -->
+    <div class="block reveal">
+      <h3>Who can move the money.</h3>
+      <p class="block-lead">The question behind every other question on this page.</p>
+      <p class="block-support"><strong>Custody today:</strong> client-owned accounts at regulated bank and PSP partners. We hold no customer funds, so a failure on our side is not a loss of your money. Release is executed by the settlement contract against the condition you defined, not by someone at <span data-brand>Setlz</span> deciding to send it.</p>
+      <p class="block-support"><strong>Reserves:</strong> escrowed balances are held one for one in fully-reserved stablecoin. They are not lent, rehypothecated, or used for treasury yield. Idle-balance routing exists for our own operating float and never touches escrowed funds.</p>
+      <p class="block-support"><strong>Audit:</strong> the settlement contracts have been audited by Hacken.</p>
+      <p class="block-support"><strong>Disputes:</strong> outcomes are rule-based and resolve inside a defined window. Funds stay in escrow until the rule fires, so a dispute delays a release rather than clawing back a completed one.</p>
+    </div>
+
+    <div class="block reveal">
+      <h3>Where you stand, and where we do.</h3>
+      <p class="block-lead">Stated plainly, because it decides who carries what.</p>
+      <p class="block-support"><strong>Today:</strong> settlement runs on regulated bank and PSP partners with client-owned accounts. The funds stay in your name and we never take possession of them, so your merchant-of-record posture does not change.</p>
+      <p class="block-support"><strong>Next:</strong> we are acquiring an authorised EU electronic money institution. That makes us the regulated principal and lets us settle as merchant of record on your behalf, which moves liability for the settlement leg from you to us. That is why the licence matters to you and not only to us.</p>
+      <p class="block-support"><strong>Either way:</strong> escrowed balances are held one for one, fully reserved, and are not lent to anyone.</p>
+    </div>
   </div>
 </section>
 
@@ -535,7 +589,7 @@
   </div>
 
   <div class="container">
-<p class="section-lede reveal"><span data-brand>Setlz</span> is built by the team that designed, shipped and runs the settlement rail for AtlasOra. Real infrastructure, not a slide.</p>
+<p class="section-lede reveal">Who you will be working with, and what each of them has shipped.</p>
 
     <div class="group reveal">
       <div class="grow grow-def">
@@ -563,7 +617,7 @@
         <div><h3>Mark Mosley</h3><p>Scales onboarding, operations and the integration pipeline that brings each new client live.</p></div>
       </div>
     </div>
-    <p class="team-advisors reveal">Founders build and sell, reinforced by senior fintech and regulated-payments advisors we are bringing on.</p>
+    <p class="team-advisors reveal">Onboarding is run by the same people who built the rail, not handed to a separate implementation team.</p>
   </div>
 </section>
 
