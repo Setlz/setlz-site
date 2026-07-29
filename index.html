@@ -63,41 +63,94 @@
   <div class="container">
     <p class="eyebrow">EURC on Base &middot; whitelabelled settlement infrastructure</p>
 
-    <!-- ============================================================
-         HERO SETTLEMENT ROW (Phase 3.2)
-         The product demonstration and the headline at the same time. One
-         ledger row: counterparties, amount, split and elapsed time as
-         columns. It executes ONCE on load, in real time, and the elapsed
-         figure lands in the low hundreds of milliseconds.
+    <!-- Headline demoted to a supporting line ABOVE the statement, with the
+         emphasis carried in signal-deep the way the deck uses <em>. -->
+    <h1 class="hero-h1">The money arrives <em>the moment</em> the service does.</h1>
+    <p class="hero-sub">Every business that takes payment before it delivers sits on a float. <span data-brand>Setlz</span> closes it the moment delivery lands.</p>
 
-         The elapsed figure is the largest numeral on the page, but it is the
-         ELAPSED column's value, sitting under that column's own label on the
-         row's baseline. It is a table cell that happens to be 116px, not a
-         stat floating over a caption.
+    <!-- ============================================================
+         SETTLEMENT STATEMENT (Phase 3.2, revised brief)
+         A statement printed on continuous-feed paper, not a panel. SVG and
+         CSS only, no raster asset.
+
+         The perforation strip down the left edge is the defining device, and
+         four of its holes ARE the settlement rail: same state model, same
+         module, not two things that resemble each other. See SETTLEMENT_RAIL
+         in app.js.
     ============================================================ -->
-    <div class="hrow" id="hrow" data-state="idle">
-      <div class="hrow-head">
-        <span class="glabel">From</span>
-        <span class="glabel">To</span>
-        <span class="glabel">Amount</span>
-        <span class="glabel">Split</span>
-        <span class="glabel hrow-elapsed-label">Elapsed</span>
+    <div class="stmt" id="stmt" data-state="idle">
+      <div class="stmt-perf" aria-hidden="true">
+        <span class="perf-hole"></span>
+        <span class="perf-hole is-state" data-node="0"></span>
+        <span class="perf-hole"></span>
+        <span class="perf-hole is-state" data-node="1"></span>
+        <span class="perf-hole"></span>
+        <span class="perf-hole is-state" data-node="2"></span>
+        <span class="perf-hole"></span>
+        <span class="perf-hole is-state" data-node="3"></span>
+        <span class="perf-hole"></span>
       </div>
-      <div class="hrow-body">
-        <span class="hrow-cell" data-label="From" id="hrow-from">Guest booking</span>
-        <span class="hrow-cell" data-label="To" id="hrow-to">Host &middot; Málaga</span>
-        <span class="hrow-cell" data-label="Amount" id="hrow-amount">&euro;1,000.00</span>
-        <span class="hrow-cell" data-label="Split" id="hrow-split">3 ways</span>
-        <span class="hrow-figure" id="hrow-elapsed">0.00s</span>
+
+      <div class="stmt-body">
+        <div class="stmt-head">
+          <span class="stmt-brand" data-brand>Setlz</span>
+          <span class="stmt-title">Settlement statement</span>
+          <span class="stmt-ref">Ref SET-2026-0714-0093</span>
+        </div>
+
+        <div class="stmt-cols">
+          <span class="glabel">Value date</span>
+          <span class="glabel">Reference</span>
+          <span class="glabel">Counterparty</span>
+          <span class="glabel stmt-num">Amount</span>
+          <span class="glabel stmt-num">Elapsed</span>
+        </div>
+
+        <div class="stmt-row">
+          <span data-c="Value date">12 Jun 2026</span>
+          <span data-c="Reference">SET-0088</span>
+          <span data-c="Counterparty">Host &middot; Málaga</span>
+          <span class="stmt-num" data-c="Amount">&euro;1,240.00</span>
+          <span class="stmt-num" data-c="Elapsed">0.38s</span>
+        </div>
+        <div class="stmt-row">
+          <span data-c="Value date">28 Jun 2026</span>
+          <span data-c="Reference">SET-0091</span>
+          <span data-c="Counterparty">Carrier &middot; Rotterdam</span>
+          <span class="stmt-num" data-c="Amount">&euro;8,410.00</span>
+          <span class="stmt-num" data-c="Elapsed">0.51s</span>
+        </div>
+        <div class="stmt-row">
+          <span data-c="Value date">09 Jul 2026</span>
+          <span data-c="Reference">SET-0092</span>
+          <span data-c="Counterparty">Supplier &middot; Valencia</span>
+          <span class="stmt-num" data-c="Amount">&euro;26,000.00</span>
+          <span class="stmt-num" data-c="Elapsed">0.44s</span>
+        </div>
+
+        <div class="stmt-row stmt-live" id="stmt-live">
+          <span data-c="Value date">14 Jul 2026</span>
+          <span data-c="Reference">SET-0093</span>
+          <span data-c="Counterparty">Host &middot; Málaga</span>
+          <span class="stmt-num" data-c="Amount">&euro;1,000.00</span>
+          <span class="stmt-num stmt-elapsed" id="stmt-elapsed" data-c="Elapsed">0.00s</span>
+        </div>
+
+        <p class="stmt-split" id="stmt-split">
+          <span>Split</span>
+          <span>Provider &euro;880.00</span>
+          <span>Platform &euro;100.00</span>
+          <span>Tax &euro;20.00</span>
+        </p>
+
+        <div class="stmt-tear" aria-hidden="true"></div>
+        <div class="stmt-foot">
+          <span class="stmt-mark" id="stmt-mark">Settled</span>
+          <span class="stmt-note">Illustrative statement, representative of tested runs</span>
+        </div>
       </div>
-      <p class="hrow-foot">
-        <span class="hrow-status" id="hrow-status">Settling</span>
-        <span class="hrow-note">Representative of tested runs, not a live feed</span>
-      </p>
     </div>
 
-    <h1 class="hero-h1">The money arrives the moment the service does.</h1>
-    <p class="hero-sub">Every business that takes payment before it delivers sits on a float. <span data-brand>Setlz</span> closes it the moment delivery lands.</p>
     <div class="hero-ctas">
       <a class="btn btn-primary" href="#request-demo">Request a demo</a>
       <a class="hero-link" href="#how">See it settle</a>

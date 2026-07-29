@@ -35,56 +35,142 @@ function randomHash(len = 8) {
 }
 
 /* ============================================================
-   HERO SETTLEMENT ROW (Phase 3.2)
+   SETTLEMENT RAIL AND STATEMENT (Phase 3.2, revised brief)
 
-   Replaces the settlement stream, which looped on a setInterval forever and
-   read as a screensaver. This runs ONCE on load and stops.
+   ONE module, ONE state model. The four settlement states are rendered in two
+   places that are the same component rather than two things that resemble each
+   other: as four holes in the hero statement's tractor-feed perforation strip,
+   and as the persistent rail at the page edge once the hero scrolls away.
 
-   The elapsed figure counts in real time and lands in the low hundreds of
-   milliseconds. Driven by requestAnimationFrame with delta accumulation, the
-   same approach the map race uses, so a backgrounded tab cannot make it jump
-   to the end.
+   State is mapped to NAMED SECTIONS, never pixel offsets, so editing content
+   cannot silently break it. Driven by IntersectionObserver with a rootMargin
+   that collapses the viewport to a thin band, so exactly one section is
+   current. No scroll listener, and no geometry read in the callback.
 ============================================================ */
 
-const hrow = document.getElementById("hrow");
+const SETTLEMENT = (() => {
+  // Node order and labels are the deck's settlement line.
+  const STAGES = [
+    { label: "Customer pays",                ids: ["hero"] },
+    { label: "Held in escrow",               ids: ["how"] },
+    { label: "Stablecoin service delivered", ids: ["proof", "safety"] },
+    { label: "Provider paid",                ids: ["pricing", "request-demo"] },
+  ];
+  const LAST = STAGES.length - 1;
 
-if (hrow) {
-  const elapsedEl = document.getElementById("hrow-elapsed");
-  const statusEl = document.getElementById("hrow-status");
-  const cells = Array.from(hrow.querySelectorAll(".hrow-cell"));
+  // Both renderings of the same state.
+  const holes = Array.from(document.querySelectorAll(".perf-hole.is-state"));
+  const rail = document.getElementById("rail");
+  const nodes = rail ? Array.from(rail.querySelectorAll(".rail-node")) : [];
+  const segs = rail ? Array.from(rail.querySelectorAll(".rail-seg")) : [];
 
-  // Where the figure lands. Low hundreds of ms, per the brief.
-  const HERO_TARGET_MS = 420;
-  const CELL_STAGGER_MS = 70;
+  let stage = -1;
+
+  function paint(next) {
+    if (next === stage) return;
+    stage = next;
+    // perforation holes
+    holes.forEach((h, i) => {
+      h.classList.toggle("is-done", i < stage);
+      h.classList.toggle("is-current", i === stage && stage < LAST);
+      h.classList.toggle("is-settled", i === LAST && stage === LAST);
+    });
+    // the page-edge rail, same states
+    nodes.forEach((n, i) => {
+      n.classList.toggle("is-done", i < stage);
+      n.classList.toggle("is-current", i === stage && stage < LAST);
+      n.classList.toggle("is-settled", i === LAST && stage === LAST);
+    });
+    segs.forEach((sg, i) => {
+      sg.classList.toggle("is-filled", i < stage);
+      sg.classList.toggle("is-settling", i === stage && stage < LAST);
+    });
+  }
+
+  function observe() {
+    const stageOf = new Map();
+    STAGES.forEach((s, i) => s.ids.forEach((id) => stageOf.set(id, i)));
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) {
+          if (!e.isIntersecting) continue;
+          const s = stageOf.get(e.target.id);
+          if (s !== undefined) paint(s);
+        }
+      },
+      { rootMargin: "-42% 0px -56% 0px", threshold: 0 }
+    );
+    stageOf.forEach((_s, id) => {
+      const el = document.getElementById(id);
+      if (el) io.observe(el);
+    });
+  }
+
+  // The page-edge rail is hidden while the hero is on screen, because the
+  // statement's own perforation holes are showing the same state there. It
+  // would otherwise be the same indicator twice.
+  function handoverOnHeroExit() {
+    const hero = document.getElementById("hero");
+    if (!hero || !rail) return;
+    const io = new IntersectionObserver(
+      (entries) => entries.forEach((e) => rail.classList.toggle("is-hidden", e.isIntersecting)),
+      { threshold: 0.15 }
+    );
+    io.observe(hero);
+  }
+
+  return { paint, observe, handoverOnHeroExit, LAST, STAGES };
+})();
+
+if (prefersReducedMotion) {
+  SETTLEMENT.paint(0);
+} else {
+  SETTLEMENT.paint(0);
+  if ("IntersectionObserver" in window) {
+    SETTLEMENT.observe();
+    SETTLEMENT.handoverOnHeroExit();
+  }
+}
+
+/* ---------- the statement's live row, once on load ---------- */
+
+const stmt = document.getElementById("stmt");
+
+if (stmt) {
+  const elapsed = document.getElementById("stmt-elapsed");
+  const live = document.getElementById("stmt-live");
+  const cells = Array.from(live.querySelectorAll("span"));
+
+  const TARGET_MS = 420;      // lands in the low hundreds of milliseconds
+  const TYPE_STAGGER = 60;
 
   function settle() {
-    hrow.dataset.state = "settled";
-    elapsedEl.textContent = (HERO_TARGET_MS / 1000).toFixed(2) + "s";
-    statusEl.textContent = "Settled on Base";
+    stmt.dataset.state = "settled";
+    elapsed.textContent = (TARGET_MS / 1000).toFixed(2) + "s";
   }
 
   if (prefersReducedMotion) {
-    // Completed row immediately, no execution animation.
+    // The completed statement, immediately, with no sequence.
+    cells.forEach((c) => (c.style.opacity = "1"));
     settle();
   } else {
-    hrow.dataset.state = "running";
-    // Cells arrive left to right, so the row reads as it fills.
+    stmt.dataset.state = "running";
+    // The live row types in, column by column.
     cells.forEach((c, i) => {
       c.style.opacity = "0";
-      setTimeout(() => { c.style.opacity = "1"; }, i * CELL_STAGGER_MS);
+      setTimeout(() => { c.style.opacity = "1"; }, i * TYPE_STAGGER);
     });
 
     let ms = 0, prev = null;
-    const MAX_FRAME_MS = 50;
-
+    const MAX_FRAME_MS = 50;   // a backgrounded tab must not jump to the end
     function tick(now) {
       ms += prev === null ? 0 : Math.min(now - prev, MAX_FRAME_MS);
       prev = now;
-      if (ms >= HERO_TARGET_MS) { settle(); return; }
-      elapsedEl.textContent = (ms / 1000).toFixed(2) + "s";
+      if (ms >= TARGET_MS) { settle(); return; }
+      elapsed.textContent = (ms / 1000).toFixed(2) + "s";
       requestAnimationFrame(tick);
     }
-    requestAnimationFrame(tick);
+    setTimeout(() => requestAnimationFrame(tick), cells.length * TYPE_STAGGER);
   }
 }
 
@@ -1279,83 +1365,6 @@ if (anatRows && typeof SETTLEMENTS !== "undefined") {
     a.textContent = "Read the " + SETTLEMENTS.audit.firm + " report";
     foot.appendChild(document.createTextNode(" "));
     foot.appendChild(a);
-  }
-}
-
-/* ============================================================
-   SETTLEMENT RAIL (Phase 3.1)
-
-   State is mapped to NAMED SECTIONS, never to pixel offsets, so editing or
-   reordering content cannot silently break it. A section that disappears
-   simply drops out of the map.
-
-   Driven by IntersectionObserver with a rootMargin that collapses the
-   viewport to a thin band at 42% height, so exactly one section is
-   "current" at a time and no ratio arithmetic is needed. There is no
-   scroll listener, and no geometry is read during the callback, so the rail
-   cannot cause layout thrash. Work per stage change is a handful of class
-   toggles on eight elements, and it only runs when the stage actually
-   changes.
-============================================================ */
-
-const rail = document.getElementById("rail");
-
-if (rail) {
-  // Node order and labels are the deck's. Each stage lists the sections that
-  // belong to it; unknown ids are ignored, missing ones are harmless.
-  const RAIL_STAGES = [
-    ["hero"],                                     // Customer pays
-    ["how"],                                      // Held in escrow
-    ["proof", "safety"],                          // Stablecoin service delivered
-    ["pricing", "request-demo"],                  // Provider paid
-  ];
-  const LAST = RAIL_STAGES.length - 1;
-
-  const nodes = Array.from(rail.querySelectorAll(".rail-node"));
-  const segs = Array.from(rail.querySelectorAll(".rail-seg"));
-
-  function paint(stage) {
-    nodes.forEach((n, i) => {
-      n.classList.toggle("is-done", i < stage);
-      n.classList.toggle("is-current", i === stage && stage < LAST);
-      // The final node only turns green once the reader actually arrives.
-      n.classList.toggle("is-settled", i === LAST && stage === LAST);
-    });
-    segs.forEach((sg, i) => {
-      sg.classList.toggle("is-filled", i < stage);
-      sg.classList.toggle("is-settling", i === stage && stage < LAST);
-    });
-  }
-
-  if (prefersReducedMotion) {
-    // Static, complete, no transitions: every node done and the last settled.
-    rail.classList.add("is-static");
-    paint(LAST);
-  } else {
-    let current = -1;
-    const stageOf = new Map();
-    RAIL_STAGES.forEach((ids, i) => ids.forEach((id) => stageOf.set(id, i)));
-
-    paint(0);
-
-    const railIO = new IntersectionObserver(
-      (entries) => {
-        // The band is thin enough that at most one section reports in.
-        for (const entry of entries) {
-          if (!entry.isIntersecting) continue;
-          const stage = stageOf.get(entry.target.id);
-          if (stage === undefined || stage === current) continue;
-          current = stage;
-          paint(stage);
-        }
-      },
-      { rootMargin: "-42% 0px -56% 0px", threshold: 0 }
-    );
-
-    stageOf.forEach((_stage, id) => {
-      const el = document.getElementById(id);
-      if (el) railIO.observe(el);
-    });
   }
 }
 

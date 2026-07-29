@@ -411,7 +411,7 @@ h3 {
 /* Tabular figures wherever a numeral sits in a data position. Martian Mono
    is monospaced so its digits are equal-width by construction; this makes
    the intent explicit and also covers Inter, which is not. */
-.gval, .gval-lg, .hrow, .compare-table, .esc, .wm-meters {
+.gval, .gval-lg, .stmt, .compare-table, .esc, .wm-meters {
   font-variant-numeric: tabular-nums;
   font-feature-settings: "tnum" 1;
 }
@@ -505,6 +505,8 @@ h3 {
    Decorative: aria-hidden, not focusable, pointer-events none. It
    duplicates information the page already states in text.
 ============================================================ */
+
+.rail.is-hidden { opacity: 0; pointer-events: none; }
 
 .rail {
   position: fixed;
@@ -718,107 +720,171 @@ h3 {
 
 .hero-ctas { display: flex; gap: var(--space-3); flex-wrap: wrap; }
 
-/* ---------- hero settlement row (Phase 3.2) ----------
-   Same ledger grid as .group elsewhere, but one row wide and with the last
-   column carrying the hero figure. The figure is a cell, not a tile. */
+/* ---------- settlement statement (Phase 3.2, revised) ----------
+   A document on continuous-feed paper. The perforation strip is the defining
+   device and four of its holes are the settlement rail: same state model,
+   driven by the same module. */
 
-.hrow {
+.stmt {
   margin-top: var(--space-7);
-  border-top: var(--rule-w) solid var(--rule);
+  display: grid;
+  grid-template-columns: 34px 1fr;
+  border: 1px solid var(--line);
+  border-radius: 0;
+  background: var(--paper);
 }
 
-.hrow-head,
-.hrow-body {
+/* Tractor feed. Holes in --mist, separated from the body by a vertical
+   dashed hairline. */
+.stmt-perf {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  padding: var(--space-4) 0;
+  border-right: 1px dashed var(--line);
+}
+.perf-hole {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--mist);
+  flex: none;
+}
+/* The four state markers. Deliberately the same shape as the decorative
+   holes: the rail hides inside the device rather than sitting on top of it. */
+.perf-hole.is-state {
+  box-sizing: border-box;
+  transition: background var(--t-mid) var(--ease), box-shadow var(--t-mid) var(--ease);
+}
+.perf-hole.is-done    { background: var(--ink); }
+.perf-hole.is-current { background: var(--ink); box-shadow: 0 0 0 3px var(--mist); }
+.perf-hole.is-settled { background: var(--signal); box-shadow: 0 0 0 3px var(--signal-wash); }
+
+.stmt-body { padding: var(--space-4) var(--space-5) var(--space-4); min-width: 0; }
+
+.stmt-head {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+  padding-bottom: var(--space-3);
+  border-bottom: 1px solid var(--line);
+}
+.stmt-brand {
+  font-family: var(--font-display);
+  font-weight: var(--display-w);
+  font-size: var(--display-3);
+  letter-spacing: var(--display-3-track);
+}
+.stmt-title { font-size: var(--body-small); color: var(--ink-soft); }
+.stmt-ref {
+  margin-left: auto;
+  font-family: var(--font-mono);
+  font-size: var(--mono-label);
+  letter-spacing: var(--mono-label-track);
+  color: var(--ink-soft);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Five columns. Amount and elapsed right-align as figures should. */
+.stmt-cols,
+.stmt-row {
   display: grid;
-  grid-template-columns: 1.3fr 1.3fr 1fr 0.7fr minmax(28%, 1.6fr);
-  gap: var(--space-5);
+  grid-template-columns: 11ch 10ch 1fr minmax(9ch, auto) minmax(7ch, auto);
+  gap: var(--space-4);
   align-items: baseline;
 }
-.hrow-head { padding: var(--space-3) 0 0; }
-.hrow-body {
-  padding: 0 0 var(--space-3);
-  border-bottom: var(--hair-w) solid var(--hair);
-}
-.hrow-elapsed-label { text-align: right; }
+.stmt-cols { padding: var(--space-3) 0 var(--space-2); }
+.stmt-num { text-align: right; }
 
-.hrow-cell {
+.stmt-row {
+  padding: var(--space-2) 0;
   font-family: var(--font-mono);
   font-size: var(--mono-row);
-  font-weight: var(--mono-row-w);
   color: var(--ink);
   font-variant-numeric: tabular-nums;
   font-feature-settings: "tnum" 1;
+  border-top: 1px solid var(--line);
+}
+/* Dotted leader between the amount and elapsed columns, the way a printed
+   statement carries the eye across. */
+.stmt-row > span:nth-child(4) { position: relative; }
+.stmt-row > span:nth-child(4)::after {
+  content: "";
+  position: absolute;
+  right: calc(var(--space-4) * -1);
+  bottom: 0.32em;
+  width: var(--space-4);
+  border-bottom: 1px dotted var(--line);
 }
 
-/* The largest numeral on the page. Right-aligned to its own column, on the
-   row's baseline, under the ELAPSED label. */
-.hrow-figure {
-  font-family: var(--font-mono);
+/* The live row. signal-deep as TEXT on signal-wash, measured at 5.61:1.
+   signal-deep as a FILL remains CTA-only. */
+.stmt-live {
+  background: var(--signal-wash);
+  color: var(--signal-deep);
+  margin: 0 calc(var(--space-5) * -1);
+  padding: var(--space-3) var(--space-5);
+}
+.stmt-live .stmt-elapsed {
   font-size: var(--mono-hero);
   font-weight: var(--mono-hero-w);
   letter-spacing: var(--mono-hero-track);
-  line-height: 0.82;
-  text-align: right;
-  color: var(--ink);
-  font-variant-numeric: tabular-nums;
-  font-feature-settings: "tnum" 1;
-  align-self: end;
+  line-height: 0.85;
+  display: block;
 }
 
-.hrow-foot {
+.stmt-split {
   display: flex;
-  justify-content: space-between;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+  padding-top: var(--space-3);
+  font-family: var(--font-mono);
+  font-size: var(--mono-label);
+  letter-spacing: var(--mono-label-track);
+  color: var(--ink-soft);
+  font-variant-numeric: tabular-nums;
+  opacity: 0;
+  transition: opacity var(--t-mid) var(--ease);
+}
+.stmt[data-state="settled"] .stmt-split { opacity: 1; }
+
+.stmt-tear {
+  margin-top: var(--space-4);
+  border-top: 1px dashed var(--line);
+}
+.stmt-foot {
+  display: flex;
+  align-items: center;
   gap: var(--space-4);
   flex-wrap: wrap;
   padding-top: var(--space-3);
 }
-.hrow-status,
-.hrow-note {
+.stmt-mark {
   font-family: var(--font-mono);
   font-size: var(--mono-label);
-  font-weight: var(--mono-label-w);
+  font-weight: var(--display-w-semi);
+  letter-spacing: var(--mono-label-track);
+  text-transform: uppercase;
+  color: var(--ink);
+  border: 1px solid var(--ink);
+  padding: var(--space-1) var(--space-2);
+  opacity: 0;
+  transform: rotate(-1.5deg);
+  transition: opacity var(--t-fast) var(--ease);
+}
+.stmt[data-state="settled"] .stmt-mark { opacity: 1; }
+.stmt-note {
+  font-family: var(--font-mono);
+  font-size: var(--mono-label);
   letter-spacing: var(--mono-label-track);
   color: var(--ink-soft);
-}
-/* Settled is the one non-CTA green: ink text, signal marker. */
-.hrow[data-state="settled"] .hrow-status { color: var(--ink); font-weight: var(--display-w-semi); }
-.hrow[data-state="settled"] .hrow-status::before {
-  content: "";
-  display: inline-block;
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: var(--signal);
-  margin-right: var(--space-2);
-  vertical-align: 1px;
+  margin-left: auto;
 }
 
-/* Cells arrive as the row executes. */
-.hrow-cell, .hrow-figure { transition: opacity var(--t-fast) var(--ease); }
-.hrow[data-state="idle"] .hrow-cell,
-.hrow[data-state="idle"] .hrow-figure { opacity: 0; }
-
-@media (prefers-reduced-motion: reduce) {
-  .hrow-cell, .hrow-figure { transition: none; }
-  .hrow[data-state="idle"] .hrow-cell,
-  .hrow[data-state="idle"] .hrow-figure { opacity: 1; }
-}
-
-@media (max-width: 760px) {
-  /* Five columns cannot hold at 390px. The row stacks into label/value
-     pairs, and the figure keeps its own full-width line. */
-  .hrow-head { display: none; }
-  .hrow-body { grid-template-columns: 1fr; gap: var(--space-2); }
-  .hrow-cell::before {
-    content: attr(data-label);
-    display: block;
-    font-size: var(--mono-label);
-    letter-spacing: var(--mono-label-track);
-    color: var(--ink-soft);
-    margin-bottom: 2px;
-  }
-  .hrow-figure { text-align: left; margin-top: var(--space-3); }
-}
+/* The headline's emphasis, matching the deck's use of <em>. */
+.hero-h1 em { font-style: normal; color: var(--signal-deep); }
 
 /* Hero link beside the primary CTA: a text link, not a second button. */
 .hero-link {
@@ -831,6 +897,27 @@ h3 {
   align-self: center;
 }
 .hero-link:hover { text-decoration-thickness: 2px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .stmt-split, .stmt-mark, .perf-hole.is-state { transition: none; }
+}
+
+@media (max-width: 760px) {
+  /* The perforation strip and the value-date column drop. Counterparty,
+     amount and elapsed survive, and it still reads as a statement. */
+  .stmt { grid-template-columns: 1fr; }
+  .stmt-perf { display: none; }
+  .stmt-cols { display: none; }
+  .stmt-row {
+    grid-template-columns: 1fr auto;
+    gap: var(--space-2) var(--space-4);
+  }
+  .stmt-row > span[data-c="Value date"],
+  .stmt-row > span[data-c="Reference"] { display: none; }
+  .stmt-row > span:nth-child(4)::after { display: none; }
+  .stmt-live .stmt-elapsed { font-size: clamp(40px, 13vw, 60px); }
+  .stmt-note { margin-left: 0; }
+}
 
 /* ---------- sections ---------- */
 
@@ -1839,7 +1926,6 @@ h3 {
 @media (max-width: 420px) {
   /* The hero figure is the largest numeral on the page and must not force
      the row wider than the viewport at the smallest sizes. */
-  .hrow-figure { font-size: clamp(44px, 14vw, 64px); }
 }
 
 /* ---------- responsive ---------- */
