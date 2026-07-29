@@ -84,123 +84,103 @@
 
 
 <!-- ============================================================
-     1. HERO
+     1. HERO  ·  SETTLEMENT COST COMPARISON
+
+     The primary hero. A platform's annual settlement cost on incumbent rails
+     against the same volume on Setlz, where the GAP BETWEEN THE TWO BARS is
+     the saving. Live volume control and a corridor toggle.
+
+     WHAT IS DELIBERATELY ABSENT: any figure describing what the platform
+     charges its own customers. No commission, no take rate, no split. We do
+     not know it and must never assert it. Every figure here is either our own
+     published rate or a sourced third-party rate, and the note says which.
+
+     THE ONE ALIGNMENT RULE: the Setlz bar width and the bracket's left edge
+     both read the single custom property --setlz-w, set in one place by
+     app.js. They are never set independently. If they were they would drift
+     at some viewport width and the entire point of the graphic breaks.
+
+     Static markup below is the completed EU-to-EU state at the €100M default,
+     so with JavaScript disabled the hero shows a correct, readable comparison
+     rather than two empty bars. app.js takes over from that state.
 ============================================================ -->
 <section class="hero tier-primary" id="hero">
   <div class="container">
-    <p class="eyebrow">EURC on Base &middot; whitelabelled settlement infrastructure</p>
+    <p class="cc-eyebrow"><span class="cc-eyebrow-rule" aria-hidden="true"></span>Settlement cost, side by side</p>
 
-    <!-- Headline demoted to a supporting line ABOVE the statement, with the
-         emphasis carried in signal-deep the way the deck uses <em>. -->
-    <h1 class="hero-h1">The money arrives <em>the moment</em> the service does.</h1>
-    <p class="hero-sub">Every business that takes payment before it delivers sits on a float. <span data-brand>Setlz</span> closes it the moment delivery lands.</p>
+    <!-- The saving percentage is computed, never hardcoded in copy: it reads
+         "Forty" on EU to EU and "Sixty-four" on cross-border. -->
+    <h1 class="hero-h1"><span id="cc-pct-word">Forty</span> percent less to settle the same volume.</h1>
+    <p class="hero-sub">Move the volume to yours. The gap between the two bars is money that currently leaves your business as processing cost.</p>
 
-    <!-- ============================================================
-         SETTLEMENT STATEMENT (Phase 3.2, revised brief)
-         A statement printed on continuous-feed paper, not a panel. SVG and
-         CSS only, no raster asset.
+    <div class="cc" id="cc">
+      <div class="cc-controls">
+        <!-- A real radio group. Native inputs rather than role="radio" divs:
+             arrow-key operation, the checked state and the group semantics all
+             come from the platform, and aria-checked on a native radio is
+             redundant. Only the presentation is custom. -->
+        <fieldset class="cc-corridor">
+          <legend class="cc-legend">Corridor</legend>
+          <div class="cc-seg">
+            <label class="cc-seg-opt">
+              <input type="radio" name="cc-corridor" value="eu" checked>
+              <span>EU to EU</span>
+            </label>
+            <label class="cc-seg-opt">
+              <input type="radio" name="cc-corridor" value="xb">
+              <span>Cross-border</span>
+            </label>
+          </div>
+        </fieldset>
 
-         The perforation strip down the left edge is the defining device, and
-         four of its holes ARE the settlement rail: same state model, same
-         module, not two things that resemble each other. See SETTLEMENT_RAIL
-         in app.js.
-    ============================================================ -->
-    <div class="stmt" id="stmt" data-state="idle">
-      <div class="stmt-perf" aria-hidden="true">
-        <span class="perf-hole"></span>
-        <span class="perf-hole is-state" data-node="0"></span>
-        <span class="perf-hole"></span>
-        <span class="perf-hole is-state" data-node="1"></span>
-        <span class="perf-hole"></span>
-        <span class="perf-hole is-state" data-node="2"></span>
-        <span class="perf-hole"></span>
-        <span class="perf-hole is-state" data-node="3"></span>
-        <span class="perf-hole"></span>
-      </div>
-
-      <div class="stmt-body">
-        <div class="stmt-head">
-          <span class="stmt-brand" data-brand>Setlz</span>
-          <span class="stmt-title">Settlement statement</span>
-          <span class="stmt-ref">Ref SET-2026-0714-0093</span>
-        </div>
-
-        <div class="stmt-cols">
-          <span class="glabel">Value date</span>
-          <span class="glabel">Reference</span>
-          <span class="glabel">Counterparty</span>
-          <span class="glabel stmt-num">Amount</span>
-          <span class="glabel stmt-num">Elapsed</span>
-        </div>
-
-        <div class="stmt-row">
-          <span data-c="Value date">12 Jun 2026</span>
-          <span data-c="Reference">SET-0088</span>
-          <span data-c="Counterparty">Host &middot; Málaga</span>
-          <span class="stmt-num" data-c="Amount">&euro;1,240.00</span>
-          <span class="stmt-num" data-c="Elapsed">0.38s</span>
-        </div>
-        <div class="stmt-row">
-          <span data-c="Value date">28 Jun 2026</span>
-          <span data-c="Reference">SET-0091</span>
-          <span data-c="Counterparty">Carrier &middot; Rotterdam</span>
-          <span class="stmt-num" data-c="Amount">&euro;8,410.00</span>
-          <span class="stmt-num" data-c="Elapsed">0.51s</span>
-        </div>
-        <div class="stmt-row">
-          <span data-c="Value date">09 Jul 2026</span>
-          <span data-c="Reference">SET-0092</span>
-          <span data-c="Counterparty">Supplier &middot; Valencia</span>
-          <span class="stmt-num" data-c="Amount">&euro;26,000.00</span>
-          <span class="stmt-num" data-c="Elapsed">0.44s</span>
-        </div>
-
-        <div class="stmt-row stmt-live" id="stmt-live">
-          <span data-c="Value date">14 Jul 2026</span>
-          <span data-c="Reference">SET-0093</span>
-          <span data-c="Counterparty">Host &middot; Málaga</span>
-          <span class="stmt-num" data-c="Amount">&euro;1,000.00</span>
-          <span class="stmt-num stmt-elapsed" id="stmt-elapsed" data-c="Elapsed">0.00s</span>
-        </div>
-
-        <!-- WHAT IS AND IS NOT ON THIS STATEMENT. Two things were on it and
-             are not ours, so both came off:
-               "Platform &euro;100.00"  the customer's own commission on its own
-                                   supplier. Their revenue, set by them.
-               "Tax &euro;20.00"        we are not a tax authority. We take a
-                                   facilitation fee and nothing else.
-             What is left is the money reaching the provider and our fee.
-
-             THE FEE, per the deck's business-model slide: the transaction fee
-             is set 40% below what a card processor would charge on the same
-             settlement. So both figures are shown, ours against theirs, as
-             amounts and never as a rate. &euro;15.00 against &euro;25.00 is that 40%,
-             and it is the deck's own arithmetic. The two legs reconcile
-             exactly to the &euro;1,000.00 in the live row above. -->
-        <p class="stmt-split" id="stmt-split">
-          <span>Split</span>
-          <span>Provider &euro;985.00</span>
-          <span><span data-brand>Setlz</span> fee &euro;15.00</span>
-        </p>
-        <p class="stmt-vs" id="stmt-vs">
-          <!-- Kept short on purpose: at 390px this line has a 292px container,
-               and the longer wording ("Same settlement, card processor fee")
-               filled it on its own and pushed the amount to a fourth line. -->
-          <span>Same settlement on cards</span>
-          <span class="stmt-vs-amt">&euro;25.00</span>
-        </p>
-
-        <div class="stmt-tear" aria-hidden="true"></div>
-        <div class="stmt-foot">
-          <span class="stmt-mark" id="stmt-mark">Settled</span>
-          <span class="stmt-note">Illustrative statement, representative of tested runs</span>
+        <div class="cc-vol">
+          <label class="cc-legend" for="cc-volume">Annual settled volume</label>
+          <div class="cc-vol-row">
+            <input class="cc-range" type="range" id="cc-volume" min="25" max="250" step="5" value="100">
+            <output class="cc-vol-out" id="cc-volume-out" for="cc-volume">&euro;100M</output>
+          </div>
         </div>
       </div>
+
+      <!-- --setlz-w is the single source of truth for the proportion. -->
+      <div class="cc-bars" id="cc-bars" style="--setlz-w: 60%">
+        <div class="cc-row">
+          <div class="cc-row-head">
+            <span class="cc-row-label">Incumbent rails</span>
+            <span class="cc-amt" id="cc-inc-amt">&euro;2,500,000</span>
+          </div>
+          <div class="cc-track"><span class="cc-fill cc-fill-inc" id="cc-inc-fill"></span></div>
+        </div>
+
+        <div class="cc-row">
+          <div class="cc-row-head">
+            <span class="cc-row-label"><span data-brand>Setlz</span></span>
+            <span class="cc-amt" id="cc-setlz-amt">&euro;1,500,000</span>
+          </div>
+          <div class="cc-track"><span class="cc-fill cc-fill-setlz" id="cc-setlz-fill"></span></div>
+        </div>
+
+        <!-- Same width as the tracks above by construction: both are full-width
+             children of .cc-bars, so a percentage means the same thing in both
+             and the bracket cannot drift from the bar end. -->
+        <div class="cc-gap">
+          <div class="cc-bracket is-shown" id="cc-bracket" aria-hidden="true"></div>
+          <div class="cc-saving is-shown" id="cc-saving">
+            <span class="cc-saving-label">Back to your margin</span>
+            <span class="cc-saving-amt" id="cc-saving-amt">&euro;1,000,000</span>
+            <span class="cc-cume is-shown" id="cc-cume">Over three years <strong id="cc-cume-amt">&euro;3,000,000</strong></span>
+          </div>
+        </div>
+      </div>
+
+      <p class="cc-note">Incumbent processing at 2.50% of volume, the <strong>bottom</strong> of the 2 to 6% band that card and correspondent-banking rates fall in (World Bank, BIS 2026). The low end is deliberate: a head of payments knows their own effective rate precisely, so widening the gap with a flattering anchor would only cost us the meeting. Cross-border adds an FX leg, 2.00% against the 1 to 4% typically hidden in the exchange rate, against our 0.10% spread on deep pools. <span data-brand>Setlz</span> is shown at 1.50%, our mid-market tier: larger platforms pay less than this, so nothing here is a universal rate. The licence is charged at cost.</p>
+
+      <div class="sr-only" aria-live="polite" id="cc-live"></div>
     </div>
 
     <div class="hero-ctas">
       <a class="btn btn-primary" href="#request-demo">Request a demo</a>
-      <a class="hero-link" href="#how">See it settle</a>
+      <a class="hero-link" href="#pricing">See the tiers</a>
     </div>
   </div>
 </section>
@@ -735,13 +715,15 @@
       </div>
     </div>
     <!-- TODO before launch, facts required:
-         TODO: registered company number
-         TODO: registered office address
+         TODO: registered company number and registered office. The visible
+               "to be added" placeholders were removed: an incomplete legal
+               line reads worse than a short one, and the requirement is
+               recorded in the launch checklist instead.
          TODO: a real contact email. Until then Contact points at the demo
                form, which itself is not wired (Phase 6.1), so there is still
                no working route to a human. This is the honest state, not a
                finished footer. -->
-    <p class="mono footer-legal">Setlz HoldCo LTD &middot; registered in England and Wales &middot; company number <span class="footer-todo">to be added</span> &middot; registered office <span class="footer-todo">to be added</span></p>
+    <p class="mono footer-legal">Setlz HoldCo LTD &middot; registered in England and Wales</p>
     <p class="mono footer-fine">Demo site</p>
   </div>
 </footer>

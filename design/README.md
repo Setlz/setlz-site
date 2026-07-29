@@ -83,9 +83,13 @@ audited while transparent and contrast checks come back incomplete.
 
 ## Open Graph image
 
-`design/og-image.svg` is the source for the site's `og-image.png`. It reuses the
-hero's statement device, so a link preview shows the same object the page opens
-with, and it is built only from the design tokens.
+`design/og-image.svg` is the source for the site's `og-image.png`. It is built
+only from the design tokens.
+
+**STALE as of the v3.3 hero.** It draws the continuous-feed settlement
+statement, which is no longer the hero, so the claim that a link preview shows
+the same object the page opens with is currently false. Redraw it from the cost
+comparison before launch; it is on the root README's launch checklist.
 
 Regenerate with the command in the root README's launch checklist. The
 intermediate `design/og-image.svg.png` is a build artefact and is gitignored.

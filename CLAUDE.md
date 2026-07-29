@@ -307,7 +307,10 @@ them; if you disagree, say so and get a decision.**
     site's main differentiator and spending it on every label dilutes that.
 13. **Eyebrows are Inter, 13px, sentence case**, preceded by the deck's
     22x1.5px rule. This is a deliberate deviation from the deck's mono-uppercase
-    eyebrow, approved in Phase 2.1.
+    eyebrow, approved in Phase 2.1. **The hero is the one exception**: its brief
+    specifies mono uppercase with a green rule, so `.cc-eyebrow` is scoped to
+    the hero and the other five sections keep the approved treatment. Do not
+    let it spread.
 14. **Uppercase survives only on data-column labels (`.glabel`) and the rail's
     node labels.** It was 144 text nodes and is now 43. Do not reintroduce
     wide-tracked uppercase for supporting lines, footnotes, status labels or
@@ -409,11 +412,17 @@ or integration, or removed.
     each. If a merged section has two headlines it has not been merged. The
     twelve-section version was deck geometry: slide chrome repeated twelve
     times for a page read without a narrator.
-40. **The hero is a settlement statement on continuous-feed paper**, and the
-    perforation strip's four state holes ARE the settlement rail. One module,
-    one state model (`SETTLEMENT` in app.js), rendered in two places. The
-    page-edge rail hides while the hero is on screen or it is the same
-    indicator twice.
+40. **The hero is the settlement cost comparison.** Two bars on a shared
+    track, a corridor toggle and a volume slider, where the gap between the
+    bars is the saving. It replaced the continuous-feed settlement statement,
+    whose perforation strip carried a second rendering of the rail's four
+    states; with that gone there is ONE rendering of the state model, and the
+    page-edge rail no longer hides at the top of the page.
+    **The bar width and the bracket's left edge both read `--setlz-w`, set in
+    exactly one place in app.js.** Never set them independently: they would
+    drift at some viewport width and the graphic's entire claim breaks. Verify
+    by measuring `bracket.left - barFill.right` at several widths, which is how
+    the alignment is checked; it is 0 at 360 through 1920 in both corridors.
 41. **No /why page, and no competitive teardown on the site.** "Why won't you
     get killed" is raise material and the deck carries it. "Why not the thing
     I am currently considering" is product material and lives in the
@@ -441,10 +450,14 @@ or integration, or removed.
     appear under a label that says it is ours, as "What the network costs us"
     now does; if a figure needs a footnote to stop it being misread, the
     figure is wrong, not the footnote.
-47. **The tiered pricing table is the only place a rate of ours appears.**
-    100 to 150 bps mid-market, 40 to 80 bps large platform, 15 to 35 bps
-    enterprise. Nowhere else: no single headline rate, no percentage, no bps
-    figure, no asterisk. A single figure in prose anchors the public price at
+47. **The tiered pricing table is the only place a rate of ours appears in
+    prose.** 100 to 150 bps mid-market, 40 to 80 bps large platform, 15 to 35
+    bps enterprise. No single headline rate, no bps figure, no asterisk
+    anywhere else. ONE guarded exception: the hero's note states our 1.50%
+    mid-market rate, because the hero's own amounts derive it anyway and
+    stating the assumption is more honest than letting a reader reverse it out.
+    That exception is conditional on the note also saying larger platforms pay
+    less than shown (rule 54). A single figure in prose anchors the public price at
     the most expensive number we charge anyone and costs us the large and
     enterprise accounts, which is why "about 150 bps" came out of the pricing
     support copy. The 40% gap is expressed as one range against another.
@@ -466,20 +479,43 @@ or integration, or removed.
     projection, the take-rate percentage, the tier revenue lines, the raise,
     the token pool. Do not derive the model from an older deck or from the
     site's own previous copy, both of which drifted.
-50. **Our fee is always shown against the incumbent's, as amounts.** A number
-    on its own invites the reader to supply their own comparison. The hero
-    statement carries the pair: `Setlz fee €15.00` in the split and
-    `Same settlement, card processor fee €25.00` struck through beneath it.
-    That is exactly the deck's 40%, so the illustration and the claim
-    reconcile; if either figure changes, both change together and the pricing
-    prose has to be rechecked.
-51. **Nothing on our statement that is not ours.** Two lines were removed for
-    this: the customer's own `Platform €100.00` commission, which is their
-    revenue on their own supplier, and `Tax €20.00` — we are not a tax
-    authority and we take a facilitation fee, nothing else. The split shows
-    the money reaching the provider and our fee. The customer's own splits
-    still appear in the escrow and anatomy demos, which is correct: those are
-    their payouts, in their context, with no fee of ours beside them.
+50. **Our cost is always shown against the incumbent's, never alone.** A
+    number on its own invites the reader to supply their own comparison. The
+    hero does this at settled-volume scale: incumbent rails against Setlz on
+    the same volume, both as amounts. The `€15.00 against €25.00` fee pair in
+    the old statement hero did the same job at single-transaction scale and
+    went with it.
+    All five rates live in `HERO_RATES` at the top of the module. The five are
+    the only place they may be edited, and `assertHeroRates()` throws if one is
+    unset or if our rate is not below theirs. There is no build step in this
+    repo, so that assertion is the substitute for failing a build: it throws,
+    logs, and renders a visible failure notice instead of a comparison drawn
+    from a missing number.
+51. **Nothing of ours states what a customer charges its own customers.**
+    No commission, no take rate, no split, in the hero or anywhere else. We do
+    not know that number and must never assert it. This has now been caught
+    twice: a `Platform €100.00` line (their revenue, on their own supplier) and
+    a `Tax €20.00` line (we are not a tax authority; we take a facilitation fee
+    and nothing else), both in the old statement hero. The customer's own
+    splits still appear in the escrow and anatomy demos, which is correct:
+    those are their payouts, in their context, with no fee of ours beside them.
+52. **The incumbent anchor stays at the conservative end of the sourced
+    range.** 2.50% is the BOTTOM of the 2 to 6% band (World Bank, BIS 2026)
+    and must not be raised to widen the gap. It is the most checkable number
+    on the page: a head of payments knows their own effective rate to the
+    basis point, so a flattering anchor loses the meeting rather than winning
+    it. The note says we use the low end, deliberately.
+53. **The FX leg is cross-border only.** `incumbentFx` and `setlzFx` are added
+    only in the cross-border state and never to EU to EU, which is why the
+    saving reads 40% on one and 64% on the other. EU to EU is the default
+    because it is the day-one position. Our own FX figure is a **placeholder**
+    marked `TODO(setlz-fx)`; confirm it against real corridor execution before
+    this hero is shown outside the team.
+54. **The hero shows the mid-market tier only**, which is why the slider caps
+    at 250: above that the rate tiers down and the percentages change. The
+    note must keep saying that larger platforms pay less than shown, or the
+    hero becomes a single universal rate, which is exactly what rule 47 exists
+    to prevent.
 
 ### Verify by measuring, not by reading
 

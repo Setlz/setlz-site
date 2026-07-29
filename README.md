@@ -36,15 +36,52 @@ The Hold section centres on an interactive escrow demo: payment streams into on-
 
 v2.4 universalised the labels: the widget defaults to a generic marketplace (Payer, Seller, Partner, Platform, delivery confirmed) with scenario presets for Short-term rental (Guest, Host, check-in) and B2B trade (Supplier, milestone, tagged exploratory). Labels only: amounts and mechanics are identical in every scenario, all defined in `ESCROW_CONFIG.scenarios`. v2.5 added the CARD | EURC | USDC rail chips plus a ghost "+ any Base stablecoin" chip (cosmetic; EURC stays the demo settlement path) and the multi-coin strip after How it works. FX claims are always scoped ("basis-point spreads on deep pools", never a rate promise); tGBP is named once, with the FCA-registered/live-on-Base facts and the not-a-partnership footnote; "integration-ready" describes stack effort, not market depth. The any-stablecoin framing stays off the Circle deck.
 
-## Hero settlement row (v3.2)
+## Hero: settlement cost comparison (v3.3)
 
-The hero is one ledger row: counterparties, amount, split and elapsed time as
-columns. It executes **once** on load and stops; the previous settlement stream
-looped on a `setInterval` forever and read as a screensaver. The elapsed figure
-is the largest numeral on the page but lives inside the row as the ELAPSED
-column's value, under that column's own label, so it is a table cell rather than
-a stat tile. `HERO_TARGET_MS` in `app.js` sets where it lands. Reduced motion
-renders the completed row with no execution animation.
+A platform's annual settlement cost on incumbent rails against the same volume
+on Setlz. Two bars on a shared track, a corridor toggle (EU to EU by default,
+cross-border) and a volume slider (25 to 250 million euro, step 5, default 100).
+**The gap between the two bars is the saving**, bracketed, with the annual figure
+and the same saving over three years beneath it. Replaced the continuous-feed
+settlement statement, which in turn replaced a `setInterval` stream that looped
+forever and read as a screensaver.
+
+**All five rates live in `HERO_RATES` at the top of the module in `app.js`.** That
+is the only place to edit them:
+
+| Rate | Value | Whose | Applies |
+|---|---|---|---|
+| `incumbentProcessing` | 2.50% | theirs | always |
+| `setlzProcessing` | 1.50% | ours, mid-market tier | always |
+| `incumbentFx` | 2.00% | theirs | **cross-border only** |
+| `setlzFx` | 0.10% | ours, **PLACEHOLDER** | **cross-border only** |
+| `cumulativeYears` | 3 | — | — |
+
+Which gives 40% on EU to EU and about 64% cross-border. The headline spells the
+percentage out and computes it, so it is never hardcoded in copy.
+
+Three things the code enforces rather than trusts:
+
+1. **Amounts reconcile.** Rounding happens once, to whole euro, and the saving is
+   derived from the rounded pair. Verified across all 92 slider-and-corridor
+   combinations.
+2. **The bracket agrees with the bar end.** Both read `--setlz-w`, set in exactly
+   one place. Measured at 0px difference from 360 to 1920 in both corridors. If
+   these are ever set independently they will drift and the graphic's claim
+   breaks.
+3. **`assertHeroRates()` throws** if a rate is unset, or if ours is not below
+   theirs, and the hero renders a visible failure notice. The brief asked for a
+   build failure; there is no build step in this repo, so this is the substitute.
+
+The intro runs once and never loops. The incumbent bar deliberately takes longer
+to draw (920ms) than ours (560ms) — same speed, longer distance, so ours finishes
+visibly early. Per-frame deltas are clamped to 50ms so a backgrounded tab cannot
+skip to the end. Any interaction during the intro completes it, so the reader's
+input always wins. Reduced motion renders the completed state with no counting.
+
+With JavaScript disabled the static markup is the completed EU-to-EU state at
+€100M, bars at final widths and bracket visible, verified in a script-blocked
+sandboxed frame.
 
 ## Settlement rail (v3.1)
 
@@ -214,6 +251,20 @@ Until that is done, the canonical, Open Graph and Twitter URLs point at a token
 that is obviously not a hostname. That is on purpose: it cannot be mistaken for
 a real value, and `robots.txt` disallows everything meanwhile, so nothing acts
 on them.
+
+**1b. The Open Graph image is stale.** `og-image.png` and its source
+`design/og-image.svg` draw the old continuous-feed settlement statement, which
+is no longer the hero. A link preview therefore shows an object the page does
+not open with. Not urgent while `robots.txt` disallows everything and nothing
+can unfurl the link, but it must be redrawn from the cost comparison before
+launch, or the claim in `design/README.md` that the preview matches the hero
+stops being true.
+
+**1c. Registered company details.** The visible "company number to be added ·
+registered office to be added" placeholders were removed from the footer: an
+incomplete legal line reads worse than a short one. The requirement did not go
+away — the footer needs the registered company number and registered office
+before launch.
 
 **2. Indexing.** Two independent fail-safes hold the site closed:
 

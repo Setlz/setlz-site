@@ -122,6 +122,7 @@
   --display-kicker:   clamp(19px, 2.2vw, 24px);
   --display-w:        700;
   --display-w-semi:   600;
+  --display-w-mid:    500;   /* hero saving figure */
 
   --body-lede:        clamp(17px, 1.3vw, 20px);
   --body:             16px;
@@ -411,7 +412,7 @@ h3 {
 /* Tabular figures wherever a numeral sits in a data position. Martian Mono
    is monospaced so its digits are equal-width by construction; this makes
    the intent explicit and also covers Inter, which is not. */
-.gval, .gval-lg, .stmt, .compare-table, .esc, .wm-meters {
+.gval, .gval-lg, .cc, .compare-table, .esc, .wm-meters {
   font-variant-numeric: tabular-nums;
   font-feature-settings: "tnum" 1;
 }
@@ -720,188 +721,303 @@ h3 {
 
 .hero-ctas { display: flex; gap: var(--space-3); flex-wrap: wrap; }
 
-/* ---------- settlement statement (Phase 3.2, revised) ----------
-   A document on continuous-feed paper. The perforation strip is the defining
-   device and four of its holes are the settlement rail: same state model,
-   driven by the same module. */
+/* ---------- hero: settlement cost comparison ----------
+   Two bars on a shared track. The gap between them is the saving, so the
+   graphic only works if the bracket and the Setlz bar end agree exactly.
 
-.stmt {
-  margin-top: var(--space-7);
-  display: grid;
-  grid-template-columns: 34px 1fr;
-  border: 1px solid var(--line);
-  border-radius: 0;
-  background: var(--paper);
-}
+   THEY AGREE BY CONSTRUCTION, not by coincidence: --setlz-w is set once, by
+   app.js, on .cc-bars. The bar reads it as its width and the bracket reads it
+   as its left margin. There is no second number to keep in sync, and no pixel
+   offset anywhere, so alignment holds at every viewport width. .cc-track and
+   .cc-gap are both full-width children of .cc-bars, which is what makes a
+   percentage mean the same thing in both. */
 
-/* Tractor feed. Holes in --mist, separated from the body by a vertical
-   dashed hairline. */
-.stmt-perf {
+.cc { margin-top: var(--space-7); }
+
+/* Deviation from the site-wide .eyebrow (Inter, sentence case, per Phase 2.1):
+   this hero's brief specifies mono uppercase with a green rule. Scoped to the
+   hero so the other five sections keep the approved treatment. */
+.cc-eyebrow {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: space-around;
-  padding: var(--space-4) 0;
-  border-right: 1px dashed var(--line);
-}
-.perf-hole {
-  width: 9px;
-  height: 9px;
-  border-radius: 50%;
-  background: var(--mist);
-  flex: none;
-}
-/* The four state markers. Deliberately the same shape as the decorative
-   holes: the rail hides inside the device rather than sitting on top of it. */
-.perf-hole.is-state {
-  box-sizing: border-box;
-  transition: background var(--t-mid) var(--ease), box-shadow var(--t-mid) var(--ease);
-}
-.perf-hole.is-done    { background: var(--ink); }
-.perf-hole.is-current { background: var(--ink); box-shadow: 0 0 0 3px var(--mist); }
-.perf-hole.is-settled { background: var(--signal); box-shadow: 0 0 0 3px var(--signal-wash); }
-
-.stmt-body { padding: var(--space-4) var(--space-5) var(--space-4); min-width: 0; }
-
-.stmt-head {
-  display: flex;
-  align-items: baseline;
   gap: var(--space-3);
-  flex-wrap: wrap;
-  padding-bottom: var(--space-3);
-  border-bottom: 1px solid var(--line);
-}
-.stmt-brand {
-  font-family: var(--font-display);
-  font-weight: var(--display-w);
-  font-size: var(--display-3);
-  letter-spacing: var(--display-3-track);
-}
-.stmt-title { font-size: var(--body-small); color: var(--ink-soft); }
-.stmt-ref {
-  margin-left: auto;
   font-family: var(--font-mono);
   font-size: var(--mono-label);
+  font-weight: var(--mono-label-w);
   letter-spacing: var(--mono-label-track);
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-bottom: var(--space-5);
+}
+.cc-eyebrow-rule {
+  flex: none;
+  width: 22px;
+  height: 1.5px;
+  background: var(--signal);
+}
+
+/* ---------- controls ---------- */
+
+.cc-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-6);
+  align-items: flex-end;
+}
+
+.cc-corridor { border: 0; padding: 0; margin: 0; min-width: 0; }
+
+.cc-legend {
+  display: block;
+  padding: 0;
+  font-family: var(--font-mono);
+  font-size: var(--mono-label);
+  font-weight: var(--mono-label-w);
+  letter-spacing: var(--mono-label-track);
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-bottom: var(--space-2);
+}
+
+/* Segmented control. Native radios carry the state and the keyboard
+   behaviour; only the presentation is custom. */
+.cc-seg { display: flex; border: var(--hair-w) solid var(--ink-soft); }
+
+.cc-seg-opt { display: flex; }
+.cc-seg-opt input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+.cc-seg-opt span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;            /* tap target */
+  padding: 0 var(--space-5);
+  font-family: var(--font-mono);
+  font-size: var(--mono-label);
+  font-weight: var(--mono-label-w);
+  letter-spacing: var(--mono-label-track);
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  cursor: pointer;
+  transition: background var(--t-fast) var(--ease), color var(--t-fast) var(--ease);
+}
+.cc-seg-opt + .cc-seg-opt span { border-left: var(--hair-w) solid var(--ink-soft); }
+.cc-seg-opt span:hover { background: var(--mist); color: var(--ink); }
+.cc-seg-opt input:checked + span {
+  background: var(--ink);
+  color: var(--paper);
+}
+.cc-seg-opt input:focus-visible + span {
+  outline: var(--focus-ring) solid var(--ink);
+  outline-offset: var(--focus-offset);
+}
+
+.cc-vol { flex: 1 1 260px; min-width: 0; }
+.cc-vol-row { display: flex; align-items: center; gap: var(--space-4); }
+
+.cc-vol-out {
+  flex: none;
+  min-width: 6ch;
+  font-family: var(--font-mono);
+  font-size: var(--mono-row);
+  font-weight: var(--mono-row-strong-w);
+  letter-spacing: var(--mono-label-track);
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+}
+
+/* The range input keeps a 44px-tall hit area with a 24px visual thumb, the
+   same pattern the note badge uses: the look is small, the target is not. */
+.cc-range {
+  -webkit-appearance: none;
+  appearance: none;
+  flex: 1 1 auto;
+  min-width: 0;
+  height: 44px;
+  margin: 0;
+  background: transparent;
+  cursor: pointer;
+}
+.cc-range:focus { outline: none; }
+.cc-range:focus-visible {
+  outline: var(--focus-ring) solid var(--ink);
+  outline-offset: var(--focus-offset);
+}
+.cc-range::-webkit-slider-runnable-track {
+  height: 2px;
+  background: var(--ink-soft);
+  border-radius: var(--radius);
+}
+.cc-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 24px;
+  height: 24px;
+  margin-top: -11px;
+  background: var(--ink);
+  border: 0;
+  border-radius: var(--radius);
+}
+.cc-range::-moz-range-track {
+  height: 2px;
+  background: var(--ink-soft);
+  border-radius: var(--radius);
+}
+.cc-range::-moz-range-thumb {
+  width: 24px;
+  height: 24px;
+  background: var(--ink);
+  border: 0;
+  border-radius: var(--radius);
+}
+
+/* ---------- bars ---------- */
+
+.cc-bars { margin-top: var(--space-6); }
+
+.cc-row + .cc-row { margin-top: var(--space-5); }
+
+.cc-row-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-4);
+  margin-bottom: var(--space-2);
+}
+.cc-row-label {
+  font-family: var(--font-mono);
+  font-size: var(--mono-label);
+  font-weight: var(--mono-label-w);
+  letter-spacing: var(--mono-label-track);
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+/* Width is reserved for the longest possible figure so a counting digit never
+   reflows the row. Mono, so ch is exact. */
+.cc-amt {
+  flex: none;
+  min-width: 12ch;
+  text-align: right;
+  font-family: var(--font-mono);
+  font-size: var(--mono-row);
+  font-weight: var(--mono-row-strong-w);
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+}
+
+.cc-track {
+  height: 28px;
+  background: var(--mist);
+  overflow: hidden;
+}
+.cc-fill { display: block; height: 100%; }
+.cc-fill-inc   { width: 100%;          background: var(--ink-soft); }
+/* --signal against --mist is 2.46:1, and the Setlz bar's END is the single
+   most information-carrying edge in the graphic: it is where the gap starts
+   and what the bracket points at. WCAG 1.4.11 wants 3:1 for that, and axe does
+   not check it. The 2px ink end-cap takes the boundary to 17.2:1 and marks the
+   measurement point rather than decorating it. box-sizing is border-box, so the
+   cap sits inside the width and --setlz-w still lands exactly on the bar end. */
+.cc-fill-setlz {
+  width: var(--setlz-w);
+  background: var(--signal);
+  border-right: var(--rule-w) solid var(--ink);
+}
+
+/* ---------- the gap, which is the whole point ---------- */
+
+.cc-gap { margin-top: var(--space-3); }
+
+.cc-bracket {
+  margin-left: var(--setlz-w);
+  height: 10px;
+  border-top: var(--rule-w) solid var(--ink);
+  border-left: var(--rule-w) solid var(--ink);
+  border-right: var(--rule-w) solid var(--ink);
+  opacity: 0;
+  transition: opacity var(--t-mid) var(--ease), margin-left var(--t-mid) var(--ease);
+}
+.cc-bracket.is-shown { opacity: 1; }
+
+.cc-saving {
+  margin-top: var(--space-3);
+  opacity: 0;
+  transition: opacity var(--t-mid) var(--ease);
+}
+.cc-saving.is-shown { opacity: 1; }
+
+.cc-saving-label {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: var(--mono-label);
+  font-weight: var(--mono-label-w);
+  letter-spacing: var(--mono-label-track);
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+.cc-saving-amt {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: var(--display-w-mid);
+  font-size: var(--display-2);
+  letter-spacing: var(--display-2-track);
+  line-height: var(--lh-tight);
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+  margin-top: var(--space-1);
+}
+.cc-cume {
+  display: block;
+  margin-top: var(--space-2);
+  font-family: var(--font-mono);
+  font-size: var(--mono-row);
   color: var(--ink-soft);
   font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+  opacity: 0;
+  transition: opacity var(--t-mid) var(--ease);
 }
+.cc-cume.is-shown { opacity: 1; }
+.cc-cume strong { color: var(--ink); font-weight: var(--mono-row-strong-w); }
 
-/* Five columns. Amount and elapsed right-align as figures should. */
-.stmt-cols,
-.stmt-row {
-  display: grid;
-  grid-template-columns: 11ch 10ch 1fr minmax(9ch, auto) minmax(7ch, auto);
-  gap: var(--space-4);
-  align-items: baseline;
+.cc-note {
+  margin-top: var(--space-6);
+  max-width: var(--measure);
+  font-size: var(--body-small);
+  line-height: var(--lh-body);
+  color: var(--ink-soft);
 }
-.stmt-cols { padding: var(--space-3) 0 var(--space-2); }
-.stmt-num { text-align: right; }
+.cc-note strong { color: var(--ink); font-weight: var(--body-w-strong); }
 
-.stmt-row {
-  padding: var(--space-2) 0;
+/* If the rate config is incomplete the hero says so rather than drawing a
+   comparison from a missing number. See assertRates() in app.js. */
+.cc[data-config-error] .cc-bars,
+.cc[data-config-error] .cc-controls { display: none; }
+.cc-config-error {
   font-family: var(--font-mono);
   font-size: var(--mono-row);
   color: var(--ink);
-  font-variant-numeric: tabular-nums;
-  font-feature-settings: "tnum" 1;
-  border-top: 1px solid var(--line);
-}
-/* Dotted leader between the amount and elapsed columns, the way a printed
-   statement carries the eye across. */
-.stmt-row > span:nth-child(4) { position: relative; }
-.stmt-row > span:nth-child(4)::after {
-  content: "";
-  position: absolute;
-  right: calc(var(--space-4) * -1);
-  bottom: 0.32em;
-  width: var(--space-4);
-  border-bottom: 1px dotted var(--line);
-}
-
-/* The live row. signal-deep as TEXT on signal-wash, measured at 5.61:1.
-   signal-deep as a FILL remains CTA-only. */
-.stmt-live {
-  background: var(--signal-wash);
-  color: var(--signal-deep);
-  margin: 0 calc(var(--space-5) * -1);
-  padding: var(--space-3) var(--space-5);
-}
-.stmt-live .stmt-elapsed {
-  font-size: var(--mono-hero);
-  font-weight: var(--mono-hero-w);
-  letter-spacing: var(--mono-hero-track);
-  line-height: 0.85;
-  display: block;
-}
-
-.stmt-split {
-  display: flex;
-  gap: var(--space-4);
-  flex-wrap: wrap;
-  padding-top: var(--space-3);
-  font-family: var(--font-mono);
-  font-size: var(--mono-label);
-  letter-spacing: var(--mono-label-track);
-  color: var(--ink-soft);
-  font-variant-numeric: tabular-nums;
-  opacity: 0;
-  transition: opacity var(--t-mid) var(--ease);
-}
-.stmt[data-state="settled"] .stmt-split { opacity: 1; }
-
-/* The incumbent's fee on the same settlement, so ours is read against
-   something. Muted and lighter than the split above it: this is their number,
-   not a line of our statement. Amounts only, never a rate. */
-.stmt-vs {
-  display: flex;
-  gap: var(--space-3);
-  flex-wrap: wrap;
-  align-items: baseline;
-  padding-top: var(--space-2);
-  font-family: var(--font-mono);
-  font-size: var(--mono-label);
-  letter-spacing: var(--mono-label-track);
-  color: var(--ink-soft);
-  font-variant-numeric: tabular-nums;
-  font-feature-settings: "tnum" 1;
-  opacity: 0;
-  transition: opacity var(--t-mid) var(--ease);
-}
-.stmt[data-state="settled"] .stmt-vs { opacity: 1; }
-.stmt-vs-amt { text-decoration: line-through; text-decoration-thickness: 1px; }
-
-.stmt-tear {
-  margin-top: var(--space-4);
-  border-top: 1px dashed var(--line);
-}
-.stmt-foot {
-  display: flex;
-  align-items: center;
-  gap: var(--space-4);
-  flex-wrap: wrap;
+  border-top: var(--rule-w) solid var(--ink);
   padding-top: var(--space-3);
 }
-.stmt-mark {
-  font-family: var(--font-mono);
-  font-size: var(--mono-label);
-  font-weight: var(--display-w-semi);
-  letter-spacing: var(--mono-label-track);
-  text-transform: uppercase;
-  color: var(--ink);
-  border: 1px solid var(--ink);
-  padding: var(--space-1) var(--space-2);
-  opacity: 0;
-  transform: rotate(-1.5deg);
-  transition: opacity var(--t-fast) var(--ease);
-}
-.stmt[data-state="settled"] .stmt-mark { opacity: 1; }
-.stmt-note {
-  font-family: var(--font-mono);
-  font-size: var(--mono-label);
-  letter-spacing: var(--mono-label-track);
-  color: var(--ink-soft);
-  margin-left: auto;
+
+/* Wide enough for the saving block to sit under the bracket without the
+   narrowest gap (EU to EU, 40% of the track) squeezing the display figure.
+   Below this it goes full width and only the bracket tracks the bar end. */
+@media (min-width: 1000px) {
+  .cc-saving {
+    margin-left: var(--setlz-w);
+    transition: opacity var(--t-mid) var(--ease), margin-left var(--t-mid) var(--ease);
+  }
 }
 
 /* The headline's emphasis, matching the deck's use of <em>. */
@@ -920,24 +1036,26 @@ h3 {
 .hero-link:hover { text-decoration-thickness: 2px; }
 
 @media (prefers-reduced-motion: reduce) {
-  .stmt-split, .stmt-mark, .perf-hole.is-state { transition: none; }
+  /* The completed comparison, immediately. No growth, no counting, no fade:
+     app.js renders the final figures and adds .is-shown itself, so all this
+     has to do is make sure nothing animates on the way in or on a toggle. */
+  .cc-fill, .cc-bracket, .cc-saving, .cc-cume { transition: none; }
 }
 
-@media (max-width: 760px) {
-  /* The perforation strip and the value-date column drop. Counterparty,
-     amount and elapsed survive, and it still reads as a statement. */
-  .stmt { grid-template-columns: 1fr; }
-  .stmt-perf { display: none; }
-  .stmt-cols { display: none; }
-  .stmt-row {
-    grid-template-columns: 1fr auto;
-    gap: var(--space-2) var(--space-4);
-  }
-  .stmt-row > span[data-c="Value date"],
-  .stmt-row > span[data-c="Reference"] { display: none; }
-  .stmt-row > span:nth-child(4)::after { display: none; }
-  .stmt-live .stmt-elapsed { font-size: clamp(40px, 13vw, 60px); }
-  .stmt-note { margin-left: 0; }
+@media (max-width: 560px) {
+  /* Bars stay full width and stack exactly as they are. The toggle and the
+     slider each take their own row, and the display figure steps down one
+     size. The bracket still computes from the shared track, so it keeps
+     agreeing with the bar end at this width too. */
+  .cc-controls { flex-direction: column; align-items: stretch; gap: var(--space-5); }
+  /* .cc-vol carries flex: 1 1 260px for the row layout. Once the container
+     turns to a column that 260px flex-basis becomes a 260px HEIGHT, which
+     opened a quarter-screen of dead space above the bars. */
+  .cc-vol { flex: 0 0 auto; }
+  .cc-seg { width: 100%; }
+  .cc-seg-opt { flex: 1 1 0; }
+  .cc-seg-opt span { width: 100%; padding: 0 var(--space-3); }
+  .cc-saving-amt { font-size: var(--display-kicker); }
 }
 
 /* ---------- sections ---------- */

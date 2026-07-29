@@ -37,10 +37,10 @@ function randomHash(len = 8) {
 /* ============================================================
    SETTLEMENT RAIL AND STATEMENT (Phase 3.2, revised brief)
 
-   ONE module, ONE state model. The four settlement states are rendered in two
-   places that are the same component rather than two things that resemble each
-   other: as four holes in the hero statement's tractor-feed perforation strip,
-   and as the persistent rail at the page edge once the hero scrolls away.
+   The four settlement states, rendered as the persistent rail at the page edge.
+   The old statement hero carried a second rendering of the same state in its
+   perforation strip; the cost-comparison hero does not, so there is one
+   rendering and the rail no longer hides at the top of the page.
 
    State is mapped to NAMED SECTIONS, never pixel offsets, so editing content
    cannot silently break it. Driven by IntersectionObserver with a rootMargin
@@ -58,8 +58,6 @@ const SETTLEMENT = (() => {
   ];
   const LAST = STAGES.length - 1;
 
-  // Both renderings of the same state.
-  const holes = Array.from(document.querySelectorAll(".perf-hole.is-state"));
   const rail = document.getElementById("rail");
   const nodes = rail ? Array.from(rail.querySelectorAll(".rail-node")) : [];
   const segs = rail ? Array.from(rail.querySelectorAll(".rail-seg")) : [];
@@ -69,13 +67,6 @@ const SETTLEMENT = (() => {
   function paint(next) {
     if (next === stage) return;
     stage = next;
-    // perforation holes
-    holes.forEach((h, i) => {
-      h.classList.toggle("is-done", i < stage);
-      h.classList.toggle("is-current", i === stage && stage < LAST);
-      h.classList.toggle("is-settled", i === LAST && stage === LAST);
-    });
-    // the page-edge rail, same states
     nodes.forEach((n, i) => {
       n.classList.toggle("is-done", i < stage);
       n.classList.toggle("is-current", i === stage && stage < LAST);
@@ -106,20 +97,12 @@ const SETTLEMENT = (() => {
     });
   }
 
-  // The page-edge rail is hidden while the hero is on screen, because the
-  // statement's own perforation holes are showing the same state there. It
-  // would otherwise be the same indicator twice.
-  function handoverOnHeroExit() {
-    const hero = document.getElementById("hero");
-    if (!hero || !rail) return;
-    const io = new IntersectionObserver(
-      (entries) => entries.forEach((e) => rail.classList.toggle("is-hidden", e.isIntersecting)),
-      { threshold: 0.15 }
-    );
-    io.observe(hero);
-  }
+  // The rail used to hide while the hero was on screen, because the old
+  // statement hero carried the same four states in its perforation strip and it
+  // would have been the same indicator twice. The cost-comparison hero has no
+  // second rendering of the state, so the rail is visible from the top.
 
-  return { paint, observe, handoverOnHeroExit, LAST, STAGES };
+  return { paint, observe, LAST, STAGES };
 })();
 
 if (prefersReducedMotion) {
@@ -128,49 +111,309 @@ if (prefersReducedMotion) {
   SETTLEMENT.paint(0);
   if ("IntersectionObserver" in window) {
     SETTLEMENT.observe();
-    SETTLEMENT.handoverOnHeroExit();
   }
 }
 
-/* ---------- the statement's live row, once on load ---------- */
+/* ============================================================
+   HERO  ·  SETTLEMENT COST COMPARISON
 
-const stmt = document.getElementById("stmt");
+   A platform's annual settlement cost on incumbent rails against the same
+   volume on Setlz. The gap between the two bars IS the saving, so the graphic
+   is only honest if three things hold, and all three are enforced here rather
+   than trusted:
 
-if (stmt) {
-  const elapsed = document.getElementById("stmt-elapsed");
-  const live = document.getElementById("stmt-live");
-  const cells = Array.from(live.querySelectorAll("span"));
+   1. The amounts reconcile. Incumbent minus Setlz equals the saving at every
+      slider position and in both corridor states. Guaranteed by rounding to
+      whole euro FIRST and deriving the saving from the rounded pair, not by
+      rounding three independent floats and hoping they agree.
+   2. The bracket agrees with the bar end. Both read --setlz-w, which is set in
+      exactly one place, below. Neither is ever set independently.
+   3. Nothing here describes what the platform charges its own customers. No
+      commission, no take rate, no split. We do not know it and must not assert
+      it. Every figure is our own published rate or a sourced third-party one.
 
-  const TARGET_MS = 420;      // lands in the low hundreds of milliseconds
-  const TYPE_STAGGER = 60;
+   The FX leg applies to cross-border only and is never added to EU to EU.
+============================================================ */
 
-  function settle() {
-    stmt.dataset.state = "settled";
-    elapsed.textContent = (TARGET_MS / 1000).toFixed(2) + "s";
+/* All five rates in one object. They will change.
+
+   2.50% is the BOTTOM of the sourced 2 to 6% band and must not be raised to
+   widen the gap. It is the most checkable number on the page: a head of
+   payments knows their own effective rate to the basis point, so a flattering
+   anchor costs us the meeting rather than winning it. */
+const HERO_RATES = {
+  incumbentProcessing: 0.0250,  // theirs. World Bank, BIS 2026 range 2 to 6%.
+  setlzProcessing:     0.0150,  // ours, mid-market tier. #pricing is authority.
+  incumbentFx:         0.0200,  // theirs, CROSS-BORDER ONLY. 1 to 4% typical.
+
+  // TODO(setlz-fx): PLACEHOLDER. 0.10% has not been confirmed against real
+  // corridor execution. Confirm before this hero is shown outside the team.
+  setlzFx:             0.0010,  // ours, CROSS-BORDER ONLY.
+
+  cumulativeYears:     3,
+};
+
+/* The brief asks for a build failure if a rate is unset. THERE IS NO BUILD
+   STEP in this repo (no package.json, no bundler; see CLAUDE.md section 1), so
+   a build gate is not available to fail. The nearest honest equivalent: throw
+   at module init, log loudly, and have the hero render a visible failure notice
+   instead of a comparison drawn from a missing number. A silent zero would be
+   the one outcome worse than a broken hero. */
+function assertHeroRates(r) {
+  const required = [
+    "incumbentProcessing", "setlzProcessing",
+    "incumbentFx", "setlzFx", "cumulativeYears",
+  ];
+  const missing = required.filter(
+    (k) => typeof r[k] !== "number" || !isFinite(r[k]) || r[k] < 0
+  );
+  if (missing.length) {
+    throw new Error(
+      "HERO_RATES is incomplete: " + missing.join(", ") +
+      ". Every rate must be a finite non-negative number."
+    );
+  }
+  if (r.setlzProcessing >= r.incumbentProcessing) {
+    throw new Error(
+      "HERO_RATES.setlzProcessing must be below incumbentProcessing, or the " +
+      "comparison inverts and the hero claims the opposite of what it means."
+    );
+  }
+}
+
+const costComparison = document.getElementById("cc");
+
+if (costComparison) {
+  const el = {
+    root:     costComparison,
+    bars:     document.getElementById("cc-bars"),
+    pctWord:  document.getElementById("cc-pct-word"),
+    incAmt:   document.getElementById("cc-inc-amt"),
+    incFill:  document.getElementById("cc-inc-fill"),
+    setAmt:   document.getElementById("cc-setlz-amt"),
+    setFill:  document.getElementById("cc-setlz-fill"),
+    bracket:  document.getElementById("cc-bracket"),
+    saving:   document.getElementById("cc-saving"),
+    savAmt:   document.getElementById("cc-saving-amt"),
+    cume:     document.getElementById("cc-cume"),
+    cumeAmt:  document.getElementById("cc-cume-amt"),
+    range:    document.getElementById("cc-volume"),
+    volOut:   document.getElementById("cc-volume-out"),
+    radios:   Array.from(document.querySelectorAll('input[name="cc-corridor"]')),
+    live:     document.getElementById("cc-live"),
+  };
+
+  try {
+    assertHeroRates(HERO_RATES);
+    initCostComparison(el);
+  } catch (err) {
+    // Loud, visible, and it does not take the rest of the page down with it.
+    console.error("[hero] settlement cost comparison disabled:", err);
+    el.root.dataset.configError = "1";
+    const p = document.createElement("p");
+    p.className = "cc-config-error";
+    p.textContent =
+      "Settlement cost comparison unavailable: rate configuration incomplete.";
+    el.root.appendChild(p);
+  }
+}
+
+function initCostComparison(el) {
+  const EUR = new Intl.NumberFormat("en-GB", {
+    style: "currency", currency: "EUR", maximumFractionDigits: 0,
+  });
+
+  const ONES = [
+    "zero", "one", "two", "three", "four", "five", "six", "seven", "eight",
+    "nine", "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen",
+    "sixteen", "seventeen", "eighteen", "nineteen",
+  ];
+  const TENS = [
+    "", "", "twenty", "thirty", "forty", "fifty", "sixty", "seventy",
+    "eighty", "ninety",
+  ];
+
+  // The headline's percentage is spelled out, and computed. Never hardcoded:
+  // it reads "Forty" on EU to EU and "Sixty-four" on cross-border.
+  function inWords(n) {
+    n = Math.round(n);
+    if (n < 0 || n > 99) return String(n);
+    const w = n < 20
+      ? ONES[n]
+      : TENS[Math.floor(n / 10)] + (n % 10 ? "-" + ONES[n % 10] : "");
+    return w.charAt(0).toUpperCase() + w.slice(1);
   }
 
-  if (prefersReducedMotion) {
-    // The completed statement, immediately, with no sequence.
-    cells.forEach((c) => (c.style.opacity = "1"));
-    settle();
-  } else {
-    stmt.dataset.state = "running";
-    // The live row types in, column by column.
-    cells.forEach((c, i) => {
-      c.style.opacity = "0";
-      setTimeout(() => { c.style.opacity = "1"; }, i * TYPE_STAGGER);
-    });
+  /* One computation, one set of numbers, everything derived from it. Rounding
+     happens here and only here, so the displayed figures reconcile by
+     construction rather than by luck. */
+  function compute(volumeM, corridor) {
+    const volume = volumeM * 1e6;
+    const crossBorder = corridor === "xb";
 
-    let ms = 0, prev = null;
-    const MAX_FRAME_MS = 50;   // a backgrounded tab must not jump to the end
-    function tick(now) {
-      ms += prev === null ? 0 : Math.min(now - prev, MAX_FRAME_MS);
+    // The FX leg is cross-border only. Never added to EU to EU.
+    const incRate = HERO_RATES.incumbentProcessing +
+      (crossBorder ? HERO_RATES.incumbentFx : 0);
+    const setRate = HERO_RATES.setlzProcessing +
+      (crossBorder ? HERO_RATES.setlzFx : 0);
+
+    const incumbent = Math.round(volume * incRate);
+    const setlz = Math.round(volume * setRate);
+    const saving = incumbent - setlz;            // reconciles by definition
+
+    return {
+      incumbent, setlz, saving,
+      cumulative: saving * HERO_RATES.cumulativeYears,
+      // Both the bar width and the bracket offset come from this one ratio.
+      widthPct: (setlz / incumbent) * 100,
+      savingPct: (1 - setlz / incumbent) * 100,
+    };
+  }
+
+  function state() {
+    const checked = el.radios.find((r) => r.checked) || el.radios[0];
+    return { volumeM: Number(el.range.value), corridor: checked.value };
+  }
+
+  // ---- timeline. Runs once on load, never loops. ----
+  const T = {
+    incStart: 260,  incGrow: 920,     // theirs draws SLOWLY
+    setStart: 1320, setGrow: 560,     // ours draws in less than half the time
+    brStart:  2020, brFade:  340, savCount: 760,
+  };
+  const END = T.brStart + T.savCount;
+  const EASE = "cubic-bezier(0.22, 0.61, 0.36, 1)";
+  const MAX_FRAME_MS = 50;   // a backgrounded tab must not skip to the end
+
+  function easeOut(p) { return 1 - Math.pow(1 - p, 3); }
+  function clamp01(n) { return n < 0 ? 0 : n > 1 ? 1 : n; }
+
+  let introRunning = false;
+  let announceTimer = null;
+
+  function setWidths(d) {
+    // THE single assignment. The Setlz bar reads --setlz-w as its width and the
+    // bracket reads it as its left margin, so they cannot disagree.
+    el.bars.style.setProperty("--setlz-w", d.widthPct.toFixed(4) + "%");
+  }
+
+  function paintFigures(d) {
+    el.incAmt.textContent = EUR.format(d.incumbent);
+    el.setAmt.textContent = EUR.format(d.setlz);
+    el.savAmt.textContent = EUR.format(d.saving);
+    el.cumeAmt.textContent = EUR.format(d.cumulative);
+    el.pctWord.textContent = inWords(d.savingPct);
+  }
+
+  function reveal() {
+    el.bracket.classList.add("is-shown");
+    el.saving.classList.add("is-shown");
+    el.cume.classList.add("is-shown");
+  }
+
+  function announce(s, d) {
+    const corridor = s.corridor === "xb" ? "Cross-border" : "EU to EU";
+    el.live.textContent =
+      corridor + ", " + EUR.format(s.volumeM * 1e6) + " settled a year. " +
+      "Incumbent rails " + EUR.format(d.incumbent) + ", " +
+      "Setlz " + EUR.format(d.setlz) + ". " +
+      "Saving " + EUR.format(d.saving) + ", " +
+      inWords(d.savingPct).toLowerCase() + " percent less.";
+  }
+
+  // Instant update. Used after the intro, and for every slider and toggle
+  // change. The bar width transition re-runs on a corridor change because the
+  // proportion actually changes; a volume change leaves the proportion alone,
+  // so nothing re-animates.
+  function update({ announceNow = true } = {}) {
+    const s = state();
+    const d = compute(s.volumeM, s.corridor);
+    el.volOut.textContent = "€" + s.volumeM + "M";
+    paintFigures(d);
+    setWidths(d);
+    if (!announceNow) return;
+    clearTimeout(announceTimer);
+    announceTimer = setTimeout(() => announce(s, d), 400);
+  }
+
+  function finishIntro() {
+    introRunning = false;
+    update({ announceNow: false });
+    reveal();
+  }
+
+  function runIntro() {
+    const s = state();
+    const d = compute(s.volumeM, s.corridor);
+
+    // Start state, with transitions off so priming is not itself animated.
+    el.incFill.style.transition = "none";
+    el.setFill.style.transition = "none";
+    el.incFill.style.width = "0%";
+    el.bars.style.setProperty("--setlz-w", "0%");
+    el.bracket.classList.remove("is-shown");
+    el.saving.classList.remove("is-shown");
+    el.cume.classList.remove("is-shown");
+    el.incAmt.textContent = EUR.format(0);
+    el.setAmt.textContent = EUR.format(0);
+    el.savAmt.textContent = EUR.format(0);
+    void el.bars.offsetWidth;                       // one forced reflow
+
+    el.incFill.style.transition = "width " + T.incGrow + "ms " + EASE;
+    el.setFill.style.transition = "width " + T.setGrow + "ms " + EASE;
+    el.bracket.style.transition =
+      "opacity " + T.brFade + "ms " + EASE +
+      ", margin-left " + T.setGrow + "ms " + EASE;
+
+    introRunning = true;
+    let t = 0, prev = null, incGo = false, setGo = false, brGo = false, cumeGo = false;
+
+    function frame(now) {
+      if (!introRunning) return;
+      t += prev === null ? 0 : Math.min(now - prev, MAX_FRAME_MS);
       prev = now;
-      if (ms >= TARGET_MS) { settle(); return; }
-      elapsed.textContent = (ms / 1000).toFixed(2) + "s";
-      requestAnimationFrame(tick);
+
+      if (!incGo && t >= T.incStart) { incGo = true; el.incFill.style.width = "100%"; }
+      if (!setGo && t >= T.setStart) { setGo = true; setWidths(d); }
+      if (!brGo && t >= T.brStart) {
+        brGo = true;
+        el.bracket.classList.add("is-shown");
+        el.saving.classList.add("is-shown");
+      }
+      if (!cumeGo && t >= END) { cumeGo = true; el.cume.classList.add("is-shown"); }
+
+      el.incAmt.textContent = EUR.format(
+        Math.round(d.incumbent * easeOut(clamp01((t - T.incStart) / T.incGrow)))
+      );
+      el.setAmt.textContent = EUR.format(
+        Math.round(d.setlz * easeOut(clamp01((t - T.setStart) / T.setGrow)))
+      );
+      el.savAmt.textContent = EUR.format(
+        Math.round(d.saving * easeOut(clamp01((t - T.brStart) / T.savCount)))
+      );
+
+      if (t >= END) { finishIntro(); return; }
+      requestAnimationFrame(frame);
     }
-    setTimeout(() => requestAnimationFrame(tick), cells.length * TYPE_STAGGER);
+    requestAnimationFrame(frame);
+  }
+
+  // ---- wiring ----
+  // Any interaction during the intro completes it first, so the reader's input
+  // always wins over the animation rather than fighting it.
+  function onInput() {
+    if (introRunning) { introRunning = false; reveal(); }
+    update();
+  }
+  el.range.addEventListener("input", onInput);
+  el.radios.forEach((r) => r.addEventListener("change", onInput));
+
+  if (prefersReducedMotion) {
+    update({ announceNow: false });
+    reveal();
+  } else {
+    update({ announceNow: false });
+    runIntro();
   }
 }
 
