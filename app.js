@@ -1304,10 +1304,10 @@ if (rail) {
   // Node order and labels are the deck's. Each stage lists the sections that
   // belong to it; unknown ids are ignored, missing ones are harmless.
   const RAIL_STAGES = [
-    ["hero", "what"],                             // Customer pays
-    ["how", "hold", "anatomy"],                   // Held in escrow
-    ["compare", "why"],                           // Stablecoin service delivered
-    ["cases", "team", "request-demo", "notes"],   // Provider paid
+    ["hero"],                                     // Customer pays
+    ["how"],                                      // Held in escrow
+    ["proof", "safety"],                          // Stablecoin service delivered
+    ["pricing", "request-demo"],                  // Provider paid
   ];
   const LAST = RAIL_STAGES.length - 1;
 
