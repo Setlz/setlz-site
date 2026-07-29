@@ -80,3 +80,12 @@ Then, with the site open, inject `/design/vendor/axe.min.js` and call
 Force `.reveal` elements visible first (`document.querySelectorAll('.reveal')
 .forEach(e=>e.classList.add('is-visible'))`) or scroll-gated content is
 audited while transparent and contrast checks come back incomplete.
+
+## Open Graph image
+
+`design/og-image.svg` is the source for the site's `og-image.png`. It reuses the
+hero's statement device, so a link preview shows the same object the page opens
+with, and it is built only from the design tokens.
+
+Regenerate with the command in the root README's launch checklist. The
+intermediate `design/og-image.svg.png` is a build artefact and is gitignored.

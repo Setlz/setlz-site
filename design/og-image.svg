@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1200" viewBox="0 0 1200 1200" role="img" aria-label="Setlz settlement statement">
+  <!-- Built from the design tokens: paper ground, ink type, one green.
+       The device is the hero's continuous-feed statement, so the card a link
+       preview shows is the same object the page opens with.
+
+       CANVAS NOTE: the artwork is 1200x630, but this file is authored on a
+       1200x1200 square with the artwork centred, because the only SVG
+       rasteriser available here (qlmanage) renders into a square canvas and
+       scales to FILL it, which cropped the right-hand columns off the first
+       attempt. Rendering the square and centre-cropping 630 rows back out is
+       deterministic. See the command in design/README.md. -->
+  <rect width="1200" height="1200" fill="#FBFAF7"/>
+  <g transform="translate(0,285)">
+
+  <!-- statement card -->
+  <rect x="80" y="96" width="1040" height="438" fill="#FBFAF7" stroke="#DAD7CE" stroke-width="2"/>
+
+  <!-- tractor-feed perforation strip -->
+  <line x1="150" y1="96" x2="150" y2="534" stroke="#DAD7CE" stroke-width="2" stroke-dasharray="7 6"/>
+  <g fill="#E9E7E0">
+    <circle cx="115" cy="150" r="9"/><circle cx="115" cy="246" r="9"/>
+    <circle cx="115" cy="438" r="9"/><circle cx="115" cy="490" r="9"/>
+  </g>
+  <!-- three passed states in ink, the last settled in signal with its wash ring -->
+  <g>
+    <circle cx="115" cy="198" r="9" fill="#15171A"/>
+    <circle cx="115" cy="294" r="9" fill="#15171A"/>
+    <circle cx="115" cy="342" r="9" fill="#15171A"/>
+    <circle cx="115" cy="390" r="15" fill="#E8F5EE"/>
+    <circle cx="115" cy="390" r="9" fill="#1CA964"/>
+  </g>
+
+  <!-- statement head -->
+  <text x="192" y="150" font-family="Space Grotesk, Helvetica, Arial, sans-serif" font-size="30" font-weight="700" fill="#15171A">setl<tspan fill="#1CA964">z</tspan></text>
+  <text x="300" y="150" font-family="Helvetica, Arial, sans-serif" font-size="19" fill="#4A4E54">Settlement statement</text>
+  <line x1="192" y1="172" x2="1064" y2="172" stroke="#DAD7CE" stroke-width="2"/>
+
+  <!-- column labels -->
+  <g font-family="Courier New, monospace" font-size="15" letter-spacing="2.4" fill="#4A4E54">
+    <text x="192" y="208">COUNTERPARTY</text>
+    <text x="700" y="208" text-anchor="end">AMOUNT</text>
+    <text x="1064" y="208" text-anchor="end">ELAPSED</text>
+  </g>
+
+  <!-- completed rows -->
+  <g font-family="Courier New, monospace" font-size="21" fill="#15171A">
+    <text x="192" y="256">Host, Málaga</text>
+    <text x="700" y="256" text-anchor="end">EUR 1,240.00</text>
+    <text x="1064" y="256" text-anchor="end">0.38s</text>
+    <text x="192" y="300">Carrier, Rotterdam</text>
+    <text x="700" y="300" text-anchor="end">EUR 8,410.00</text>
+    <text x="1064" y="300" text-anchor="end">0.51s</text>
+  </g>
+  <line x1="192" y1="232" x2="1064" y2="232" stroke="#DAD7CE"/>
+  <line x1="192" y1="276" x2="1064" y2="276" stroke="#DAD7CE"/>
+  <line x1="192" y1="320" x2="1064" y2="320" stroke="#DAD7CE"/>
+
+  <!-- the live row on the wash, figure in signal-deep -->
+  <rect x="152" y="326" width="912" height="120" fill="#E8F5EE"/>
+  <g font-family="Courier New, monospace" font-size="21" fill="#0A6E48">
+    <text x="192" y="372">Host, Málaga</text>
+    <text x="700" y="372" text-anchor="end">EUR 1,000.00</text>
+  </g>
+  <text x="1064" y="424" text-anchor="end" font-family="Courier New, monospace" font-size="76" font-weight="700" fill="#0A6E48">0.42s</text>
+
+  <!-- tear line and settled mark -->
+  <line x1="192" y1="470" x2="1064" y2="470" stroke="#DAD7CE" stroke-width="2" stroke-dasharray="8 7"/>
+  <rect x="192" y="486" width="104" height="30" fill="none" stroke="#15171A" stroke-width="2"/>
+  <text x="244" y="507" text-anchor="middle" font-family="Courier New, monospace" font-size="15" letter-spacing="2" font-weight="700" fill="#15171A">SETTLED</text>
+
+  <!-- the claim -->
+  <text x="80" y="590" font-family="Space Grotesk, Helvetica, Arial, sans-serif" font-size="30" font-weight="700" fill="#15171A">The money arrives <tspan fill="#0A6E48">the moment</tspan> the service does.</text>
+  </g>
+</svg>

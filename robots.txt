@@ -1,0 +1,17 @@
+# Setlz, demo state.
+#
+# Everything is disallowed while this is a demo. That is deliberate and it
+# pairs with the noindex meta tag in each page's head: two independent
+# fail-safes, so indexing cannot happen by omission.
+#
+# AT LAUNCH, replace the two lines below with the production block, and remove
+# the noindex meta from index.html and verticals/index.html. See the checklist
+# in README.md.
+
+User-agent: *
+Disallow: /
+
+# --- production block, do not enable before launch ---
+# User-agent: *
+# Allow: /
+# Sitemap: https://TODO-SETLZ-DOMAIN/sitemap.xml

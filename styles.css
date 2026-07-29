@@ -1758,7 +1758,7 @@ h3 {
 }
 @keyframes demo-fill { to { background-size: 100% 100%; } }
 
-.demo-fine { margin-top: var(--space-3); color: var(--on-dark-faint); font-size: var(--mono-label); }
+.demo-fine { margin-top: var(--space-3); color: var(--on-dark-soft); font-size: var(--mono-label); }
 
 .demo-confirm h3 { margin-bottom: var(--space-3); }
 .demo-confirm p { color: var(--on-dark-soft); font-size: var(--mono-row); margin-bottom: var(--space-4); }
@@ -1814,23 +1814,30 @@ h3 {
 .footer-col { display: flex; flex-direction: column; gap: var(--space-2); }
 .footer-head { color: var(--ink-soft); margin-bottom: var(--space-1); }
 
-.dead {
-  color: var(--ink-soft);
-  text-decoration: none;
-  font-size: var(--mono-row);
-}
-.dead:hover {
-  color: var(--ink);
-  text-decoration: underline;
-  text-decoration-color: var(--ink);
-  text-decoration-thickness: 2px;
-  text-underline-offset: 4px;
-}
 
 .footer-fine {
   color: var(--ink-soft);
   border-top: 1px solid var(--line);
   padding-top: var(--space-5);
+}
+
+
+/* Footer: the developer column is honest prose rather than dead links, and the
+   legal line carries the registered details a UK company must show. */
+.footer-plain {
+  font-size: var(--body-small);
+  color: var(--ink-soft);
+  max-width: 34ch;
+  line-height: var(--lh-body);
+}
+.footer-legal {
+  color: var(--ink-soft);
+  margin-top: var(--space-5);
+  max-width: var(--measure);
+}
+.footer-todo {
+  border-bottom: 1px dashed var(--line);
+  color: var(--ink-soft);
 }
 
 /* ---------- reveal on scroll ---------- */

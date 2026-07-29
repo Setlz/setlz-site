@@ -129,3 +129,64 @@ Escrow guardrails (v2.1):
 - Idle-balance treasury routing is never connected to escrowed, held, or guest funds anywhere in copy. No yield language near escrow.
 - Escrow is described as rule-based and on-chain, never as a guarantee of outcome. No guaranteed, insured, or protection-scheme language.
 - Wallet provider and yield venues are never named.
+
+## Launch checklist (Phase 6.2)
+
+Everything below is deliberately unfinished while this is a demo. Each item is
+a single, findable change rather than a value buried somewhere.
+
+**1. The domain.** `TODO-SETLZ-DOMAIN` appears in `index.html`,
+`verticals/index.html`, `robots.txt` and `sitemap.xml`. Find and replace it in
+all four:
+
+```bash
+grep -rl TODO-SETLZ-DOMAIN . --exclude-dir=.git | xargs sed -i '' 's|TODO-SETLZ-DOMAIN|setlz.example|g'
+```
+
+Until that is done, the canonical, Open Graph and Twitter URLs point at a token
+that is obviously not a hostname. That is on purpose: it cannot be mistaken for
+a real value, and `robots.txt` disallows everything meanwhile, so nothing acts
+on them.
+
+**2. Indexing.** Two independent fail-safes hold the site closed:
+
+- `<meta name="robots" content="noindex, nofollow">` in both pages
+- `Disallow: /` in `robots.txt`
+
+To open it: remove the meta tag from both pages, and swap `robots.txt` for the
+production block commented at the bottom of that file.
+
+Honest limitation, and the one part of 6.2 that is not fully satisfiable here:
+the brief asks for indexing to be environment-driven rather than a value
+someone remembers to flip. That needs a build step or a host config, and this
+repo has neither. The nearest correct thing once a host exists is an
+`X-Robots-Tag: noindex` header on the staging origin only, leaving production
+clean. Until then, noindex is the default so a demo can never be indexed by
+omission, only by an explicit edit.
+
+**3. Facts still required.**
+
+| Where | What |
+|---|---|
+| footer, `index.html` | registered company number |
+| footer, `index.html` | registered office address |
+| footer, `index.html` | a real contact email. Contact currently points at the demo form, which is itself not wired, so there is no working route to a human yet |
+| `settlements.js` | Hacken report URL and audit date |
+| `#safety`, `index.html` | what backs the 99.9% uptime figure, and a named escalation path |
+
+**4. The Open Graph image.** `og-image.png` is generated from
+`design/og-image.svg`, which is built from the design tokens. To regenerate
+after editing the SVG:
+
+```bash
+qlmanage -t -s 1200 -o design design/og-image.svg && sips -c 630 1200 design/og-image.svg.png --out og-image.png
+```
+
+The SVG is authored on a 1200x1200 square with the artwork centred, because
+`qlmanage` renders into a square canvas and scales to fill it. Rendering square
+and centre-cropping 630 rows back out is deterministic; rendering the 1200x630
+artwork directly crops the right-hand columns.
+
+**5. Still outstanding from Phase 6:** the form does not submit anywhere (6.1,
+and it needs a destination decided first), and the team has no photos or
+LinkedIn links (6.3).

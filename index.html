@@ -3,8 +3,36 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Setlz · whitelabelled stablecoin settlement infrastructure</title>
+<meta name="description" content="Settlement infrastructure for platforms that take payment before they deliver. Funds are held against a condition and released the moment delivery lands, settled in EURC on Base, split atomically, under your brand.">
+
+<!-- ============================================================
+     INDEXING (Phase 6.2)
+
+     noindex is the FAIL-SAFE default and this is the single switch. There is
+     no build step in this repo, so a truly environment-driven value needs
+     either a host header (X-Robots-Tag on staging) or a build. Until a deploy
+     target exists, defaulting to noindex means a demo can never be indexed by
+     omission; the launch checklist in README.md is the deliberate flip.
+============================================================ -->
 <meta name="robots" content="noindex, nofollow">
-<title>Setlz</title>
+
+<!-- Absolute URLs below carry the TODO-SETLZ-DOMAIN token. They are inert
+     while robots.txt disallows everything, and launch requires replacing the
+     token everywhere it appears. See the checklist in README.md. -->
+<link rel="canonical" href="https://TODO-SETLZ-DOMAIN/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Setlz">
+<meta property="og:title" content="Setlz · whitelabelled stablecoin settlement infrastructure">
+<meta property="og:description" content="Settlement infrastructure for platforms that take payment before they deliver. Funds are held against a condition and released the moment delivery lands, settled in EURC on Base, split atomically, under your brand.">
+<meta property="og:url" content="https://TODO-SETLZ-DOMAIN/">
+<meta property="og:image" content="https://TODO-SETLZ-DOMAIN/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Setlz · whitelabelled stablecoin settlement infrastructure">
+<meta name="twitter:description" content="Settlement infrastructure for platforms that take payment before they deliver. Funds are held against a condition and released the moment delivery lands, settled in EURC on Base, split atomically, under your brand.">
+<meta name="twitter:image" content="https://TODO-SETLZ-DOMAIN/og-image.png">
 <!-- Self-hosted variable faces, 94KB total for the latin subset.
      Preloaded so the stylesheet does not gate first paint on a
      third-party round trip. -->
@@ -498,15 +526,15 @@
       </div>
       <div class="grow grow-lv">
         <span class="glabel">Transaction fee &middot; mid-market, around $100M settled a year</span>
-        <span class="gval-lg">100&ndash;150 bps</span>
+        <span class="gval-lg">100 to 150 bps</span>
       </div>
       <div class="grow grow-lv">
         <span class="glabel">Transaction fee &middot; large platform, around $1B a year</span>
-        <span class="gval-lg">40&ndash;80 bps</span>
+        <span class="gval-lg">40 to 80 bps</span>
       </div>
       <div class="grow grow-lv">
         <span class="glabel">Transaction fee &middot; enterprise, $10B a year and above</span>
-        <span class="gval-lg">15&ndash;35 bps</span>
+        <span class="gval-lg">15 to 35 bps</span>
       </div>
     </div>
 
@@ -636,25 +664,39 @@
         </a>
         <p class="footer-parent">A product of Setlz HoldCo LTD.</p>
       </div>
+      <!-- One decision per link, and nothing stays as "#" (Phase 6.2).
+
+           The product column now points at sections that exist rather than at
+           invented feature pages. The developer column is deliberately plain
+           text: for infrastructure sold to engineers, a dead docs link is a
+           louder credibility signal than admitting the docs are not published,
+           and a "coming soon" stub that says nothing is the same lie with an
+           extra click. -->
       <div class="footer-col">
-        <span class="mono footer-head">Product</span>
-        <a href="#" class="dead">Settlement engine</a>
-        <a href="#" class="dead">Programmable splits</a>
-        <a href="#" class="dead">Treasury routing</a>
+        <span class="mono footer-head">The product</span>
+        <a href="#how">How it works</a>
+        <a href="#proof">Proof</a>
+        <a href="#pricing">Pricing</a>
       </div>
       <div class="footer-col">
         <span class="mono footer-head">Developers</span>
-        <a href="#" class="dead">Documentation</a>
-        <a href="#" class="dead">API reference</a>
-        <a href="#" class="dead">Status</a>
+        <p class="footer-plain">Documentation, API reference and a status page are not published yet. Ask for access when you book a demo and you will get the current spec.</p>
       </div>
       <div class="footer-col">
         <span class="mono footer-head">Company</span>
-        <a href="#" class="dead">About</a>
-        <a href="#" class="dead">Compliance</a>
-        <a href="#" class="dead">Contact</a>
+        <a href="/verticals/">Verticals</a>
+        <a href="#safety">Safety and custody</a>
+        <a href="#request-demo">Contact</a>
       </div>
     </div>
+    <!-- TODO before launch, facts required:
+         TODO: registered company number
+         TODO: registered office address
+         TODO: a real contact email. Until then Contact points at the demo
+               form, which itself is not wired (Phase 6.1), so there is still
+               no working route to a human. This is the honest state, not a
+               finished footer. -->
+    <p class="mono footer-legal">Setlz HoldCo LTD &middot; registered in England and Wales &middot; company number <span class="footer-todo">to be added</span> &middot; registered office <span class="footer-todo">to be added</span></p>
     <p class="mono footer-fine">Demo site</p>
   </div>
 </footer>
