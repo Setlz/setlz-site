@@ -490,18 +490,18 @@ const WM_CONFIG = {
     },
     {
       key: "malaga-dublin",
-      label: "Malaga → Dublin",
+      label: "Málaga → Dublin",
       viewBox: [340, 28, 175, 105],
       viewBoxMobile: [372, 32, 130, 102],
       dotR: 0.62,
-      from: { name: "Malaga", lat: 36.72, lon: -4.42, la: [7, 11, "start"] },
+      from: { name: "Málaga", lat: 36.72, lon: -4.42, la: [7, 11, "start"] },
       to: { name: "Dublin", lat: 53.35, lon: -6.26, la: [7, -6, "start"] },
       pulseStart: "EURC",
       pulseEnd: "EURC",
       flip: false,
       midCaption: "EU internal: EURC end to end, no coin flip needed.",
       wireHops: [
-        { name: "Malaga bank", lat: 36.72, lon: -4.42, lbl: false },
+        { name: "Málaga bank", lat: 36.72, lon: -4.42, lbl: false },
         { name: "ES correspondent · Madrid", lat: 40.42, lon: -3.7, la: [7, 4, "start"] },
         { name: "SWIFT network", lat: 46.0, lon: -14.0, la: [-7, 4, "end"] },
         { name: "IE correspondent", lat: 52.3, lon: -8.6, la: [-7, 10, "end"] },
@@ -1358,66 +1358,6 @@ if (rail) {
     });
   }
 }
-
-/* ============================================================
-   NOTE AFFORDANCES (change order: Phase 1.3)
-   Replaces the per-component asterisked footnotes. CSS handles
-   hover and focus-within; this adds the tap path, dismissal, and
-   edge pinning so a popover never runs off screen.
-============================================================ */
-
-document.querySelectorAll(".note-ref").forEach((ref) => {
-  const btn = ref.querySelector(".note-btn");
-  const pop = ref.querySelector(".note-pop");
-  if (!btn || !pop) return;
-
-  function close() {
-    pop.classList.remove("is-open");
-    btn.setAttribute("aria-expanded", "false");
-  }
-
-  function open() {
-    // Pin to whichever edge keeps it on screen. Measured after showing,
-    // since a hidden element has no box.
-    pop.classList.remove("pin-left", "pin-right");
-    pop.classList.add("is-open");
-    btn.setAttribute("aria-expanded", "true");
-    const r = pop.getBoundingClientRect();
-    if (r.left < 8) pop.classList.add("pin-left");
-    else if (r.right > window.innerWidth - 8) pop.classList.add("pin-right");
-  }
-
-  btn.addEventListener("click", (e) => {
-    e.stopPropagation();
-    if (pop.classList.contains("is-open")) close();
-    else {
-      document.querySelectorAll(".note-pop.is-open").forEach((p) => {
-        p.classList.remove("is-open");
-        p.closest(".note-ref").querySelector(".note-btn").setAttribute("aria-expanded", "false");
-      });
-      open();
-    }
-  });
-
-  btn.addEventListener("keydown", (e) => {
-    if (e.key === "Escape") { close(); btn.blur(); }
-  });
-
-  // Same edge pinning for the hover and focus paths, which CSS drives.
-  ref.addEventListener("pointerenter", () => {
-    pop.classList.remove("pin-left", "pin-right");
-    const r = pop.getBoundingClientRect();
-    if (r.left < 8) pop.classList.add("pin-left");
-    else if (r.right > window.innerWidth - 8) pop.classList.add("pin-right");
-  });
-});
-
-document.addEventListener("click", () => {
-  document.querySelectorAll(".note-pop.is-open").forEach((p) => {
-    p.classList.remove("is-open");
-    p.closest(".note-ref").querySelector(".note-btn").setAttribute("aria-expanded", "false");
-  });
-});
 
 /* ============================================================
    REVEAL ON SCROLL

@@ -320,6 +320,34 @@ them; if you disagree, say so and get a decision.**
     above 3px, zero untokenised font sizes. Hairlines and rule widths at 1 to
     3px stay literal on purpose: snapping them to a spacing step blurs them.
 
+### Entity scope — standing prohibitions
+
+**Setlz is a standalone company.** AtlasOra is a customer, nothing more. Any
+reference on this site to any other entity must be a customer, a named vendor
+or integration, or removed.
+
+34. **Never introduce, and reject in future passes:** token or tokenomics
+    content, a whitepaper, foundation or group corporate structure,
+    sister-company or affiliate framing, ecosystem or community sections, or
+    any positioning of Setlz as a short-term rental business. Short-term rental
+    is a vertical we serve, not something we are.
+35. **"Reference customer" is banned.** It is a term of art implying an
+    arm's-length endorsement and it overclaimed. AtlasOra is "our first
+    customer" on first mention only; every later mention is just "AtlasOra".
+36. **The AtlasOra relationship is disclosed at first mention, as an
+    advantage**: the rail was built underneath a working marketplace rather
+    than from a specification, which is why the trigger and dispute logic
+    covers the cases it does. Andrew's team bio states he is CEO of AtlasOra,
+    which discloses it by construction. Do not add a separate small-print
+    disclosure line; one was removed for reading as a concealed affiliate.
+37. **No footnotes, no notes-and-methodology block, no caveat tooltip system.**
+    A page needing eight footnotes is making eight claims it is not confident
+    in. Fold the caveat into the sentence, or drop the figure. Exactly one
+    visible "simulated" label, on the escrow demo.
+38. **One spelling of Málaga**, accented, in markup and in JS config alike.
+    Write the character, not the `&aacute;` entity, so a grep finds every
+    instance.
+
 ### Copy
 
 18. **Correct English for the settle word-family.** `Setlz` is the brand and
