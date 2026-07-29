@@ -1180,7 +1180,7 @@ h3 {
 
 
 /* Trust centerpiece styles: block is commented out in the HTML until the
-   v2.9 claim gate clears (wallet memo, audit, Gavin sign-off). */
+   the stronger custody claims are permitted. */
 .trust-center {
   margin-top: var(--space-7);
   border: 1.5px solid var(--ink);

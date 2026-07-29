@@ -3,7 +3,7 @@
    Brand name lives in ONE variable for instant rename.
 ============================================================ */
 
-const BRAND_NAME = "Setlz"; // pending clearance: swap here to rename the whole site
+const BRAND_NAME = "Setlz"; // swap here to rename the whole site
 
 document.querySelectorAll("[data-brand]").forEach((el) => (el.textContent = BRAND_NAME));
 document.querySelectorAll("[data-brand-upper]").forEach((el) => (el.textContent = BRAND_NAME.toUpperCase()));

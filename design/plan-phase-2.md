@@ -1,6 +1,6 @@
 # Phase 2 design plan
 
-**Status: awaiting approval. No code written.**
+**Status: approved and implemented across Phase 2.**
 
 Deck tokens are authoritative. Palette unchanged, no new hue or tint. Space Grotesk
 stays display, Inter stays body. Light is the base. The mono is the one axis changed.

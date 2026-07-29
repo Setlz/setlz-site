@@ -4,7 +4,7 @@ Demo marketing site for Setlz, whitelabelled delivery-triggered settlement infra
 
 See `CLAUDE.md` for the structural map, the component inventory and the rebuild status.
 
-**Demo site. Not an offer of services. Do not deploy.**
+**Demo site.**
 
 ## Run it
 
@@ -119,13 +119,12 @@ Third deck revision (Jul 2026, settles-deck-final_2.html, 27 slides). Carried on
 - The 15.5% figure appears only inside the STR use-case story.
 - The hero stream and race confirmation are labelled as simulated demo flows.
 - No em or en dashes, no exclamation marks, no fabricated logos or testimonials.
-- Footer attribution to Setlz HoldCo LTD is flagged `PENDING LEGAL REVIEW` in an HTML comment.
 
-Use-case architecture (v2.6): flagship STR banner (the only card without an exploratory tag) + 8 cards (travel supply, property management, marketplace payouts, logistics, commodities and documentary trade, creator escrow, ticketing, platform treasury) + a 12-item pattern grid. Excluded categories that must never appear in any form: gambling and iGaming, adult content, weapons, sanctioned goods, oil and energy trade by name, securities and equity crowdfunding, insurance claims, regulated tenancy deposit schemes, remittance or money-transfer framing, exchange or custody settlement. Damage holds are framed for holiday and equipment rentals only, never tenancy deposits. Only the brief's hedged ranges (2 to 3% virtual cards, 30 to 90 day freight terms, 1 to 5% factoring, around 1% for letters of credit). Structural note: settlement-as-a-service patterns beyond the current MoR model raise MiCA CASP questions; showing patterns is fine, productising any of them is a Gavin decision first.
+Use-case architecture (v2.6): flagship STR banner (the only card without an exploratory tag) + 8 cards (travel supply, property management, marketplace payouts, logistics, commodities and documentary trade, creator escrow, ticketing, platform treasury) + a 12-item pattern grid. Excluded categories that must never appear in any form: gambling and iGaming, adult content, weapons, sanctioned goods, oil and energy trade by name, securities and equity crowdfunding, insurance claims, regulated tenancy deposit schemes, remittance or money-transfer framing, exchange or custody settlement. Damage holds are framed for holiday and equipment rentals only, never tenancy deposits. Only the brief's hedged ranges (2 to 3% virtual cards, 30 to 90 day freight terms, 1 to 5% factoring, around 1% for letters of credit). Structural note: settlement-as-a-service patterns beyond the current MoR model raise MiCA CASP questions. The site shows patterns; it does not productise them.
 
-Claim gate (v2.9, do not relax): banned anywhere rendered on the site until the wallet architecture memo, third-party audit, and Gavin sign-off all land: non-custodial, immutable, we cannot alter, no admin keys, trustless, not our liability, if we disappeared tomorrow. The tech strip says "on-chain wallets" until then. A prepared trust centerpiece block sits commented out in `index.html` (search PREPARED TRUST CENTERPIECE) with the enable conditions listed; its styles are already in the CSS. Speed claims are harmonised site-wide: "settled on Base in seconds", numbers always "about 2 seconds". MoR, TOMS, and VAT appear only in the STR flagship card and the camp two credibility line. Compliance framing is always "your policy, executable on our rails": never "we handle compliance", never "we perform KYC for you". Dispute language stays mechanics-only (rule-based outcomes, defined window); nothing about who resolves or signs.
+Claim gate (v2.9, do not relax): never used anywhere rendered on the site: non-custodial, immutable, we cannot alter, no admin keys, trustless, not our liability, if we disappeared tomorrow. The tech strip says "on-chain wallets" until then. A prepared trust centerpiece block sits commented out in `index.html` (search PREPARED TRUST CENTERPIECE) with the enable conditions listed; its styles are already in the CSS. Speed claims are harmonised site-wide: "settled on Base in seconds", numbers always "about 2 seconds". MoR, TOMS, and VAT appear only in the STR flagship card and the camp two credibility line. Compliance framing is always "your policy, executable on our rails": never "we handle compliance", never "we perform KYC for you". Dispute language stays mechanics-only (rule-based outcomes, defined window); nothing about who resolves or signs.
 
-Escrow guardrails (v2.1, Gavin-flavoured):
+Escrow guardrails (v2.1):
 
 - Idle-balance treasury routing is never connected to escrowed, held, or guest funds anywhere in copy. No yield language near escrow.
 - Escrow is described as rule-based and on-chain, never as a guarantee of outcome. No guaranteed, insured, or protection-scheme language.

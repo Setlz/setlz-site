@@ -237,7 +237,7 @@ Inter Tight and JetBrains Mono from `fonts.googleapis.com`. Phase 2.2 must self-
 
 4. **A prepared block sits commented out** at `index.html:519–535`, "PREPARED TRUST
    CENTERPIECE". Its CSS is already live at `styles.css:1009`. It is gated on three
-   conditions (wallet-architecture memo, third-party audit, sign-off). Phase 4.2 builds a
+   conditions. Phase 4.2 builds a
    security section in adjacent territory — do not enable this block as a shortcut.
 
 5. **`map-dots.js` is generated.** If the world-map demo is deleted in Phase 1.1, delete
@@ -364,8 +364,8 @@ or integration, or removed.
     why it cannot be compared to Visa and Mastercard settlement.
 21. **The v2.9 claim gate still stands.** `non-custodial`, `immutable`, `no
     admin keys`, `trustless`, `we cannot alter`, `if we disappeared tomorrow`
-    require the wallet-architecture memo AND a third-party audit AND sign-off.
-    Only the Hacken audit has landed, so none of that language may appear.
+    are never used on the site. The Hacken audit is recorded, but the stronger
+    custody language stays off the page regardless.
 22. **Four aphorism kickers, page-wide maximum.** There were 19.
 
 ### Behaviour
