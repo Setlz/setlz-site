@@ -178,9 +178,10 @@
       <div class="sr-only" aria-live="polite" id="cc-live"></div>
     </div>
 
+    <!-- One action. The request-a-demo CTA was removed along with the form, so
+         the tiered table is the remaining next step. -->
     <div class="hero-ctas">
-      <a class="btn btn-primary" href="#request-demo">Request a demo</a>
-      <a class="hero-link" href="#pricing">See the tiers</a>
+      <a class="btn btn-primary" href="#pricing">See the tiers</a>
     </div>
   </div>
 </section>
@@ -198,8 +199,14 @@
 <section class="section band tier-standard" id="how">
   <div class="container">
     <p class="eyebrow">How it works</p>
-    <h2 class="h2">Fiat in. Stablecoin speed.<br>Fiat out. Owned end to end.</h2>
-<p class="statement reveal">A settlement rail they own, not rent: any payment in, settled in EURC on Base in seconds, split atomically, under your brand.</p>
+    <h2 class="h2">Fiat in. Stablecoin speed.<br>Fiat out. Under your brand.</h2>
+    <!-- NOT "a rail they own, not rent". They license the rail from us: that is
+         the whole business model, a licence at cost plus a transaction fee. If
+         they owned it there would be nothing to integrate and nothing to pay
+         for. What is theirs is the brand and the customer relationship; the
+         rail is ours, and saying otherwise is a claim a buyer would unpick in
+         the first call. -->
+<p class="statement reveal">A whitelabelled settlement rail: any payment in, settled in EURC on Base in seconds, split atomically, and your customers only ever see your brand.</p>
 
 <div class="group reveal">
       <div class="grow grow-lv"><span class="glabel">Delivery to payout</span><span class="gval-lg">Minutes</span></div>
@@ -208,7 +215,9 @@
            A figure that needs a footnote to be read correctly is the wrong
            figure; the label now says whose money it is. -->
       <div class="grow grow-lv"><span class="glabel">What the network costs us</span><span class="gval-lg">Cents</span></div>
-      <div class="grow grow-lv"><span class="glabel">Ownership</span><span class="gval-lg">Whitelabel</span></div>
+      <!-- Was labelled "Ownership", which claimed the customer owns the rail.
+           They do not. What they get is their brand on the front of it. -->
+      <div class="grow grow-lv"><span class="glabel">What your customers see</span><span class="gval-lg">Your brand</span></div>
     </div>
 
 <div class="group reveal">
@@ -231,100 +240,6 @@
       </ul>
     </div>
 
-<!-- Interactive escrow simulator (change order v2.2). All values in ESCROW_CONFIG in app.js. -->
-    <div class="esc reveal" id="esc" data-state="idle">
-      <div class="esc-top">
-        <span class="mono esc-stage-label" id="esc-stage">01 payment</span>
-        <div class="esc-scenarios" id="esc-scenarios" role="group" aria-label="Scenario presets"></div>
-        <div class="esc-rail" role="group" aria-label="Payment rail (cosmetic)">
-          <button class="mono esc-rail-btn is-on" type="button" data-rail="card">Card</button>
-          <button class="mono esc-rail-btn" type="button" data-rail="eurc">EURC</button>
-          <button class="mono esc-rail-btn" type="button" data-rail="usdc">USDC</button>
-          <span class="mono esc-rail-ghost">+ any Base stablecoin</span>
-        </div>
-        <span class="mono esc-sim-note">Interactive demo &middot; simulated transactions</span>
-      </div>
-
-      <div class="esc-board" id="esc-board">
-
-        <div class="esc-col">
-          <div class="esc-node" id="esc-payer">
-            <span class="mono esc-node-label" id="esc-payer-label">Payer</span>
-            <span class="mono esc-node-amt" id="esc-payer-amt">&euro;1,000</span>
-            <span class="mono esc-node-sub" id="esc-payer-sub">Pays via card</span>
-            <span class="mono esc-node-status" id="esc-payer-status">Ready</span>
-          </div>
-        </div>
-
-        <div class="esc-col esc-col-mid">
-          <div class="esc-vault" id="esc-vault">
-            <div class="esc-vault-head">
-              <svg class="esc-lock" viewBox="0 0 16 16" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><rect x="2.5" y="7" width="11" height="7" rx="1.5"/><path d="M5 7V5a3 3 0 0 1 6 0v2"/></svg>
-              <span class="mono">Escrow &middot; on-chain</span>
-              <span class="mono esc-chip" id="esc-chip">Awaiting payment</span>
-            </div>
-            <div class="esc-vault-amt mono" id="esc-vault-amt">&euro;0</div>
-            <div class="mono esc-hash" id="esc-hash" hidden></div>
-            <p class="esc-beat" id="esc-beat" hidden>Settled. Final. Held by rule, not by banks.</p>
-            <div class="esc-rule" id="esc-rule" hidden>
-              <div class="mono esc-rule-line" id="esc-rule-line">Release rule: delivery confirmed, then release</div>
-              <div class="mono esc-cond" id="esc-cond">Delivery: pending</div>
-            </div>
-          </div>
-
-          <div class="esc-views" id="esc-views" hidden>
-            <div class="esc-view">
-              <span class="mono esc-view-label" id="esc-view-a">Payer view</span>
-              <span class="mono esc-view-amt">Locked &middot; &euro;1,000 EURC</span>
-            </div>
-            <div class="esc-view">
-              <span class="mono esc-view-label" id="esc-view-b">Seller view</span>
-              <span class="mono esc-view-amt">Locked &middot; &euro;1,000 EURC</span>
-            </div>
-          </div>
-          <p class="esc-views-caption" id="esc-views-caption" hidden>Visible to both sides. Verifiable by both sides.</p>
-
-          <p class="esc-compare" id="esc-compare" hidden>On card rails this money would still be in flight, and clawable for up to 120 days.</p>
-
-          <div class="esc-banner mono" id="esc-banner" hidden>Funds remain secured while the window runs</div>
-
-          <div class="esc-actions" id="esc-actions">
-            <button class="btn btn-primary" id="esc-primary" type="button">Simulate a purchase</button>
-            <button class="btn btn-ghost" id="esc-dispute-btn" type="button" hidden>Open dispute</button>
-            <button class="btn btn-primary" id="esc-refund-btn" type="button" hidden>Refund payer</button>
-            <button class="btn btn-ghost" id="esc-release-btn" type="button" hidden>Release to seller</button>
-          </div>
-
-          <p class="esc-stamp" id="esc-stamp" hidden></p>
-          <div class="mono esc-receipt" id="esc-receipt" hidden>
-            <span>Release to final: seconds</span>
-            <span>Chargebacks on-chain: none</span>
-            <span>Banking hours consulted: Zero</span>
-          </div>
-        </div>
-
-        <div class="esc-col">
-          <div class="esc-node esc-wallet" data-wallet="seller">
-            <span class="mono esc-node-label">Seller</span>
-            <span class="mono esc-node-amt">&euro;880</span>
-            <span class="mono esc-node-status">Awaiting</span>
-          </div>
-          <div class="esc-node esc-wallet" data-wallet="partner">
-            <span class="mono esc-node-label">Partner</span>
-            <span class="mono esc-node-amt">&euro;20</span>
-            <span class="mono esc-node-status">Awaiting</span>
-          </div>
-          <div class="esc-node esc-wallet" data-wallet="platform">
-            <span class="mono esc-node-label">Platform</span>
-            <span class="mono esc-node-amt">&euro;100</span>
-            <span class="mono esc-node-status">Awaiting</span>
-          </div>
-        </div>
-
-      </div>
-      <p class="esc-coin-caption">Setlz in EURC today. Engineered for any Base-native fiat stablecoin.</p>
-      <div class="sr-only" aria-live="polite" id="esc-live"></div>
-    </div>
 
     <!-- The three options a platform actually chooses between (Phase 5.5).
          Factual, no adjectives, no defensibility language. States what each
@@ -582,67 +497,23 @@
 ============================================================ -->
 
 <!-- ============================================================
-     6. DEMO
-     Absorbs the form and the team.
+     6. TEAM
+
+     Was the demo section: it carried the request-a-demo form and absorbed the
+     team in the 1.0 consolidation. The form is removed, so what is left is the
+     team on the one dark band.
+
+     It now uses .band-dark rather than the bespoke .demo-band. Same ground, but
+     flat ink instead of a gradient, and the on-dark token overrides live in one
+     place instead of being duplicated per-section. ANYTHING placed on this band
+     must have its contrast rechecked, not just its layout: that bug shipped
+     twice here already.
 ============================================================ -->
-<section class="demo-band tier-primary" id="request-demo">
-<div class="container demo-grid">
-
-    <div class="demo-copy">
-      <p class="eyebrow eyebrow-dark">Get a demo</p>
-      <h2 class="demo-h2">See it settle on your numbers.</h2>
-      <p class="demo-sub">Twenty minutes, your flows, live on Base testnet. We will run your payout split through the engine while you watch.</p>
-      <div class="demo-chips mono">
-        <span>Built and tested on Base</span>
-        <span>EURC-native</span>
-        <span>Escrow held by rule</span>
-      </div>
-    </div>
-
-    <div class="demo-card">
-      <form id="demo-form" novalidate>
-        <div class="demo-field">
-          <label class="mono" for="demo-name" data-demo-label="name">Name</label>
-          <input id="demo-name" name="name" type="text" required autocomplete="name">
-          <span class="mono demo-error" id="demo-name-err" hidden></span>
-        </div>
-        <div class="demo-field">
-          <label class="mono" for="demo-email" data-demo-label="email">Work email</label>
-          <input id="demo-email" name="email" type="email" required autocomplete="email">
-          <span class="mono demo-error" id="demo-email-err" hidden></span>
-        </div>
-        <div class="demo-field">
-          <label class="mono" for="demo-company" data-demo-label="company">Company</label>
-          <input id="demo-company" name="company" type="text" required autocomplete="organization">
-          <span class="mono demo-error" id="demo-company-err" hidden></span>
-        </div>
-        <div class="demo-field">
-          <label class="mono" for="demo-settling" data-demo-label="settling">What are you settling?</label>
-          <select id="demo-settling" name="settling"></select>
-        </div>
-        <div class="demo-field">
-          <label class="mono" for="demo-notes" data-demo-label="notes">Anything we should know? (optional)</label>
-          <textarea id="demo-notes" name="notes" rows="3"></textarea>
-        </div>
-        <!-- WIRING SLOT (mandatory the moment this form is connected):
-             consent checkbox + privacy policy link go here. -->
-        <button class="btn btn-primary demo-submit" id="demo-submit" type="submit">Request a demo</button>
-        <p class="mono demo-fine">Demo site. Form not yet connected. No data is stored or transmitted.</p>
-      </form>
-
-      <div class="demo-confirm" id="demo-confirm" hidden>
-        <h3 id="demo-confirm-head"></h3>
-        <p id="demo-confirm-line"></p>
-        <a class="mono demo-mailto" id="demo-mailto" href="#"></a>
-        <p class="mono demo-fine" id="demo-confirm-fine"></p>
-      </div>
-      <div class="sr-only" aria-live="polite" id="demo-live"></div>
-    </div>
-
-  </div>
-
+<section class="section band-dark tier-primary" id="team">
   <div class="container">
-<p class="section-lede reveal">Who you will be working with, and what each of them has shipped.</p>
+    <p class="eyebrow">Team</p>
+    <h2 class="h2">Who you would be<br>working with.</h2>
+<p class="section-lede reveal">What each of them has shipped.</p>
 
     <div class="group reveal">
       <div class="grow grow-def">
@@ -705,13 +576,13 @@
       </div>
       <div class="footer-col">
         <span class="mono footer-head">Developers</span>
-        <p class="footer-plain">Documentation, API reference and a status page are not published yet. Ask for access when you book a demo and you will get the current spec.</p>
+        <p class="footer-plain">Documentation, API reference and a status page are not published yet.</p>
       </div>
       <div class="footer-col">
         <span class="mono footer-head">Company</span>
         <a href="/verticals/">Verticals</a>
         <a href="#safety">Safety and custody</a>
-        <a href="#request-demo">Contact</a>
+        <a href="#team">Team</a>
       </div>
     </div>
     <!-- TODO before launch, facts required:
@@ -719,10 +590,10 @@
                "to be added" placeholders were removed: an incomplete legal
                line reads worse than a short one, and the requirement is
                recorded in the launch checklist instead.
-         TODO: a real contact email. Until then Contact points at the demo
-               form, which itself is not wired (Phase 6.1), so there is still
-               no working route to a human. This is the honest state, not a
-               finished footer. -->
+         TODO: a real contact email, and it is now the ONLY missing route to a
+               human. The demo form was removed, so unlike before there is no
+               form standing in for one. Nothing on this site currently lets a
+               visitor make contact. -->
     <p class="mono footer-legal">Setlz HoldCo LTD &middot; registered in England and Wales</p>
     <p class="mono footer-fine">Demo site</p>
   </div>

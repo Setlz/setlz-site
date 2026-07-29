@@ -349,8 +349,10 @@ or integration, or removed.
     concealed affiliate.
 37. **No footnotes, no notes-and-methodology block, no caveat tooltip system.**
     A page needing eight footnotes is making eight claims it is not confident
-    in. Fold the caveat into the sentence, or drop the figure. Exactly one
-    visible "simulated" label, on the escrow demo.
+    in. Fold the caveat into the sentence, or drop the figure. Simulated
+    content is labelled where it appears: the settlement anatomy and the
+    corridor map each carry one label. (The escrow demo held the third and is
+    deleted.)
 38. **One spelling of Málaga**, accented, in markup and in JS config alike.
     Write the character, not the `&aacute;` entity, so a grep finds every
     instance.
@@ -408,7 +410,9 @@ or integration, or removed.
 ### Structure (revised brief)
 
 39. **Six sections, not twelve.** Hero, How it works, Proof, Safety and
-    custody, Pricing, Demo. One eyebrow, one headline and one closing thought
+    custody, Pricing, Team. (The sixth was Demo until the form was deleted;
+    the section had absorbed the team, which is what remains.) One eyebrow,
+    one headline and one closing thought
     each. If a merged section has two headlines it has not been merged. The
     twelve-section version was deck geometry: slide chrome repeated twelve
     times for a page read without a narrator.
@@ -499,23 +503,35 @@ or integration, or removed.
     and nothing else), both in the old statement hero. The customer's own
     splits still appear in the escrow and anatomy demos, which is correct:
     those are their payouts, in their context, with no fee of ours beside them.
-52. **The incumbent anchor stays at the conservative end of the sourced
+52. **Never claim the customer owns the rail.** They license it from us, which
+    is the entire business model: a licence at cost plus a transaction fee. If
+    they owned it there would be nothing to integrate and nothing to pay for.
+    Removed for this reason: "a settlement rail they own, not rent", "Owned end
+    to end", and an "Ownership / Whitelabel" stat. What is theirs is the brand
+    and the customer relationship. Use "whitelabelled" and "your customers only
+    ever see your brand"; never imply transfer of the asset.
+53. **The incumbent anchor stays at the conservative end of the sourced
     range.** 2.50% is the BOTTOM of the 2 to 6% band (World Bank, BIS 2026)
     and must not be raised to widen the gap. It is the most checkable number
     on the page: a head of payments knows their own effective rate to the
     basis point, so a flattering anchor loses the meeting rather than winning
     it. The note says we use the low end, deliberately.
-53. **The FX leg is cross-border only.** `incumbentFx` and `setlzFx` are added
+54. **The FX leg is cross-border only.** `incumbentFx` and `setlzFx` are added
     only in the cross-border state and never to EU to EU, which is why the
     saving reads 40% on one and 64% on the other. EU to EU is the default
     because it is the day-one position. Our own FX figure is a **placeholder**
     marked `TODO(setlz-fx)`; confirm it against real corridor execution before
     this hero is shown outside the team.
-54. **The hero shows the mid-market tier only**, which is why the slider caps
+55. **The hero shows the mid-market tier only**, which is why the slider caps
     at 250: above that the rate tiers down and the percentages change. The
     note must keep saying that larger platforms pay less than shown, or the
     hero becomes a single universal rate, which is exactly what rule 47 exists
     to prevent.
+56. **The escrow simulator and the demo request form are deleted.** The form
+    submitted nowhere and the simulator asserted the customer's own commission
+    and a tax line, which is not ours to state. Two demos remain: the
+    settlement anatomy and the corridor map. Do not rebuild either deletion
+    without being asked.
 
 ### Verify by measuring, not by reading
 

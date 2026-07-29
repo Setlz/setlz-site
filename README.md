@@ -30,11 +30,23 @@ The comparison section opens with an animated map race: the same payment sent on
 
 The race never actually finished before the rebuild: the markup carried `id="wm-settled"` while `app.js` looks up `wm-settled`, so the frame loop threw at the moment the arc completed. The brand-spelling rule below applies to rendered strings only, never to ids or classes.
 
-## Escrow simulator (v2.2, flattened in Phase 2.3)
+## Escrow simulator (v2.2 to v3.3) — REMOVED
 
-The Hold section centres on an interactive escrow demo: payment streams into on-chain escrow, a visible release rule holds it, the visitor confirms the condition (or opens a dispute) and watches the atomic split fire in under a second. All demo values (amounts, split, rule text, stage labels, copy beats, timings) live in one `ESCROW_CONFIG` object at the top of the simulator block in `app.js`. The tx hash is deliberately fake (`0xSIM…DEMO`, labelled simulated). Reduced motion is respected (fades, no particles) and state changes are announced via aria-live.
+Deleted in full: markup, ~190 lines of CSS and ~340 lines of JS
+(`ESCROW_CONFIG` and the state machine). It was the interactive payment /
+hold / release / split illustration in How it works.
 
-v2.4 universalised the labels: the widget defaults to a generic marketplace (Payer, Seller, Partner, Platform, delivery confirmed) with scenario presets for Short-term rental (Guest, Host, check-in) and B2B trade (Supplier, milestone, tagged exploratory). Labels only: amounts and mechanics are identical in every scenario, all defined in `ESCROW_CONFIG.scenarios`. v2.5 added the CARD | EURC | USDC rail chips plus a ghost "+ any Base stablecoin" chip (cosmetic; EURC stays the demo settlement path) and the multi-coin strip after How it works. FX claims are always scoped ("basis-point spreads on deep pools", never a rate promise); tGBP is named once, with the FCA-registered/live-on-Base facts and the not-a-partnership footnote; "integration-ready" describes stack effort, not market depth. The any-stablecoin framing stays off the Circle deck.
+Two reasons it went. It was not needed to make the point, and it asserted
+figures that are not ours to assert: a `Platform €100` commission and a
+`Partner €20` line, i.e. what the customer charges its own suppliers. See the
+pricing-hygiene and no-ownership guardrails below.
+
+**Two demos remain**: the settlement anatomy in `#proof` (data in
+`settlements.js`) and the corridor map race (`WM_CONFIG` in `app.js`).
+
+Watch out when deleting CSS by region: `.sr-only` and `.pullquote` sat inside
+the same block and were nearly lost with it. `.sr-only` is load-bearing — every
+aria-live region uses it, and without the rule they become visible text.
 
 ## Hero: settlement cost comparison (v3.3)
 
@@ -116,9 +128,24 @@ The accent colour is also one variable, at the top of `styles.css`:
 
 Palette (matched to the Setlz logo, Jul 2026): white base, emerald green accent, charcoal near-black ink (`#17191C`) for type, cool neutral greys, near-black full-bleed sections with green accents. The hexes are eyedropper approximations; refine them when the high-quality logo asset lands. The nav/footer mark is a CSS stand-in (charcoal square, three bars, green centre) and the wordmark renders lowercase with a green final letter, both built from `BRAND_NAME`. Green is never used for text below 18px bold on white; smaller accents are badges (white on green) or ink.
 
-## Demo request form (v2.7, NOT WIRED)
+## Demo request form (v2.7 to v3.3) — REMOVED
 
-The closing dark section (`#request-demo`) holds a front-end-only demo request form. It is honestly unwired: client-side validation only, no storage, no cookies, no network call, payload logged to console on localhost only and discarded. The confirmation state states explicitly that the form is not connected and shows an obvious placeholder address (`demo@[settles-domain-pending].example`). All labels, options, copy, timings, and the placeholder email live in `DEMO_CONFIG` in `app.js`; a commented WIRING SLOT in the markup and the submit handler marks where the endpoint, consent checkbox, and privacy policy link must go the moment it is connected (they become mandatory then).
+Deleted in full: markup, CSS and `DEMO_CONFIG` plus the validation and
+submission handler in `app.js`. It was front-end only and submitted nowhere, so
+nothing functional was lost.
+
+The `#request-demo` section had also absorbed the team in the 1.0
+consolidation, so what remains is a **team section** (`#team`) on the one dark
+band, now using `.band-dark` rather than a bespoke `.demo-band`.
+
+Removed with it: the hero's "Request a demo" CTA (the tiered table is the
+remaining action), the submit button, and the footer's "Contact" link, which
+pointed at the deleted section and now points at `#team`.
+
+**Consequence, deliberately recorded: there is now no contact route on the
+site at all.** Previously an unwired form at least implied one. A real contact
+email is on the launch checklist and is the only thing standing between this
+and a page a buyer can act on.
 
 Spelling (REVERSED in Phase 5.1, Jul 2026): the site previously wrote the settle
 word-family in a deliberate brand misspelling (setl, setlz, setld, setling, setlment).
@@ -146,7 +173,7 @@ The site now carries the investor deck's positioning: whitelabelled, delivery-tr
 
 Second deck revision (Jul 2026, Setlz-Deck.pdf, 25 slides): proof language walked back site-wide from "in production / live" to "built and tested end to end, across repeated runs" (race caption, stream note, flagship and travel tags, camp two, trump card, team section, demo chip). Slide-1 timing is ~11 minutes (flow diagram updated), the execution stat is "Settlement execution: cents", the 77% stat is sourced to EY-Parthenon 2025, and the moat's regulatory line is per-vertical liability + MoR posture. Kept OFF the site from this deck: the raise ($6M at $24M pre-money), EMI acquisition pipeline and costs, seed deliverables, the unit economics (figures deliberately not restated here), token/backstop-pool slide, risk slide, beachhead trade figures (€4T/€1.3T), BVNK/Mastercard, and the word "audited" for the settlement contract (still gated behind the v2.9 audit condition).
 
-Third deck revision (Jul 2026, settles-deck-final_2.html, 27 slides). Carried onto the site: "utilising stablecoins" in the hero lede; the ownership framing ("a settlement rail they own, not rent") on the What it is statement, with a WHITELABELLED RAIL node added to the flow diagram; a fine-print line under the four switch stats scoping execution cost to the stablecoin leg (not the all-in cost of a regulated payment) and ownership to a branded rail rather than a facilitator's; "Owned end to end." on the How it works heading; the expanded Why now strip (the volume and projection figures were CUT again in Phase 5.3 as unsourceable; only MiCA/GENIUS, the EY-Parthenon 77%, and rails-at-cents survive); the moat lede (we assemble the pieces, we do not claim the pieces are unbuildable) and the "why they will not follow us down" horizontal-by-design line; the business model "what you are paying for" line and the facilitator/commodity punch; the use-cases lede (common thread is the float, identical mechanics, different trigger event); a Where we are strip (live travel, next freight and fintech pilots, exploratory stablecoin infra partners, proof first partners second); and the rewritten team section (deck order, Andrew Deighan now CPO product and settlement, Adam Bates's Cardano/IOHK and BBDO credentials, fuller Samuel/Jake/Edison/Mark bios, plus the advisors line). Footer parent attribution is now "A product of Setlz HoldCo LTD." Kept OFF from this deck, unchanged from before: the raise ($6M on a $30M post-money SAFE cap), EMI acquisition pipeline, costs and roadmap phases, seed deliverables, the unit economics (figures deliberately not restated here), the $500M-to-$7.5M revenue projection, SAM tables, the beachhead EU trade figures, the token and backstop pool, the risk slide, the competitor table with its volume and acquisition figures (Stripe/Bridge $1.1bn, BVNK/Mastercard, $30B+ flows), and the deck's "group structure" phrasing for shared customer roles.
+Third deck revision (Jul 2026, settles-deck-final_2.html, 27 slides). Carried onto the site: "utilising stablecoins" in the hero lede; the ownership framing ("a settlement rail they own, not rent") on the What it is statement **[REMOVED Jul 2026 as factually wrong: customers license the rail from us, which is the entire business model. See the guardrail below]**; a fine-print line under the four switch stats scoping execution cost to the stablecoin leg (not the all-in cost of a regulated payment) and ownership to a branded rail rather than a facilitator's; "Owned end to end." on the How it works heading; the expanded Why now strip (the volume and projection figures were CUT again in Phase 5.3 as unsourceable; only MiCA/GENIUS, the EY-Parthenon 77%, and rails-at-cents survive); the moat lede (we assemble the pieces, we do not claim the pieces are unbuildable) and the "why they will not follow us down" horizontal-by-design line; the business model "what you are paying for" line and the facilitator/commodity punch; the use-cases lede (common thread is the float, identical mechanics, different trigger event); a Where we are strip (live travel, next freight and fintech pilots, exploratory stablecoin infra partners, proof first partners second); and the rewritten team section (deck order, Andrew Deighan now CPO product and settlement, Adam Bates's Cardano/IOHK and BBDO credentials, fuller Samuel/Jake/Edison/Mark bios, plus the advisors line). Footer parent attribution is now "A product of Setlz HoldCo LTD." Kept OFF from this deck, unchanged from before: the raise ($6M on a $30M post-money SAFE cap), EMI acquisition pipeline, costs and roadmap phases, seed deliverables, the unit economics (figures deliberately not restated here), the $500M-to-$7.5M revenue projection, SAM tables, the beachhead EU trade figures, the token and backstop pool, the risk slide, the competitor table with its volume and acquisition figures (Stripe/Bridge $1.1bn, BVNK/Mastercard, $30B+ flows), and the deck's "group structure" phrasing for shared customer roles.
 
 ## Content guardrails baked into the copy
 
@@ -187,6 +214,17 @@ tax line (we are not a tax authority; we take a facilitation fee and nothing
 else). The customer's own splits still appear in the escrow and anatomy demos,
 which is correct — those are their payouts, in their context, with no fee of
 ours beside them.
+
+### Never claim the customer owns the rail
+
+They license it from us. That is the business model: a licence at cost plus a
+transaction fee on every settlement. If they owned the rail there would be
+nothing to integrate and nothing to pay for, so "a rail they own, not rent" and
+"Owned end to end" were removed, along with an "Ownership: Whitelabel" stat.
+
+What is theirs is the **brand and the customer relationship**. The rail is ours.
+Say "whitelabelled", say "your customers only ever see your brand", and never
+imply transfer of the asset. A head of payments unpicks this in the first call.
 
 ### No customer is named on the site
 
