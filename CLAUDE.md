@@ -398,6 +398,36 @@ or integration, or removed.
 33. **The rail is decorative**: `aria-hidden`, no focusable children,
     `pointer-events: none`. It duplicates what the page states in text.
 
+### Structure (revised brief)
+
+39. **Six sections, not twelve.** Hero, How it works, Proof, Safety and
+    custody, Pricing, Demo. One eyebrow, one headline and one closing thought
+    each. If a merged section has two headlines it has not been merged. The
+    twelve-section version was deck geometry: slide chrome repeated twelve
+    times for a page read without a narrator.
+40. **The hero is a settlement statement on continuous-feed paper**, and the
+    perforation strip's four state holes ARE the settlement rail. One module,
+    one state model (`SETTLEMENT` in app.js), rendered in two places. The
+    page-edge rail hides while the hero is on screen or it is the same
+    indicator twice.
+41. **No /why page, and no competitive teardown on the site.** "Why won't you
+    get killed" is raise material and the deck carries it. "Why not the thing
+    I am currently considering" is product material and lives in the
+    four-option comparison in How it works, at 150 words maximum, factual,
+    with no defensibility language. **Building it in-house is the real
+    default and must stay in that list.**
+42. **Banned vocabulary:** moat, defensibility, TAM, beachhead, wedge, land
+    and expand, first mover, why now. If a sentence only makes sense to
+    someone deciding whether to invest, it does not belong.
+43. **No market sizing.** A buyer does not size our market before buying.
+44. **Regulation is stated as a liability position**, never as a moat: where
+    the funds sit today, what the licence changes, and who carries the
+    settlement leg either way.
+45. **Anything moved onto the dark band must have its colours rechecked.**
+    This bug has now shipped twice: the demo form in 7.2 and the team in this
+    pass, both left as ink text on ink at 2.15:1 after being relocated.
+    Moving a block is a colour change, not just a layout change.
+
 ### Verify by measuring, not by reading
 
 The recurring lesson of this rebuild. Bugs that a diff read would not have

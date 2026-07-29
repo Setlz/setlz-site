@@ -1779,6 +1779,22 @@ h3 {
    dark band: measured 1:1 before this. */
 .demo-confirm h3 { color: var(--on-dark); }
 
+
+/* The team was absorbed into the dark demo band by the 1.0 consolidation and
+   kept its ink text: measured 2.15:1. Same failure mode as the demo form in
+   7.2, caught the same way. Anything moved onto this band needs its colours
+   rechecked, not just its layout. */
+.demo-band .section-lede,
+.demo-band .grow p,
+.demo-band .team-advisors { color: var(--on-dark-soft); }
+.demo-band .glabel { color: var(--on-dark-faint); }
+.demo-band .grow h3,
+.demo-band .gval,
+.demo-band .gval-lg { color: var(--on-dark); }
+.demo-band .group { border-top-color: var(--on-dark); }
+.demo-band .grow { border-bottom-color: var(--on-dark-line); }
+.demo-band .team-advisors { border-left-color: var(--on-dark); }
+
 /* ---------- footer ---------- */
 
 .footer {
