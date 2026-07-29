@@ -427,6 +427,32 @@ or integration, or removed.
     This bug has now shipped twice: the demo form in 7.2 and the team in this
     pass, both left as ink text on ink at 2.15:1 after being relocated.
     Moving a block is a colour change, not just a layout change.
+46. **Three money figures, never blurred and never compared against each
+    other.** *Our price* is what the customer pays us. *Our cost* is what the
+    rail costs us to run. *Their price* is what incumbents charge the
+    customer. Any comparison must be price against price or cost against
+    cost, never one of each. The old comparison table put "near zero
+    on-chain" (our cost) opposite "2 to 6% plus FX spread" (their price),
+    which is the first line a head of payments would catch. Our cost may only
+    appear under a label that says it is ours, as "What the network costs us"
+    now does; if a figure needs a footnote to stop it being misread, the
+    figure is wrong, not the footnote.
+47. **The tiered pricing table is the only place a rate of ours appears.**
+    100 to 150 bps mid-market, 40 to 80 bps large platform, 15 to 35 bps
+    enterprise. Nowhere else: no single headline rate, no percentage, no bps
+    figure, no asterisk. A single figure in prose anchors the public price at
+    the most expensive number we charge anyone and costs us the large and
+    enterprise accounts, which is why "about 150 bps" came out of the pricing
+    support copy. The 40% gap is expressed as one range against another.
+    **"Blended" is banned** as a modifier on the fee: it implies revenue
+    lines beyond the transaction fee. In the hero statement the fee line
+    reads "Setlz fee" with an **amount**, never a rate, and the legs must
+    reconcile exactly to the live row's total.
+48. **Never publish the unit economics.** The cost stack, the gross profit
+    per transaction, the transaction gross margin. Investor content. This
+    includes prose in repo files: the README's deck-revision notes used to
+    restate the figures in its own list of things kept off the site, in a
+    public repo.
 
 ### Verify by measuring, not by reading
 

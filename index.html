@@ -163,11 +163,18 @@
           <span class="stmt-num stmt-elapsed" id="stmt-elapsed" data-c="Elapsed">0.00s</span>
         </div>
 
+        <!-- The fee line carries an amount, never a rate. An amount in one
+             illustrative settlement states what we take without publishing a
+             number anyone can quote back as our price; the tiered table in
+             #pricing is the only place a rate appears. Our line is last
+             because it is the residual, and the four legs reconcile exactly
+             to the &euro;1,000.00 in the live row above. -->
         <p class="stmt-split" id="stmt-split">
           <span>Split</span>
-          <span>Provider &euro;880.00</span>
+          <span>Provider &euro;868.00</span>
           <span>Platform &euro;100.00</span>
           <span>Tax &euro;20.00</span>
+          <span><span data-brand>Setlz</span> fee &euro;12.00</span>
         </p>
 
         <div class="stmt-tear" aria-hidden="true"></div>
@@ -203,7 +210,11 @@
 
 <div class="group reveal">
       <div class="grow grow-lv"><span class="glabel">Delivery to payout</span><span class="gval-lg">Minutes</span></div>
-      <div class="grow grow-lv"><span class="glabel">Settlement execution, the stablecoin leg</span><span class="gval-lg">Cents</span></div>
+      <!-- This is our cost, not our price. The old label scoped it with a
+           qualifier ("the stablecoin leg") and still read as what we charge.
+           A figure that needs a footnote to be read correctly is the wrong
+           figure; the label now says whose money it is. -->
+      <div class="grow grow-lv"><span class="glabel">What the network costs us</span><span class="gval-lg">Cents</span></div>
       <div class="grow grow-lv"><span class="glabel">Ownership</span><span class="gval-lg">Whitelabel</span></div>
     </div>
 
@@ -405,13 +416,21 @@
           <span class="mono wm-lane-title" id="wm-lane-brand">Setlz</span>
           <div class="mono wm-row"><span>On-chain finality</span><span id="wm-fin">0.0s</span></div>
           <div class="mono wm-row"><span>Bank credit</span><span id="wm-credit">SEPA instant · pending</span></div>
-          <div class="mono wm-row"><span>Network cost, on-chain only</span><span>Under $0.01</span></div>
+          <!-- Our cost, labelled as ours. Opposite it the wire lane says
+               "charged to sender", so the two rows cannot be read as one
+               price against another. -->
+          <div class="mono wm-row"><span>Network cost to us</span><span>Under $0.01</span></div>
           <div class="mono wm-row"><span>FX</span><span>Basis-point spread on deep pools</span></div>
         </div>
         <div class="wm-lane">
           <span class="mono wm-lane-title">International wire</span>
           <div class="mono wm-row"><span>Elapsed</span><span id="wm-elapsed">Not started</span></div>
-          <div class="mono wm-row"><span>Fees, typical published rates</span><span><span id="wm-fees">$0</span></span></div>
+          <!-- "charged to sender" is the like-for-like marker against the
+               Setlz lane's "Network cost to us". The "typical" hedge lives in
+               the value ("$30 to 40 typical"), so the label stays short: at
+               390px this row is a flex pair and a long label crowds the
+               figure. -->
+          <div class="mono wm-row"><span>Fees charged to sender</span><span><span id="wm-fees">$0</span></span></div>
           <div class="mono wm-row"><span>Hops</span><span>4 to 5 intermediaries</span></div>
           <div class="mono wm-row"><span>Fx margin</span><span>1 to 4% hidden in the rate</span></div>
           <div class="mono wm-row"><span>Availability</span><span>Banking hours only</span></div>
@@ -432,7 +451,12 @@
         </thead>
         <tbody>
           <tr><td>Settlement</td><td class="cell-win" data-c="Setlz">Seconds</td><td data-c="Cards + bank payouts">T+2 or worse</td></tr>
-          <tr><td>Cost</td><td class="cell-win" data-c="Setlz">Near zero on-chain</td><td data-c="Cards + bank payouts">2 to 6% plus FX spread</td></tr>
+          <!-- Like for like: both cells are what the platform pays. The old row
+               compared our on-chain cost against their price, which is the one
+               line on this page a head of payments would catch first. Our side
+               points at the tiered table rather than restating a rate, because
+               the table is the only place a rate of ours appears. -->
+          <tr><td>What you pay</td><td class="cell-win" data-c="Setlz">Tiered basis points, falling with settled volume. See <a href="#pricing">Pricing</a>.</td><td data-c="Cards + bank payouts">2 to 6% plus FX spread</td></tr>
           <tr><td>FX</td><td class="cell-win" data-c="Setlz">Transparent on-chain swap, basis-point spreads on deep pools</td><td data-c="Cards + bank payouts">1 to 4% margin hidden in the exchange rate</td></tr>
           <tr><td>Cross-border</td><td class="cell-win" data-c="Setlz">Native</td><td data-c="Cards + bank payouts">Correspondent banking</td></tr>
           <tr><td>Splits</td><td class="cell-win" data-c="Setlz">Atomic and programmable</td><td data-c="Cards + bank payouts">Manual reconciliation</td></tr>
@@ -509,8 +533,17 @@
      PRICING (Phase 4.3)
      The two-line model was already written and is kept verbatim. What was
      missing was a number: the page claimed "40% under card processors" and
-     "a thin fee" without ever saying what the fee is. Basis-point band and
-     the volume tiers come from the deck's own unit economics.
+     "a thin fee" without ever saying what the fee is.
+
+     THREE THINGS THAT MUST NEVER BE BLURRED, here or anywhere on the site:
+       our price   what the customer pays us      the tiered table below
+       our cost    what the rail costs us to run  labelled as ours, or absent
+       their price what incumbents charge         labelled as theirs
+     Never compare one of those against a different one. This block of three
+     tiers is the ONLY place a rate of ours may appear: no single headline
+     rate elsewhere, no percentage, no bps figure, no asterisk. The cost
+     stack, the gross profit per transaction and the transaction gross margin
+     are investor content and are never published here.
 ============================================================ -->
 <section class="section band tier-standard" id="pricing">
   <div class="container">
@@ -537,7 +570,7 @@
       </div>
     </div>
 
-    <p class="block-support reveal"><strong>Where the number comes from.</strong> Card processors charge roughly 2 to 6% for less, on typical published rates that vary by acquirer, region and card mix. At the mid-market tier our blended fee is about 150 bps against a typical card cost near 250 bps, which is the 40% gap the rest of this page refers to. Arithmetic on two figures, not a slogan.</p>
+    <p class="block-support reveal"><strong>Where the 40% comes from.</strong> Card processors charge roughly 2 to 6% of every transaction for less, on published rates that vary by acquirer, region and card mix. Every tier above sits under that range. Measured against a typical card cost rather than the floor of it, the narrowest gap is about 40%, and it widens as settled volume rises. Two ranges compared, not a slogan.</p>
     <p class="block-support reveal"><strong>What you are paying for.</strong> Not the rail, which costs cents, but the whitelabelled vertical product on top: the escrow, the delivery triggers and the structure you would otherwise build yourself.</p>
     <p class="mono anat-foot reveal">Indicative. Priced per corridor and settled volume, and confirmed in writing before onboarding.</p>
   </div>

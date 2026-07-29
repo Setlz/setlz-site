@@ -1506,6 +1506,17 @@ h3 {
 
 .cell-win { color: var(--ink); font-weight: var(--display-w); font-size: var(--body-lede); }
 
+/* The "What you pay" row links to the pricing table rather than restating a
+   rate. It is the only in-prose anchor on the page, so without this it took
+   the UA default blue, which is not in the palette. Matches `.cases-more a`. */
+.compare-table a {
+  color: var(--ink);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+}
+.compare-table a:hover { text-decoration-thickness: 2px; }
+
 .compare-close {
   margin-top: var(--space-6);
   font-family: var(--font-display);
