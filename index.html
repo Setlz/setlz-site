@@ -163,16 +163,21 @@
           <span class="stmt-num stmt-elapsed" id="stmt-elapsed" data-c="Elapsed">0.00s</span>
         </div>
 
-        <!-- The fee line carries an amount, never a rate. An amount in one
+        <!-- The customer's own commission is NOT on this statement. It used to
+             be, as "Platform &euro;100.00", and it was the largest number in the
+             row: a third party's revenue line sitting next to our fee, where a
+             reader tallies the two and reads &euro;112 as the cost of using Setlz.
+             What that platform charges its own suppliers is its business and
+             has nothing to do with us.
+
+             The fee line carries an amount, never a rate. An amount in one
              illustrative settlement states what we take without publishing a
              number anyone can quote back as our price; the tiered table in
-             #pricing is the only place a rate appears. Our line is last
-             because it is the residual, and the four legs reconcile exactly
-             to the &euro;1,000.00 in the live row above. -->
+             #pricing is the only place a rate appears. The three legs
+             reconcile exactly to the &euro;1,000.00 in the live row above. -->
         <p class="stmt-split" id="stmt-split">
           <span>Split</span>
-          <span>Provider &euro;868.00</span>
-          <span>Platform &euro;100.00</span>
+          <span>Provider &euro;968.00</span>
           <span>Tax &euro;20.00</span>
           <span><span data-brand>Setlz</span> fee &euro;12.00</span>
         </p>
