@@ -322,7 +322,7 @@ them; if you disagree, say so and get a decision.**
 
 ### Entity scope — standing prohibitions
 
-**Setlz is a standalone company.** AtlasOra is a customer, nothing more. Any
+**Setlz is a standalone company.** No customer is named on the site. Any
 reference on this site to any other entity must be a customer, a named vendor
 or integration, or removed.
 
@@ -331,15 +331,19 @@ or integration, or removed.
     sister-company or affiliate framing, ecosystem or community sections, or
     any positioning of Setlz as a short-term rental business. Short-term rental
     is a vertical we serve, not something we are.
-35. **"Reference customer" is banned.** It is a term of art implying an
-    arm's-length endorsement and it overclaimed. AtlasOra is "our first
-    customer" on first mention only; every later mention is just "AtlasOra".
-36. **The AtlasOra relationship is disclosed at first mention, as an
-    advantage**: the rail was built underneath a working marketplace rather
-    than from a specification, which is why the trigger and dispute logic
-    covers the cases it does. Andrew's team bio states he is CEO of AtlasOra,
-    which discloses it by construction. Do not add a separate small-print
-    disclosure line; one was removed for reading as a concealed affiliate.
+35. **"Reference customer" is banned**, and so is naming any customer at all.
+    It is a term of art implying an arm's-length endorsement and it
+    overclaimed.
+36. **AtlasOra is never mentioned on the site. Not once, anywhere.** This was
+    asked for three times and reintroduced twice, so treat it as absolute: no
+    name in copy, comments, alt text, config, metadata or commit-facing files.
+    It is a customer, and customers are not named here. What survives is the
+    unnamed version of the advantage, which is the part that persuades anyway:
+    the rail was built underneath a working marketplace rather than from a
+    specification, which is why the trigger and dispute logic covers the cases
+    it does. Do not add a disclosure line either; with no customer named there
+    is nothing to disclose, and one was already removed for reading as a
+    concealed affiliate.
 37. **No footnotes, no notes-and-methodology block, no caveat tooltip system.**
     A page needing eight footnotes is making eight claims it is not confident
     in. Fold the caveat into the sentence, or drop the figure. Exactly one
@@ -453,6 +457,29 @@ or integration, or removed.
     includes prose in repo files: the README's deck-revision notes used to
     restate the figures in its own list of things kept off the site, in a
     public repo.
+49. **`setlz-deck FINAL.html` is the only source of truth for how we make
+    money.** Its business-model slide: two lines, licence fee at cost
+    (onboarding, integration, support, priced to cover cost so we earn only
+    when you transact) and a transaction fee **set 40% below what a card
+    processor would charge on the same settlement**. Everything else on that
+    deck about money is investor content and stays off: the volume-to-revenue
+    projection, the take-rate percentage, the tier revenue lines, the raise,
+    the token pool. Do not derive the model from an older deck or from the
+    site's own previous copy, both of which drifted.
+50. **Our fee is always shown against the incumbent's, as amounts.** A number
+    on its own invites the reader to supply their own comparison. The hero
+    statement carries the pair: `Setlz fee €15.00` in the split and
+    `Same settlement, card processor fee €25.00` struck through beneath it.
+    That is exactly the deck's 40%, so the illustration and the claim
+    reconcile; if either figure changes, both change together and the pricing
+    prose has to be rechecked.
+51. **Nothing on our statement that is not ours.** Two lines were removed for
+    this: the customer's own `Platform €100.00` commission, which is their
+    revenue on their own supplier, and `Tax €20.00` — we are not a tax
+    authority and we take a facilitation fee, nothing else. The split shows
+    the money reaching the provider and our fee. The customer's own splits
+    still appear in the escrow and anatomy demos, which is correct: those are
+    their payouts, in their context, with no fee of ours beside them.
 
 ### Verify by measuring, not by reading
 

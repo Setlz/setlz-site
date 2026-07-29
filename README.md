@@ -105,15 +105,15 @@ The rule now:
 
 ## Deck alignment (Jul 2026, settles-deck-final.html)
 
-The site now carries the investor deck's positioning: whitelabelled, delivery-triggered settlement infrastructure for any pay-before-deliver business (float framing in the hero), fiat in / fiat out, the four switch stats (minutes, near zero, whitelabel, 40% less), production proof (AtlasOra named as first and reference customer; under 30 min provider payout, 11 min round trip with the cron footnote, 99.9% uptime), the business model strip (licence at cost, transaction fee 40% under), the moat strip (regulatory position, integration depth, trigger and dispute library, the Stripe assembly answer), the why-now strip (MiCA/GENIUS, 77% corporates, rails at cents), a Fintech and PSPs use case, and the team section. Deliberately kept OFF the site from the deck: the token and guarantee pool (no-token guardrail stands), the raise, EMI acquisition economics and roadmap phases, revenue projections and SAM tables, competitor volume/acquisition figures, BVNK partner speculation, and the word "safeguarded" (protection-scheme guardrail).
+The site now carries the investor deck's positioning: whitelabelled, delivery-triggered settlement infrastructure for any pay-before-deliver business (float framing in the hero), fiat in / fiat out, the four switch stats (minutes, near zero, whitelabel, 40% less), production proof (under 30 min provider payout, 11 min round trip with the cron footnote, 99.9% uptime), the business model strip (licence at cost, transaction fee 40% under), the moat strip (regulatory position, integration depth, trigger and dispute library, the Stripe assembly answer), the why-now strip (MiCA/GENIUS, 77% corporates, rails at cents), a Fintech and PSPs use case, and the team section. Deliberately kept OFF the site from the deck: the token and guarantee pool (no-token guardrail stands), the raise, EMI acquisition economics and roadmap phases, revenue projections and SAM tables, competitor volume/acquisition figures, BVNK partner speculation, and the word "safeguarded" (protection-scheme guardrail).
 
-Second deck revision (Jul 2026, Setlz-Deck.pdf, 25 slides): proof language walked back site-wide from "in production / live" to "built and tested end to end, across repeated runs with AtlasOra, our first reference customer" (race caption, stream note, flagship and travel tags, camp two, trump card, team section, demo chip). Slide-1 timing is ~11 minutes (flow diagram updated), the execution stat is "Settlement execution: cents", the 77% stat is sourced to EY-Parthenon 2025, and the moat's regulatory line is per-vertical liability + MoR posture. Kept OFF the site from this deck: the raise ($6M at $24M pre-money), EMI acquisition pipeline and costs, seed deliverables, the unit economics (figures deliberately not restated here), token/backstop-pool slide, risk slide, beachhead trade figures (€4T/€1.3T), BVNK/Mastercard, and the word "audited" for the settlement contract (still gated behind the v2.9 audit condition).
+Second deck revision (Jul 2026, Setlz-Deck.pdf, 25 slides): proof language walked back site-wide from "in production / live" to "built and tested end to end, across repeated runs" (race caption, stream note, flagship and travel tags, camp two, trump card, team section, demo chip). Slide-1 timing is ~11 minutes (flow diagram updated), the execution stat is "Settlement execution: cents", the 77% stat is sourced to EY-Parthenon 2025, and the moat's regulatory line is per-vertical liability + MoR posture. Kept OFF the site from this deck: the raise ($6M at $24M pre-money), EMI acquisition pipeline and costs, seed deliverables, the unit economics (figures deliberately not restated here), token/backstop-pool slide, risk slide, beachhead trade figures (€4T/€1.3T), BVNK/Mastercard, and the word "audited" for the settlement contract (still gated behind the v2.9 audit condition).
 
-Third deck revision (Jul 2026, settles-deck-final_2.html, 27 slides). Carried onto the site: "utilising stablecoins" in the hero lede; the ownership framing ("a settlement rail they own, not rent") on the What it is statement, with a WHITELABELLED RAIL node added to the flow diagram; a fine-print line under the four switch stats scoping execution cost to the stablecoin leg (not the all-in cost of a regulated payment) and ownership to a branded rail rather than a facilitator's; "Owned end to end." on the How it works heading; the expanded Why now strip (the volume and projection figures were CUT again in Phase 5.3 as unsourceable; only MiCA/GENIUS, the EY-Parthenon 77%, and rails-at-cents survive); the moat lede (we assemble the pieces, we do not claim the pieces are unbuildable) and the "why they will not follow us down" horizontal-by-design line; the business model "what you are paying for" line and the facilitator/commodity punch; the use-cases lede (common thread is the float, identical mechanics, different trigger event); a Where we are strip (live AtlasOra travel, next freight and fintech pilots, exploratory stablecoin infra partners, proof first partners second); and the rewritten team section (deck order, Andrew Deighan now CPO product and settlement, Adam Bates's Cardano/IOHK and BBDO credentials, fuller Samuel/Jake/Edison/Mark bios, plus the advisors line). Footer parent attribution is now "A product of Setlz HoldCo LTD." Kept OFF from this deck, unchanged from before: the raise ($6M on a $30M post-money SAFE cap), EMI acquisition pipeline, costs and roadmap phases, seed deliverables, the unit economics (figures deliberately not restated here), the $500M-to-$7.5M revenue projection, SAM tables, the beachhead EU trade figures, the token and backstop pool, the risk slide, the competitor table with its volume and acquisition figures (Stripe/Bridge $1.1bn, BVNK/Mastercard, $30B+ flows), and the deck's "group structure" phrasing for shared AtlasOra roles.
+Third deck revision (Jul 2026, settles-deck-final_2.html, 27 slides). Carried onto the site: "utilising stablecoins" in the hero lede; the ownership framing ("a settlement rail they own, not rent") on the What it is statement, with a WHITELABELLED RAIL node added to the flow diagram; a fine-print line under the four switch stats scoping execution cost to the stablecoin leg (not the all-in cost of a regulated payment) and ownership to a branded rail rather than a facilitator's; "Owned end to end." on the How it works heading; the expanded Why now strip (the volume and projection figures were CUT again in Phase 5.3 as unsourceable; only MiCA/GENIUS, the EY-Parthenon 77%, and rails-at-cents survive); the moat lede (we assemble the pieces, we do not claim the pieces are unbuildable) and the "why they will not follow us down" horizontal-by-design line; the business model "what you are paying for" line and the facilitator/commodity punch; the use-cases lede (common thread is the float, identical mechanics, different trigger event); a Where we are strip (live travel, next freight and fintech pilots, exploratory stablecoin infra partners, proof first partners second); and the rewritten team section (deck order, Andrew Deighan now CPO product and settlement, Adam Bates's Cardano/IOHK and BBDO credentials, fuller Samuel/Jake/Edison/Mark bios, plus the advisors line). Footer parent attribution is now "A product of Setlz HoldCo LTD." Kept OFF from this deck, unchanged from before: the raise ($6M on a $30M post-money SAFE cap), EMI acquisition pipeline, costs and roadmap phases, seed deliverables, the unit economics (figures deliberately not restated here), the $500M-to-$7.5M revenue projection, SAM tables, the beachhead EU trade figures, the token and backstop pool, the risk slide, the competitor table with its volume and acquisition figures (Stripe/Bridge $1.1bn, BVNK/Mastercard, $30B+ flows), and the deck's "group structure" phrasing for shared customer roles.
 
 ## Content guardrails baked into the copy
 
-- Proof framing: built and tested end to end with AtlasOra as first reference customer (per the deck). No production or live-service claims, no GMV or revenue figures; the only public numbers are speed and uptime.
+- Proof framing: built and tested end to end across repeated runs. **No customer is named on the site, ever** (see below). No production or live-service claims, no GMV or revenue figures; the only public numbers are speed and uptime.
 - No token content anywhere.
 - Competitor comparisons are capability-level and named for comparison only. No competitor pricing, incidents, or disparagement.
 - The 15.5% figure appears only inside the STR use-case story.
@@ -121,6 +121,44 @@ Third deck revision (Jul 2026, settles-deck-final_2.html, 27 slides). Carried on
 - No em or en dashes, no exclamation marks, no fabricated logos or testimonials.
 
 ### Pricing hygiene (Jul 2026, do not relax)
+
+**Source of truth for how we make money: `setlz-deck FINAL.html`, the
+business-model slide. Nothing else** — not an older deck, not the site's own
+previous copy, both of which drifted.
+
+Two lines:
+
+1. **Licence fee, at cost.** Recurring, covers onboarding, integration and
+   support. Priced to cover cost, not to profit, so we earn only when the
+   customer transacts. Say this plainly wherever the model is described; it is
+   what makes the transaction fee legible.
+2. **Transaction fee, set 40% below what a card processor would charge on the
+   same settlement.** This is the whole commercial claim.
+
+Off the site from that same deck: the volume-to-revenue projection, the
+take-rate percentage, the per-tier revenue lines, the raise, the token pool.
+
+**Our fee is always shown against the incumbent's, as amounts, never a rate.**
+The hero statement carries the pair: `Setlz fee EUR 15.00` in the split, and
+`Same settlement, card processor fee EUR 25.00` struck through beneath it. That
+is exactly 40%, so the illustration and the claim reconcile. Change one figure
+and you change both, then recheck the pricing prose.
+
+**Nothing on our statement that is not ours.** Removed for this reason: the
+customer's own platform commission (their revenue, on their own supplier) and a
+tax line (we are not a tax authority; we take a facilitation fee and nothing
+else). The customer's own splits still appear in the escrow and anatomy demos,
+which is correct — those are their payouts, in their context, with no fee of
+ours beside them.
+
+### No customer is named on the site
+
+Not once, anywhere: copy, HTML comments, alt text, JS config, metadata. A
+customer is a customer. The unnamed version of the advantage is the part that
+persuades anyway: the rail was built underneath a working marketplace rather
+than from a specification, which is why the trigger and dispute logic covers
+the cases it does. No disclosure line either — with no customer named there is
+nothing to disclose.
 
 Three separate things, never blurred and never compared against each other:
 

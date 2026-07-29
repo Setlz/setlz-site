@@ -163,23 +163,31 @@
           <span class="stmt-num stmt-elapsed" id="stmt-elapsed" data-c="Elapsed">0.00s</span>
         </div>
 
-        <!-- The customer's own commission is NOT on this statement. It used to
-             be, as "Platform &euro;100.00", and it was the largest number in the
-             row: a third party's revenue line sitting next to our fee, where a
-             reader tallies the two and reads &euro;112 as the cost of using Setlz.
-             What that platform charges its own suppliers is its business and
-             has nothing to do with us.
+        <!-- WHAT IS AND IS NOT ON THIS STATEMENT. Two things were on it and
+             are not ours, so both came off:
+               "Platform &euro;100.00"  the customer's own commission on its own
+                                   supplier. Their revenue, set by them.
+               "Tax &euro;20.00"        we are not a tax authority. We take a
+                                   facilitation fee and nothing else.
+             What is left is the money reaching the provider and our fee.
 
-             The fee line carries an amount, never a rate. An amount in one
-             illustrative settlement states what we take without publishing a
-             number anyone can quote back as our price; the tiered table in
-             #pricing is the only place a rate appears. The three legs
-             reconcile exactly to the &euro;1,000.00 in the live row above. -->
+             THE FEE, per the deck's business-model slide: the transaction fee
+             is set 40% below what a card processor would charge on the same
+             settlement. So both figures are shown, ours against theirs, as
+             amounts and never as a rate. &euro;15.00 against &euro;25.00 is that 40%,
+             and it is the deck's own arithmetic. The two legs reconcile
+             exactly to the &euro;1,000.00 in the live row above. -->
         <p class="stmt-split" id="stmt-split">
           <span>Split</span>
-          <span>Provider &euro;968.00</span>
-          <span>Tax &euro;20.00</span>
-          <span><span data-brand>Setlz</span> fee &euro;12.00</span>
+          <span>Provider &euro;985.00</span>
+          <span><span data-brand>Setlz</span> fee &euro;15.00</span>
+        </p>
+        <p class="stmt-vs" id="stmt-vs">
+          <!-- Kept short on purpose: at 390px this line has a 292px container,
+               and the longer wording ("Same settlement, card processor fee")
+               filled it on its own and pushed the amount to a fourth line. -->
+          <span>Same settlement on cards</span>
+          <span class="stmt-vs-amt">&euro;25.00</span>
         </p>
 
         <div class="stmt-tear" aria-hidden="true"></div>
@@ -371,7 +379,7 @@
 
 <!-- ============================================================
      3. PROOF
-     Absorbs the measured figures, AtlasOra, the settlement anatomy and the
+     Absorbs the measured figures, the settlement anatomy and the
      comparison table.
 ============================================================ -->
 <section class="section band-support tier-standard" id="proof">
@@ -381,7 +389,7 @@
 <!-- Proof (deck slide 09). Relocated here when the race widget was deleted:
          this is section content, not demo chrome, and it belongs beside the
          surviving demo. -->
-    <p class="race-caption"><span data-brand>Setlz</span> is not a concept. The rail, escrow, delivery triggers and integrations are built and tested end to end across repeated runs with AtlasOra, our first customer. We built this underneath a working marketplace rather than from a specification, which is why the trigger and dispute logic covers the cases it does.</p>
+    <p class="race-caption"><span data-brand>Setlz</span> is not a concept. The rail, escrow, delivery triggers and integrations are built and tested end to end across repeated runs. We built this underneath a working marketplace rather than from a specification, which is why the trigger and dispute logic covers the cases it does.</p>
 
     <div class="group reveal">
       <div class="grow grow-lv"><span class="glabel">Delivery to provider paid &middot; measured across runs</span><span class="gval-lg">Under 30 min</span></div>
@@ -575,7 +583,7 @@
       </div>
     </div>
 
-    <p class="block-support reveal"><strong>Where the 40% comes from.</strong> Card processors charge roughly 2 to 6% of every transaction for less, on published rates that vary by acquirer, region and card mix. Every tier above sits under that range. Measured against a typical card cost rather than the floor of it, the narrowest gap is about 40%, and it widens as settled volume rises. Two ranges compared, not a slogan.</p>
+    <p class="block-support reveal"><strong>Where the 40% comes from.</strong> Card processors charge roughly 2 to 6% of every transaction for less, on published rates that vary by acquirer, region and card mix. The transaction fee is set 40% below what a card processor would charge on the same settlement, and the gap widens as settled volume rises. Every tier above sits under the card range.</p>
     <p class="block-support reveal"><strong>What you are paying for.</strong> Not the rail, which costs cents, but the whitelabelled vertical product on top: the escrow, the delivery triggers and the structure you would otherwise build yourself.</p>
     <p class="mono anat-foot reveal">Indicative. Priced per corridor and settled volume, and confirmed in writing before onboarding.</p>
   </div>
@@ -671,7 +679,7 @@
       </div>
       <div class="grow grow-def">
         <span class="glabel">CPO &middot; Product and settlement</span>
-        <div><h3>Andrew Deighan</h3><p>Co-founder and product lead. Fintech founder; CEO of AtlasOra, the rail's first and proving customer.</p></div>
+        <div><h3>Andrew Deighan</h3><p>Co-founder and product lead. Fintech founder and marketplace operator, which is where the trigger and dispute requirements came from.</p></div>
       </div>
       <div class="grow grow-def">
         <span class="glabel">CFO &middot; Finance</span>

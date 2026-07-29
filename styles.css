@@ -850,6 +850,27 @@ h3 {
 }
 .stmt[data-state="settled"] .stmt-split { opacity: 1; }
 
+/* The incumbent's fee on the same settlement, so ours is read against
+   something. Muted and lighter than the split above it: this is their number,
+   not a line of our statement. Amounts only, never a rate. */
+.stmt-vs {
+  display: flex;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+  align-items: baseline;
+  padding-top: var(--space-2);
+  font-family: var(--font-mono);
+  font-size: var(--mono-label);
+  letter-spacing: var(--mono-label-track);
+  color: var(--ink-soft);
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+  opacity: 0;
+  transition: opacity var(--t-mid) var(--ease);
+}
+.stmt[data-state="settled"] .stmt-vs { opacity: 1; }
+.stmt-vs-amt { text-decoration: line-through; text-decoration-thickness: 1px; }
+
 .stmt-tear {
   margin-top: var(--space-4);
   border-top: 1px dashed var(--line);
