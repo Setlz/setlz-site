@@ -286,13 +286,34 @@
          surviving demo. -->
     <p class="race-caption"><span data-brand>Setlz</span> is not a concept. The rail, escrow, delivery triggers and integrations are built and tested end to end across repeated runs. We built this underneath a working marketplace rather than from a specification, which is why the trigger and dispute logic covers the cases it does.</p>
 
-    <div class="group reveal">
-      <div class="grow grow-lv"><span class="glabel">Delivery to provider paid &middot; measured across runs</span><span class="gval-lg">Under 30 min</span></div>
-      <div class="grow grow-lv"><span class="glabel">Fiat to stablecoin to fiat round trip, bounded by our own 20-minute cron</span><span class="gval-lg">11 min</span></div>
-      <div class="grow grow-lv"><span class="glabel">Settlement uptime</span><span class="gval-lg">99.9%</span></div>
+    <!-- Three columns, not three rows. As stacked .grow-lv rows the label sat
+         hard left and the value hard right with ~300px of nothing between
+         them, three times over, and the long qualifiers made the labels wrap
+         into the void. Splitting each into label / value / qualifier and
+         setting them side by side removes the gap, drops the block from 305px
+         to about half that, and lets the three figures read as one band
+         instead of three lonely lines. -->
+    <div class="pstats reveal">
+      <div class="pstat">
+        <span class="glabel">Delivery to provider paid</span>
+        <span class="pstat-val">Under 30 min</span>
+        <span class="pstat-note">Measured across repeated runs</span>
+      </div>
+      <div class="pstat">
+        <span class="glabel">Round trip, fiat to fiat</span>
+        <span class="pstat-val">11 min</span>
+        <span class="pstat-note">Bounded by our own 20-minute cron</span>
+      </div>
+      <div class="pstat">
+        <span class="glabel">Settlement uptime</span>
+        <span class="pstat-val">99.9%</span>
+      </div>
     </div>
 
-<p class="section-lede reveal">Open any settlement to see what actually happened: capture, escrow, the rule that held it, and the split that fired the moment the condition was met. Three payouts, one transaction, no reconciliation afterwards.</p>
+    <!-- Was a second .section-lede at 19.6px, which read as a second headline
+         in a section that already has one. Demoted to an instruction sitting
+         directly on the rows it describes. -->
+    <p class="pstats-lede reveal">Open any settlement below: capture, escrow, the rule that held it, and the split that fired the moment the condition was met.</p>
     <div class="group reveal" id="anat-rows"></div>
     <p class="anat-foot mono" id="anat-foot"></p>
     <div class="sr-only" aria-live="polite" id="anat-live"></div>
@@ -324,10 +345,6 @@
           <span class="mono wm-lane-title" id="wm-lane-brand">Setlz</span>
           <div class="mono wm-row"><span>On-chain finality</span><span id="wm-fin">0.0s</span></div>
           <div class="mono wm-row"><span>Bank credit</span><span id="wm-credit">SEPA instant · pending</span></div>
-          <!-- Our cost, labelled as ours. Opposite it the wire lane says
-               "charged to sender", so the two rows cannot be read as one
-               price against another. -->
-          <div class="mono wm-row"><span>Network cost to us</span><span>Under $0.01</span></div>
           <div class="mono wm-row"><span>FX</span><span>Basis-point spread on deep pools</span></div>
         </div>
         <div class="wm-lane">
@@ -340,7 +357,6 @@
                figure. -->
           <div class="mono wm-row"><span>Fees charged to sender</span><span><span id="wm-fees">$0</span></span></div>
           <div class="mono wm-row"><span>Hops</span><span>4 to 5 intermediaries</span></div>
-          <div class="mono wm-row"><span>Fx margin</span><span>1 to 4% hidden in the rate</span></div>
           <div class="mono wm-row"><span>Availability</span><span>Banking hours only</span></div>
         </div>
       </div>

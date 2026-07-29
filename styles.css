@@ -104,6 +104,7 @@
   --mono-hero-w:      600;
   --mono-hero-track:  -0.03em;
   --mono-display:     clamp(28px, 3.4vw, 44px);
+  --mono-stat:        clamp(24px, 2.3vw, 32px);   /* proof stat band */
   --mono-display-w:   500;
   --mono-display-track: -0.015em;
   --mono-row:         15px;
@@ -517,7 +518,27 @@ h3 {
   pointer-events: none;
 }
 
-.rail-track { display: flex; flex-direction: column; align-items: flex-start; }
+/* A continuous track behind the stations. Without it the inactive dots and
+   segments are --mist on paper at 1.19:1, effectively invisible, so what you
+   actually saw was two or three ink dots and a green fragment floating in the
+   gutter: it read as a rendering artefact rather than an indicator. The line
+   is --line and aria-hidden like the rest of the rail. */
+.rail-track {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  position: relative;
+}
+.rail-track::before {
+  content: "";
+  position: absolute;
+  left: 5px;
+  top: 5px;
+  bottom: 5px;
+  width: 1px;
+  background: var(--line);
+}
+.rail-node, .rail-seg { position: relative; }
 
 .rail-node { display: flex; align-items: center; gap: var(--space-3); }
 
@@ -527,8 +548,8 @@ h3 {
   width: 11px;
   height: 11px;
   border-radius: 50%;
-  background: var(--mist);
-  border: 2px solid var(--mist);
+  background: var(--paper);
+  border: 2px solid var(--line);
   box-sizing: border-box;
   flex: none;
   transition: background var(--t-mid) var(--ease), border-color var(--t-mid) var(--ease),
@@ -567,8 +588,8 @@ h3 {
 /* Segments: vertical here, aligned to the dot's centre. */
 .rail-seg {
   width: 2px;
-  height: 40px;
-  background: var(--mist);
+  height: 52px;
+  background: transparent;
   margin-left: 4.5px;
   transition: background var(--t-mid) var(--ease);
 }
@@ -1136,6 +1157,169 @@ h3 {
   max-width: 34ch;
 }
 
+/* ---------- proof stat band ----------
+   Three columns. The previous version used stacked .grow-lv rows, which put
+   the label hard left and the figure hard right with roughly 300px of empty
+   band between them, three times in a row. Side by side, the figures read as
+   one measurement and the qualifier goes under the number it qualifies rather
+   than being crammed into the label. */
+.pstats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-6);
+  border-top: var(--rule-w) solid var(--rule);
+  padding-top: var(--space-5);
+  margin-top: var(--space-7);
+}
+.pstat { display: flex; flex-direction: column; gap: var(--space-2); }
+.pstat-val {
+  font-family: var(--font-mono);
+  font-size: var(--mono-stat);
+  font-weight: var(--mono-display-w);
+  letter-spacing: var(--mono-display-track);
+  line-height: var(--lh-tight);
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+}
+.pstat-note {
+  font-size: var(--body-small);
+  line-height: var(--lh-snug);
+  color: var(--ink-soft);
+  max-width: 30ch;
+}
+
+/* An instruction for the rows below it, not a second headline. */
+.pstats-lede {
+  font-size: var(--body);
+  color: var(--ink-soft);
+  max-width: var(--measure);
+  margin-top: var(--space-8);
+}
+
+/* ---------- anatomy of a settlement (Phase 4.1) ----------
+   RESTORED. All 25 rules of this block were deleted by commit 0b6dbfc, which
+   removed the adjacent note-affordance block by region and took this with it.
+   The component has been rendering completely unstyled since: values ran into
+   each other ("EUR 1,240.0011m 04s0xsim7f3c9e21a4f2"), the disclosure button
+   kept its UA border, and the whole element read as a broken table. This is
+   the third time a region-based CSS deletion has taken a neighbour with it.
+   Delete by selector, and re-render the section afterwards.
+
+   No panel, no card: the expanded detail is indented hairline rows, so the
+   whole thing stays inside the one-level containment budget. */
+.anat { padding: 0; }
+
+.anat-head {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: var(--space-4);
+  align-items: baseline;
+  padding: var(--space-4) 0;
+  background: none;
+  border: 0;
+  border-radius: var(--radius);
+  text-align: left;
+  cursor: pointer;
+  font: inherit;
+}
+.anat-head:hover .anat-toggle { color: var(--ink); }
+.anat-head:focus-visible { outline: var(--focus-ring) solid var(--ink); outline-offset: var(--focus-offset); }
+
+.anat-cells {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+.anat-elapsed {
+  font-family: var(--font-mono);
+  font-size: var(--mono-row);
+  color: var(--ink-soft);
+  font-variant-numeric: tabular-nums;
+}
+.anat-hash {
+  font-family: var(--font-mono);
+  font-size: var(--mono-label);
+  letter-spacing: var(--mono-label-track);
+  color: var(--ink);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+/* Simulated hashes are not links and must not look like one. */
+.anat-hash.is-sim {
+  text-decoration: none;
+  color: var(--ink-soft);
+  border-bottom: 1px dashed var(--line);
+}
+.anat-toggle {
+  font-family: var(--font-mono);
+  font-size: var(--body-lede);
+  line-height: 1;
+  color: var(--ink-soft);
+  width: 1ch;
+  transition: transform var(--t-fast) var(--ease), color var(--t-fast) var(--ease);
+}
+.anat.is-open .anat-toggle { transform: rotate(45deg); color: var(--ink); }
+
+/* Expanded: a timeline, then the payout legs. Indented, hairline-separated,
+   no ground of its own. */
+.anat-panel { padding: 0 0 var(--space-5); }
+
+.anat-step,
+.anat-leg {
+  display: grid;
+  grid-template-columns: 8ch 1fr auto;
+  gap: var(--space-4);
+  align-items: baseline;
+  padding: var(--space-2) 0;
+  border-top: var(--hair-w) solid var(--hair);
+}
+.anat-leg { grid-template-columns: 8ch 1fr auto; }
+
+.anat-t {
+  font-family: var(--font-mono);
+  font-size: var(--mono-label);
+  letter-spacing: var(--mono-label-track);
+  color: var(--ink-soft);
+  font-variant-numeric: tabular-nums;
+}
+.anat-what { display: flex; flex-direction: column; gap: 2px; }
+.anat-what-main { font-size: var(--body-small); color: var(--ink); font-weight: var(--body-w-strong); }
+.anat-detail { font-size: var(--body-small); color: var(--ink-soft); }
+.anat-amt {
+  font-family: var(--font-mono);
+  font-size: var(--mono-row);
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+  text-align: right;
+}
+
+.anat-legs { margin-top: var(--space-4); }
+.anat-legs > .glabel { padding-bottom: var(--space-2); }
+.anat-leg-to { grid-column: 2; font-size: var(--body-small); color: var(--ink); }
+
+.anat-stamp {
+  font-family: var(--font-display);
+  font-size: var(--body);
+  font-weight: var(--display-w-semi);
+  color: var(--ink);
+  margin-top: var(--space-4);
+}
+
+/* Mono at 11px with label tracking is much wider per character than the 70ch
+   --measure assumes, so this wrapped into three stubby lines. Given its own
+   ceiling in ch of its own face. */
+.anat-foot { color: var(--ink-soft); margin-top: var(--space-5); max-width: 78ch; }
+.anat-audit-link { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .anat-toggle { transition: none; }
+}
+
 /* ---------- multi-coin strip (v2.5) ---------- */
 
 
@@ -1176,9 +1360,14 @@ h3 {
 
 /* ---------- world map race (v2.3) ---------- */
 
+/* The section's four blocks (stats, anatomy, corridor map, comparison) were
+   evenly and tightly spaced, so they read as one continuous strip rather than
+   four separate arguments. The map gets a paper plate: on the mist band the
+   dot field was --line on --mist, 1.19:1, and read washed out. */
 .wm {
-  padding: var(--space-5) var(--space-5) var(--space-5);
-  margin: var(--space-3) 0 var(--space-7);
+  padding: var(--space-6);
+  margin: var(--space-9) 0 var(--space-8);
+  background: var(--paper);
   border-top: var(--rule-w) solid var(--rule);
 }
 
@@ -1316,13 +1505,13 @@ h3 {
 .wm-meters {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: var(--space-4);
-  margin-top: var(--space-3);
+  gap: var(--space-7);
+  margin-top: var(--space-5);
   border-top: 1px solid var(--line);
   padding-top: var(--space-4);
 }
 
-.wm-lane { display: flex; flex-direction: column; gap: var(--space-2); }
+.wm-lane { display: flex; flex-direction: column; gap: var(--space-3); }
 
 .wm-lane-title {
   display: inline-block;
@@ -1358,7 +1547,8 @@ h3 {
 
 /* ---------- comparison table (compressed beneath the map) ---------- */
 
-.table-scroll { overflow-x: auto; }
+.table-scroll {
+  margin-top: var(--space-8); overflow-x: auto; }
 
 .compare-table {
   width: 100%;
@@ -1723,8 +1913,15 @@ h3 {
      meters below state every figure in text. */
   .wm-wire-label { display: none; }
 
+  .pstats { grid-template-columns: 1fr; gap: var(--space-5); }
+
   /* --- anatomy rows --- */
   .anat-cells { gap: var(--space-3); }
+  .anat-head { grid-template-columns: 1fr; }
+  .anat-cells { justify-content: flex-start; margin-top: var(--space-2); }
+  .anat-step, .anat-leg { grid-template-columns: 7ch 1fr; }
+  .anat-amt { grid-column: 2; text-align: left; }
+  .anat-leg-to { grid-column: 2; }
 }
 
 @media (max-width: 420px) {
