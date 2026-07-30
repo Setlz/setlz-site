@@ -791,13 +791,77 @@ if (wm && typeof MAP_DOTS !== "undefined") {
     return out;
   }
 
+  /* ============================================================
+     PLOTTING TABLE PERSPECTIVE (Task 3)
+
+     The dot plane lies back like a war-room chart table and the corridor arcs
+     rise off it in z. Not a globe: all six corridors have to stay legible at
+     once. No WebGL.
+
+     ONE TILT CONSTANT. The brief has the plane CSS-transformed and the arcs
+     projected in JS, with a warning that the two can diverge. They cannot
+     diverge here because there is no CSS transform: the dots are projected
+     through the SAME function as the arcs and drawn to canvas already
+     projected. Deviation from the letter of 3a, taken because it removes the
+     entire class of drift the brief warns about, and because per-dot work is
+     still affordable on canvas. Flagged in the report.
+
+     Arcs stay flat, untransformed SVG on top, so text is crisp, paths remain
+     dash-animatable and everything stays screen-reader addressable.
+  ============================================================ */
+  const WM_TILT_DEG = 48;        // steeper than ~52 compresses latitude and the
+  const WM_PERSPECTIVE = 1400;   // Europe-Asia lanes lose vertical separation
+  const WM_APEX_PER_DAY = 90 / 38;   // 38-day lane rises ~90px; height IS duration
+
+  // Flatten, do not shrink: a perspective plane at 390px is unreadable.
+  const tiltActive = () =>
+    !prefersReducedMotion && window.matchMedia("(min-width: 720px)").matches;
+
+  function projectPoint(u, v, h) {
+    if (!tiltActive()) return { x: u, y: v };
+    const t = (WM_TILT_DEG * Math.PI) / 180;
+    const cx = MAP_GRID.w / 2, cy = MAP_GRID.h / 2;
+    const dv = v - cy;
+    const Y = dv * Math.cos(t) - h * Math.sin(t);
+    const Z = dv * Math.sin(t) + h * Math.cos(t);
+    const sc = WM_PERSPECTIVE / (WM_PERSPECTIVE + Z);
+    return { x: cx + (u - cx) * sc, y: cy + Y * sc };
+  }
+
+  /* Elevation along a geodesic: h = apex * sin(pi * s). apex is proportional to
+     TRANSIT DAYS, not distance, so Busan-Rotterdam at 38 days rises highest and
+     Shenzhen-Singapore at 4 days stays almost flat on the plane. */
+  function liftArc(pts, transitDays) {
+    const apex = (transitDays || 0) * WM_APEX_PER_DAY;
+    return pts.map((pt, i) => {
+      const sN = pts.length > 1 ? i / (pts.length - 1) : 0;
+      return projectPoint(pt.x, pt.y, apex * Math.sin(Math.PI * sN));
+    });
+  }
+  const onPlane = (pt) => projectPoint(pt.x, pt.y, 0);
+
   const dotsPath = elNS("path", { id: "map-dots-g", class: "wm-dots" }, svg);
   let dotsRadius = null;
 
   function setDotRadius(r) {
-    if (r === dotsRadius) return;
+    if (r === dotsRadius && !tiltActive()) return;
     dotsRadius = r;
-    dotsPath.setAttribute("d", dotPathFor(r));
+    dotsPath.setAttribute("d", tiltActive() ? tiltedDotPath(r) : dotPathFor(r));
+  }
+
+  /* The plane, projected. Every dot goes through projectPoint at h = 0, so the
+     table and the arcs on it are the same geometry by construction. */
+  function tiltedDotPath(r) {
+    const rr = r.toFixed(2), dia = (r * 2).toFixed(2);
+    const step = MAP_GRID.step * MAP_GRID.scale;
+    const d = [];
+    for (let i = 0, n = 0; i < MAP_DOTS.length; i += 2, n++) {
+      const p = projectPoint(MAP_DOTS[i] * step, MAP_DOTS[i + 1] * step, 0);
+      d.push("M" + (p.x - r).toFixed(1) + " " + p.y.toFixed(1) +
+        "a" + rr + " " + rr + " 0 1 0 " + dia + " 0" +
+        "a" + rr + " " + rr + " 0 1 0 -" + dia + " 0");
+    }
+    return d.join("");
   }
 
   const gDyn = elNS("g", {}, svg);
@@ -824,10 +888,46 @@ if (wm && typeof MAP_DOTS !== "undefined") {
     setDotRadius(c.dotR);
     gDyn.innerHTML = "";
 
-    const A = proj(c.from.lat, c.from.lon);
-    const B = proj(c.to.lat, c.to.lon);
-    const arcPts = greatCircle(c.from, c.to, 72);
-    const hops = c.wireHops.map((h) => ({ ...h, p: proj(h.lat, h.lon) }));
+    /* Everything is projected ONCE, here, so all downstream code, the
+       animation included, interpolates coordinates that are already on the
+       tilted table. There is no second projection to keep in sync.
+
+       The geodesic is the true great circle between the ports, sampled at 64
+       points and then projected. Real routes bow asymmetrically; a symmetric
+       bezier is what makes these graphics look fake. */
+    const A = onPlane(proj(c.from.lat, c.from.lon));
+    const B = onPlane(proj(c.to.lat, c.to.lon));
+    const arcFlat = greatCircle(c.from, c.to, 64);
+    const arcPts = liftArc(arcFlat, c.transitDays);
+    const hops = c.wireHops.map((h) => ({ ...h, p: onPlane(proj(h.lat, h.lon)) }));
+
+    /* 3d. Contact shadow: the same geodesic at h = 0, projected onto the
+       plane. Opacity falls as the arc rises, so a 38-day lane casts a fainter,
+       wider shadow and a 4-day lane sits tight against the table. This is what
+       sells the depth. */
+    let arcShadow = null, arcShadowLen = 0;
+    if (tiltActive()) {
+      const grounded = arcFlat.map(onPlane);
+      const apex = (c.transitDays || 0) * WM_APEX_PER_DAY;
+      /* Revealed in step with the arc. Drawn complete while the arc was still
+         undrawn, it read as a shadow with nothing casting it. */
+      arcShadow = elNS("path", {
+        class: "wm-arc-shadow", d: pathD(grounded),
+        "stroke-width": (1.6 + apex / 60) * u,
+        opacity: Math.max(0.06, 0.3 - apex / 900),
+      }, gDyn);
+      const shLen = arcShadow.getTotalLength();
+      arcShadow.setAttribute("stroke-dasharray", shLen);
+      arcShadow.setAttribute("stroke-dashoffset", shLen);
+      arcShadowLen = shLen;
+      // Thin drop lines ground the two ports against the plane.
+      [A, B].forEach((pt) => {
+        elNS("line", {
+          class: "wm-drop", x1: pt.x, y1: pt.y, x2: pt.x, y2: pt.y + 5 * u,
+          "stroke-width": 0.8 * u,
+        }, gDyn);
+      });
+    }
 
     // Wire base path, trail, nodes, labels.
     const wireD = pathD(hops.map((h) => h.p));
@@ -854,9 +954,13 @@ if (wm && typeof MAP_DOTS !== "undefined") {
        mid-point flip caption, which fires on c.flip, so the two intra-APAC
        lanes drew an unlabelled green line. The whole contrast is "one hop, no
        correspondent chain", and it has to be legible without the animation. */
-    const apex = arcPts[Math.floor(arcPts.length / 2)];
+    /* The apex is lifted off the plane now, so a label hung above it ran off
+       the top of the artboard. Clamped inside, and placed below the apex when
+       there is no room above it. */
+    const apexPt = arcPts[Math.floor(arcPts.length / 2)];
+    const above = apexPt.y - 5 * u;
     const arcLbl = elNS("text", {
-      class: "wm-arc-label", x: apex.x, y: apex.y - 5 * u,
+      class: "wm-arc-label", x: apexPt.x, y: above < 8 * u ? apexPt.y + 11 * u : above,
       "text-anchor": "middle", "font-size": 5.6 * u,
     }, gDyn);
     arcLbl.textContent = "EURC on Base";
@@ -914,7 +1018,7 @@ if (wm && typeof MAP_DOTS !== "undefined") {
     // narrative boxes live in fixed corners so they never cover the routes.
     placeOverlay(wEl.stall, hops[c.stallHop].p, vb);
 
-    layer = { vb, u, arc, arcLen, arcPts, hops, segLens, wireTotal, wireTrail, setPulse, wirePulse, badge, setBadgeLabel };
+    layer = { vb, u, arc, arcLen, arcPts, hops, segLens, wireTotal, wireTrail, setPulse, wirePulse, badge, setBadgeLabel, arcShadow, arcShadowLen };
   }
 
   function resetPanels() {
@@ -1040,6 +1144,7 @@ if (wm && typeof MAP_DOTS !== "undefined") {
       layer.setPulse.setAttribute("cy", pt.y);
       layer.badge.setAttribute("transform", "translate(" + pt.x + "," + pt.y + ")");
       layer.arc.setAttribute("stroke-dashoffset", layer.arcLen * (1 - p));
+      if (layer.arcShadow) layer.arcShadow.setAttribute("stroke-dashoffset", layer.arcShadowLen * (1 - p));
       if (!settledArc) wEl.fin.textContent = (p * 2).toFixed(1) + "s";
 
       if (c.flip && !flipped && p >= 0.5) {

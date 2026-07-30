@@ -1437,6 +1437,16 @@ h3 {
 
 /* No glow, and note the raw rgba this carried was the only one left outside
    :root. Task 3 replaces it with a real projected contact shadow. */
+/* Contact shadow: the arc's own geodesic, flat on the plane. Blurred and
+   low-opacity, opacity set per corridor in JS from the arc's apex. */
+.wm-arc-shadow {
+  stroke: var(--ink);
+  fill: none;
+  stroke-linecap: round;
+  filter: blur(2px);
+}
+.wm-drop { stroke: var(--ink); opacity: 0.25; }
+
 .wm-arc-trail {
   stroke: var(--signal);
   fill: none;
