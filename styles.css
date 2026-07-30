@@ -1009,6 +1009,19 @@ h3 {
 .cc-cume.is-shown { opacity: 1; }
 .cc-cume strong { color: var(--ink); font-weight: var(--mono-row-strong-w); }
 
+/* Names the incumbent assumption at the CURRENT volume, so the comparison
+   states what it is measured against instead of waiting to be asked. */
+.cc-assume {
+  margin-top: var(--space-5);
+  font-family: var(--font-mono);
+  font-size: var(--mono-label);
+  letter-spacing: var(--mono-label-track);
+  line-height: var(--lh-snug);
+  color: var(--ink-soft);
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+}
+
 .cc-note {
   margin-top: var(--space-6);
   max-width: var(--measure);

@@ -106,11 +106,11 @@
 ============================================================ -->
 <section class="hero tier-primary" id="hero">
   <div class="container">
-    <p class="cc-eyebrow"><span class="cc-eyebrow-rule" aria-hidden="true"></span>Settlement cost, side by side</p>
+    <p class="cc-eyebrow"><span class="cc-eyebrow-rule" aria-hidden="true"></span>Stablecoin settlement layer &middot; costs side by side</p>
 
     <!-- The saving percentage is computed, never hardcoded in copy: it reads
          "Forty" on EU to EU and "Sixty-four" on cross-border. -->
-    <h1 class="hero-h1"><span id="cc-pct-word">Forty</span> percent less to settle the same volume.</h1>
+    <h1 class="hero-h1"><span id="cc-pct-word">Sixty-four</span> percent less to settle the same volume.</h1>
     <p class="hero-sub">Move the volume to yours. The gap between the two bars is money that currently leaves your business as processing cost.</p>
 
     <div class="cc" id="cc">
@@ -123,11 +123,13 @@
           <legend class="cc-legend">Corridor</legend>
           <div class="cc-seg">
             <label class="cc-seg-opt">
-              <input type="radio" name="cc-corridor" value="eu" checked>
+              <input type="radio" name="cc-corridor" value="eu">
               <span>EU to EU</span>
             </label>
             <label class="cc-seg-opt">
-              <input type="radio" name="cc-corridor" value="xb">
+              <!-- Cross-border is the default: the beachhead is APAC to Europe,
+                   so the default must match the corridors the map shows. -->
+              <input type="radio" name="cc-corridor" value="xb" checked>
               <span>Cross-border</span>
             </label>
           </div>
@@ -136,18 +138,18 @@
         <div class="cc-vol">
           <label class="cc-legend" for="cc-volume">Annual settled volume</label>
           <div class="cc-vol-row">
-            <input class="cc-range" type="range" id="cc-volume" min="25" max="250" step="5" value="100">
+            <input class="cc-range" type="range" id="cc-volume" min="25" max="1000" step="5" value="100">
             <output class="cc-vol-out" id="cc-volume-out" for="cc-volume">&euro;100M</output>
           </div>
         </div>
       </div>
 
       <!-- --setlz-w is the single source of truth for the proportion. -->
-      <div class="cc-bars" id="cc-bars" style="--setlz-w: 60%">
+      <div class="cc-bars" id="cc-bars" style="--setlz-w: 35.5556%">
         <div class="cc-row">
           <div class="cc-row-head">
             <span class="cc-row-label">Incumbent rails</span>
-            <span class="cc-amt" id="cc-inc-amt">&euro;2,500,000</span>
+            <span class="cc-amt" id="cc-inc-amt">&euro;4,500,000</span>
           </div>
           <div class="cc-track"><span class="cc-fill cc-fill-inc" id="cc-inc-fill"></span></div>
         </div>
@@ -155,7 +157,7 @@
         <div class="cc-row">
           <div class="cc-row-head">
             <span class="cc-row-label"><span data-brand>Setlz</span></span>
-            <span class="cc-amt" id="cc-setlz-amt">&euro;1,500,000</span>
+            <span class="cc-amt" id="cc-setlz-amt">&euro;1,600,000</span>
           </div>
           <div class="cc-track"><span class="cc-fill cc-fill-setlz" id="cc-setlz-fill"></span></div>
         </div>
@@ -167,13 +169,19 @@
           <div class="cc-bracket is-shown" id="cc-bracket" aria-hidden="true"></div>
           <div class="cc-saving is-shown" id="cc-saving">
             <span class="cc-saving-label">Back to your margin</span>
-            <span class="cc-saving-amt" id="cc-saving-amt">&euro;1,000,000</span>
-            <span class="cc-cume is-shown" id="cc-cume">Over three years <strong id="cc-cume-amt">&euro;3,000,000</strong></span>
+            <span class="cc-saving-amt" id="cc-saving-amt">&euro;2,900,000</span>
+            <span class="cc-cume is-shown" id="cc-cume">Over three years <strong id="cc-cume-amt">&euro;8,700,000</strong></span>
           </div>
         </div>
       </div>
 
-      <p class="cc-note">Incumbent processing at 2.50% of volume, the <strong>bottom</strong> of the 2 to 6% band that card and correspondent-banking rates fall in (World Bank, BIS 2026). The low end is deliberate: a head of payments knows their own effective rate precisely, so widening the gap with a flattering anchor would only cost us the meeting. Cross-border adds an FX leg, 2.00% against the 1 to 4% typically hidden in the exchange rate, against our 0.10% spread on deep pools. <span data-brand>Setlz</span> is shown at 1.50%, our mid-market tier: larger platforms pay less than this, so nothing here is a universal rate. The licence is charged at cost.</p>
+      <!-- At a billion euro a reader asks what they are being compared
+           against. Naming the incumbent assumption at the CURRENT volume
+           pre-empts the objection instead of waiting for it. Computed, never
+           written: it moves with the slider. -->
+      <p class="cc-assume" id="cc-assume"></p>
+
+      <p class="cc-note">Card and correspondent-banking rates fall in a 2 to 6% band (World Bank, BIS 2026), and the incumbent figure used here sits at the conservative end of it at every volume. That is deliberate: a head of payments knows their own effective rate precisely, so widening the gap with a flattering anchor would only cost us the meeting. Cross-border adds an FX leg on both sides, against the 1 to 4% typically hidden in the exchange rate. <strong>Both sides tier down with settled volume</strong>, because incumbent pricing does too; holding theirs flat while ours falls would inflate the gap. Our own rate at any volume is set by the tiered table in <a href="#pricing">Pricing</a>. The licence is charged at cost.</p>
 
       <div class="sr-only" aria-live="polite" id="cc-live"></div>
     </div>

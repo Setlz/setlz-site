@@ -135,50 +135,168 @@ if (prefersReducedMotion) {
    The FX leg applies to cross-border only and is never added to EU to EU.
 ============================================================ */
 
-/* All five rates in one object. They will change.
+/* ---------- rates, banded by settled volume ----------
 
-   2.50% is the BOTTOM of the sourced 2 to 6% band and must not be raised to
-   widen the gap. It is the most checkable number on the page: a head of
-   payments knows their own effective rate to the basis point, so a flattering
-   anchor costs us the meeting rather than winning it. */
-const HERO_RATES = {
-  incumbentProcessing: 0.0250,  // theirs. World Bank, BIS 2026 range 2 to 6%.
-  setlzProcessing:     0.0150,  // ours, mid-market tier. #pricing is authority.
-  incumbentFx:         0.0200,  // theirs, CROSS-BORDER ONLY. 1 to 4% typical.
+   RATES TIER ON BOTH SIDES. Tiering our rate down while holding the incumbent
+   flat would inflate the gap artificially, and a head of payments at a
+   billion-euro platform knows their effective rate to the basis point. That
+   asymmetry would be the most catchable error on this page, so the incumbent
+   tiers too.
 
-  // TODO(setlz-fx): PLACEHOLDER. 0.10% has not been confirmed against real
-  // corridor execution. Confirm before this hero is shown outside the team.
-  setlzFx:             0.0010,  // ours, CROSS-BORDER ONLY.
+   Every rate carries a `source`. A number without a source is not shippable:
+   assertHeroRates() throws on either a missing value OR a missing source, so
+   an estimate cannot quietly become the claim under the headline.
 
-  cumulativeYears:     3,
-};
+   Setlz processing figures are fixed by the published tiers in #pricing.
+   NOTE, flagged rather than silently resolved: the brief calls these
+   "midpoints of our published tiers" and gives 150 / 60 / 25. 60 and 25 are
+   the midpoints of 40-80 and 15-35. 150 is the CEILING of 100-150, not its
+   midpoint (that would be 125). The brief's explicit number is used; if the
+   midpoint was intended, change the one value below. */
 
-/* The brief asks for a build failure if a rate is unset. THERE IS NO BUILD
-   STEP in this repo (no package.json, no bundler; see CLAUDE.md section 1), so
-   a build gate is not available to fail. The nearest honest equivalent: throw
-   at module init, log loudly, and have the hero render a visible failure notice
-   instead of a comparison drawn from a missing number. A silent zero would be
-   the one outcome worse than a broken hero. */
-function assertHeroRates(r) {
-  const required = [
-    "incumbentProcessing", "setlzProcessing",
-    "incumbentFx", "setlzFx", "cumulativeYears",
-  ];
-  const missing = required.filter(
-    (k) => typeof r[k] !== "number" || !isFinite(r[k]) || r[k] < 0
-  );
-  if (missing.length) {
+const HERO_RATE_BANDS = [
+  {
+    // Applies at and below this volume, flat.
+    anchorVolumeM: 250,
+    incumbentProcessing: { bps: null, source: null },
+    incumbentFx:         { bps: null, source: null },
+    setlzProcessing:     { bps: 150, source: "Published mid-market tier, 100 to 150 bps, #pricing" },
+    setlzFx:             { bps: null, source: null },
+  },
+  {
+    anchorVolumeM: 2000,
+    incumbentProcessing: { bps: null, source: null },
+    incumbentFx:         { bps: null, source: null },
+    setlzProcessing:     { bps: 60, source: "Published large-platform tier, 40 to 80 bps, #pricing" },
+    setlzFx:             { bps: null, source: null },
+  },
+  {
+    // Applies at and above this volume, flat.
+    anchorVolumeM: 10000,
+    incumbentProcessing: { bps: null, source: null },
+    incumbentFx:         { bps: null, source: null },
+    setlzProcessing:     { bps: 25, source: "Published enterprise tier, 15 to 35 bps, #pricing" },
+    setlzFx:             { bps: null, source: null },
+  },
+];
+
+/* PROVISIONAL SHAPE DATA, NOT SHIPPABLE.
+
+   The brief supplies these as "indicative only, for scale, to be replaced not
+   adopted" and says explicitly: do not substitute estimates. They are kept
+   here, separate from the config above and OFF by default, purely so the
+   interpolation, the bar geometry and the counters can be exercised before the
+   real figures arrive. Flipping the constant below to true does NOT make them
+   sourced; it only lets the component render locally for review.
+
+   Shape: incumbent processing ~250 bps at 100M falling toward ~150 bps at 1B
+   as platforms negotiate interchange-plus; incumbent FX ~200 bps falling
+   toward ~100 bps across the same range. The band anchors below are solved so
+   the curve passes through those two points.
+
+   REPLACE, then delete this block and this constant. */
+const USE_PROVISIONAL_RATES = false;
+
+const PROVISIONAL_BPS = [
+  { incumbentProcessing: 250, incumbentFx: 200, setlzFx: 10 },
+  { incumbentProcessing: 100, incumbentFx:  50, setlzFx: 10 },
+  { incumbentProcessing:  75, incumbentFx:  35, setlzFx: 10 },
+];
+
+const HERO_CUMULATIVE_YEARS = 3;
+
+const RATE_KEYS = ["incumbentProcessing", "incumbentFx", "setlzProcessing", "setlzFx"];
+
+/* The brief asks to fail the build on any unset value. THERE IS NO BUILD STEP
+   in this repo (no package.json, no bundler; CLAUDE.md section 1), so this
+   throws at module init instead, and the hero renders a visible failure notice
+   rather than a comparison drawn from a number nobody sourced. */
+function assertHeroRates(bands) {
+  const unset = [];
+  const unsourced = [];
+
+  bands.forEach((band, i) => {
+    RATE_KEYS.forEach((key) => {
+      const r = band[key];
+      if (!r || typeof r.bps !== "number" || !isFinite(r.bps) || r.bps < 0) {
+        unset.push("band " + i + " " + key);
+      } else if (typeof r.source !== "string" || !r.source.trim()) {
+        unsourced.push("band " + i + " " + key);
+      }
+    });
+    if (i > 0 && band.anchorVolumeM <= bands[i - 1].anchorVolumeM) {
+      throw new Error("HERO_RATE_BANDS anchors must ascend: band " + i);
+    }
+  });
+
+  if (unset.length) {
     throw new Error(
-      "HERO_RATES is incomplete: " + missing.join(", ") +
-      ". Every rate must be a finite non-negative number."
+      "HERO_RATE_BANDS has unset rates: " + unset.join(", ") +
+      ". Every rate must be a finite non-negative bps figure."
     );
   }
-  if (r.setlzProcessing >= r.incumbentProcessing) {
+  if (unsourced.length) {
     throw new Error(
-      "HERO_RATES.setlzProcessing must be below incumbentProcessing, or the " +
-      "comparison inverts and the hero claims the opposite of what it means."
+      "HERO_RATE_BANDS has unsourced rates: " + unsourced.join(", ") +
+      ". A figure without a source is an estimate, and estimates do not ship " +
+      "under the headline claim."
     );
   }
+
+  // Our side must sit below theirs in every band, or the comparison inverts
+  // and the hero claims the opposite of what it means.
+  bands.forEach((band, i) => {
+    const ours = band.setlzProcessing.bps + band.setlzFx.bps;
+    const theirs = band.incumbentProcessing.bps + band.incumbentFx.bps;
+    if (ours >= theirs) {
+      throw new Error("HERO_RATE_BANDS band " + i + ": Setlz total is not below the incumbent total.");
+    }
+  });
+}
+
+/* Interpolated on log10(volume), so the curve is smooth and there is no step
+   at a band edge: a visible jump in the saving while dragging reads as a bug.
+   Flat outside the outermost anchors. */
+function ratesAtVolume(volumeM) {
+  const bands = HERO_RATE_BANDS;
+  const first = bands[0];
+  const last = bands[bands.length - 1];
+  const pick = (b, k) => b[k].bps / 10000;
+
+  if (volumeM <= first.anchorVolumeM) {
+    return {
+      incumbentProcessing: pick(first, "incumbentProcessing"),
+      incumbentFx: pick(first, "incumbentFx"),
+      setlzProcessing: pick(first, "setlzProcessing"),
+      setlzFx: pick(first, "setlzFx"),
+    };
+  }
+  if (volumeM >= last.anchorVolumeM) {
+    return {
+      incumbentProcessing: pick(last, "incumbentProcessing"),
+      incumbentFx: pick(last, "incumbentFx"),
+      setlzProcessing: pick(last, "setlzProcessing"),
+      setlzFx: pick(last, "setlzFx"),
+    };
+  }
+
+  let lo = bands[0], hi = bands[1];
+  for (let i = 0; i < bands.length - 1; i++) {
+    if (volumeM > bands[i].anchorVolumeM && volumeM <= bands[i + 1].anchorVolumeM) {
+      lo = bands[i]; hi = bands[i + 1]; break;
+    }
+  }
+  const t =
+    (Math.log10(volumeM) - Math.log10(lo.anchorVolumeM)) /
+    (Math.log10(hi.anchorVolumeM) - Math.log10(lo.anchorVolumeM));
+
+  const mix = (k) => pick(lo, k) + (pick(hi, k) - pick(lo, k)) * t;
+  return {
+    incumbentProcessing: mix("incumbentProcessing"),
+    incumbentFx: mix("incumbentFx"),
+    setlzProcessing: mix("setlzProcessing"),
+    setlzFx: mix("setlzFx"),
+  };
 }
 
 const costComparison = document.getElementById("cc");
@@ -200,11 +318,20 @@ if (costComparison) {
     range:    document.getElementById("cc-volume"),
     volOut:   document.getElementById("cc-volume-out"),
     radios:   Array.from(document.querySelectorAll('input[name="cc-corridor"]')),
+    assume:   document.getElementById("cc-assume"),
     live:     document.getElementById("cc-live"),
   };
 
   try {
-    assertHeroRates(HERO_RATES);
+    if (USE_PROVISIONAL_RATES) {
+      // Local review only. Does not make these figures sourced.
+      HERO_RATE_BANDS.forEach((b, i) => {
+        b.incumbentProcessing = { bps: PROVISIONAL_BPS[i].incumbentProcessing, source: "PROVISIONAL, unsourced" };
+        b.incumbentFx = { bps: PROVISIONAL_BPS[i].incumbentFx, source: "PROVISIONAL, unsourced" };
+        b.setlzFx = { bps: PROVISIONAL_BPS[i].setlzFx, source: "PROVISIONAL, unsourced" };
+      });
+    }
+    assertHeroRates(HERO_RATE_BANDS);
     initCostComparison(el);
   } catch (err) {
     // Loud, visible, and it does not take the rest of the page down with it.
@@ -250,12 +377,11 @@ function initCostComparison(el) {
   function compute(volumeM, corridor) {
     const volume = volumeM * 1e6;
     const crossBorder = corridor === "xb";
+    const r = ratesAtVolume(volumeM);
 
     // The FX leg is cross-border only. Never added to EU to EU.
-    const incRate = HERO_RATES.incumbentProcessing +
-      (crossBorder ? HERO_RATES.incumbentFx : 0);
-    const setRate = HERO_RATES.setlzProcessing +
-      (crossBorder ? HERO_RATES.setlzFx : 0);
+    const incRate = r.incumbentProcessing + (crossBorder ? r.incumbentFx : 0);
+    const setRate = r.setlzProcessing + (crossBorder ? r.setlzFx : 0);
 
     const incumbent = Math.round(volume * incRate);
     const setlz = Math.round(volume * setRate);
@@ -263,7 +389,11 @@ function initCostComparison(el) {
 
     return {
       incumbent, setlz, saving,
-      cumulative: saving * HERO_RATES.cumulativeYears,
+      cumulative: saving * HERO_CUMULATIVE_YEARS,
+      // The incumbent side of the assumption line, at THIS volume.
+      incProcPct: r.incumbentProcessing * 100,
+      incFxPct: r.incumbentFx * 100,
+      crossBorder,
       // Both the bar width and the bracket offset come from this one ratio.
       widthPct: (setlz / incumbent) * 100,
       savingPct: (1 - setlz / incumbent) * 100,
@@ -303,6 +433,14 @@ function initCostComparison(el) {
     el.savAmt.textContent = EUR.format(d.saving);
     el.cumeAmt.textContent = EUR.format(d.cumulative);
     el.pctWord.textContent = inWords(d.savingPct);
+    if (el.assume) {
+      const pc = (n) => n.toFixed(2) + "%";
+      el.assume.textContent = d.crossBorder
+        ? "Assumes " + pc(d.incProcPct) + " processing and " + pc(d.incFxPct) +
+          " FX at this volume, typical of negotiated enterprise pricing."
+        : "Assumes " + pc(d.incProcPct) +
+          " processing at this volume, typical of negotiated enterprise pricing.";
+    }
   }
 
   function reveal() {
