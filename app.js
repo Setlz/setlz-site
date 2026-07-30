@@ -660,7 +660,13 @@ WM_CONFIG.corridors = WM_CONFIG.corridors.map((c) => {
   const to = WM_PORTS[c.to];
   const stated = c.chain.map((k) => WM_HOPS[k]);          // every hop, for the text
   const mid = stated.filter((h) => h.plot !== false);     // only those on the artboard
-  const eastbound = from.lon > to.lon;
+  /* Label side is decided by where the pin sits on the ARTBOARD, not by which
+     way the corridor runs. Direction-based placement put Rotterdam's label off
+     the left edge and Hong Kong's off the right, because the viewBox is the
+     exact artboard and anything outside it is clipped. Pins past 60% of the
+     width get their label on the inside. */
+  const side = (lon) => (((lon - MAP_GRID.lonMin) * MAP_GRID.scale) > MAP_GRID.w * 0.6
+    ? [-7, "end"] : [7, "start"]);
   return {
     key: c.key,
     label: from.name + " \u2192 " + to.name,
@@ -668,8 +674,8 @@ WM_CONFIG.corridors = WM_CONFIG.corridors.map((c) => {
     hopDays: c.hopDays,
     viewBox: WM_CONFIG.viewBox,
     dotR: 0.62,
-    from: { ...from, la: [eastbound ? 7 : -7, -7, eastbound ? "start" : "end"] },
-    to: { ...to, la: [eastbound ? -7 : 7, -7, eastbound ? "end" : "start"] },
+    from: { ...from, la: [side(from.lon)[0], -7, side(from.lon)[1]] },
+    to: { ...to, la: [side(to.lon)[0], -7, side(to.lon)[1]] },
     pulseStart: "USDC",
     pulseEnd: "EURC",
     flip: c.chain.length > 1,
@@ -679,7 +685,7 @@ WM_CONFIG.corridors = WM_CONFIG.corridors.map((c) => {
       ...mid.map((h) => ({
         name: h.name + " \u00b7 day " + c.hopDays[stated.indexOf(h) + 1],
         lat: h.lat, lon: h.lon,
-        la: [7, stated.indexOf(h) % 2 ? -7 : 14, "start"],
+        la: [side(h.lon)[0], stated.indexOf(h) % 2 ? -7 : 14, side(h.lon)[1]],
       })),
       { name: to.name + " bank", lat: to.lat, lon: to.lon, lbl: false },
     ],
@@ -884,6 +890,12 @@ if (wm && typeof MAP_DOTS !== "undefined") {
       badgeText.setAttribute("x", 0);
     }
     setBadgeLabel(c.pulseStart);
+    /* Park the pulse and its badge on the origin pin. They are opacity 0 until
+       the run starts, but at 0,0 their bounding boxes sit outside the artboard,
+       which showed up as stray geometry in the top-left when measuring. */
+    setPulse.setAttribute("cx", A.x); setPulse.setAttribute("cy", A.y);
+    wirePulse.setAttribute("cx", A.x); wirePulse.setAttribute("cy", A.y);
+    badge.setAttribute("transform", "translate(" + A.x + "," + A.y + ")");
 
     // Hop cumulative lengths for the wire trail.
     const segLens = [];
