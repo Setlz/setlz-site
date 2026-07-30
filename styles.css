@@ -1427,19 +1427,34 @@ h3 {
   letter-spacing: var(--mono-label-track);
 }
 
+/* Names the Setlz line on every corridor, not just the ones that flip coin. */
+.wm-arc-label {
+  fill: var(--signal-deep);
+  font-family: var(--font-mono);
+  font-weight: var(--mono-label-w);
+  letter-spacing: var(--mono-label-track);
+}
+
+/* No glow, and note the raw rgba this carried was the only one left outside
+   :root. Task 3 replaces it with a real projected contact shadow. */
 .wm-arc-trail {
   stroke: var(--signal);
   fill: none;
   stroke-linecap: round;
-  filter: drop-shadow(0 0 3px rgba(21, 23, 26, 0.45));
 }
 
-.wm-wire-path { stroke: var(--mist); fill: none; }
+/* The legacy route is #4A4E54 per the brief. It was --mist, 1.19:1 on paper,
+   which made the undrawn route effectively invisible and left the
+   reduced-motion "both paths complete" state showing only the Setlz arc.
+   Base at reduced opacity, trail solid, so the same colour carries both the
+   route and the progress along it. */
+.wm-wire-path { stroke: var(--ink-soft); opacity: 0.35; fill: none; }
 .wm-wire-trail { stroke: var(--ink-soft); fill: none; }
 .wm-wire-node { fill: var(--paper); stroke: var(--ink-soft); }
 .wm-wire-label { font-family: var(--font-mono); fill: var(--ink-soft); letter-spacing: var(--mono-label-track); }
 
-.wm-pulse-setlz { fill: var(--signal); filter: drop-shadow(0 0 5px var(--signal-hi)); }
+/* No glow: the shared constraints forbid it, and it was the only one left. */
+.wm-pulse-setlz { fill: var(--signal); }
 .wm-pulse-wire { fill: var(--ink-soft); }
 
 .wm-badge-rect { fill: var(--ink); rx: 3px; }

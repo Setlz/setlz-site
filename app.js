@@ -843,6 +843,17 @@ if (wm && typeof MAP_DOTS !== "undefined") {
     // Setlz arc trail (drawn behind the pulse).
     const arc = elNS("path", { class: "wm-arc-trail", d: pathD(arcPts), "stroke-width": 2.2 * u }, gDyn);
     const arcLen = arc.getTotalLength();
+
+    /* The arc says what it is, on every lane. It used to be carried only by the
+       mid-point flip caption, which fires on c.flip, so the two intra-APAC
+       lanes drew an unlabelled green line. The whole contrast is "one hop, no
+       correspondent chain", and it has to be legible without the animation. */
+    const apex = arcPts[Math.floor(arcPts.length / 2)];
+    const arcLbl = elNS("text", {
+      class: "wm-arc-label", x: apex.x, y: apex.y - 5 * u,
+      "text-anchor": "middle", "font-size": 5.6 * u,
+    }, gDyn);
+    arcLbl.textContent = "EURC on Base";
     arc.setAttribute("stroke-dasharray", arcLen);
     arc.setAttribute("stroke-dashoffset", arcLen);
 
