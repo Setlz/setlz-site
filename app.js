@@ -573,6 +573,37 @@ function initCostComparison(el) {
    external requests). All corridor data lives in WM_CONFIG.
 ============================================================ */
 
+/* Ports. Real lat/lon only: every pixel on the map is derived from these
+   through proj(), which reads MAP_GRID. There is no hardcoded pixel position
+   anywhere in this file, and changing a lat/lon here moves the pin. */
+const WM_PORTS = {
+  rotterdam: { name: "Rotterdam",   lat: 51.95, lon:   4.48 },
+  hamburg:   { name: "Hamburg",     lat: 53.55, lon:  10.00 },
+  genoa:     { name: "Genoa",       lat: 44.41, lon:   8.93 },
+  shanghai:  { name: "Shanghai",    lat: 31.23, lon: 121.47 },
+  busan:     { name: "Busan",       lat: 35.10, lon: 129.04 },
+  shenzhen:  { name: "Shenzhen",    lat: 22.54, lon: 114.06 },
+  hochiminh: { name: "Ho Chi Minh", lat: 10.82, lon: 106.63 },
+  singapore: { name: "Singapore",   lat:  1.35, lon: 103.82 },
+};
+
+/* Correspondent banks on the legacy chain. Their positions are real too.
+
+   NEW YORK SITS OUTSIDE THE ARTBOARD, DELIBERATELY. The brief fixes the canvas
+   at 10W to 145E and separately requires the US correspondent hop be kept,
+   because a KRW or VND to EUR payment routinely clears through a USD
+   intermediary though neither end is American. Those two requirements cannot
+   both be satisfied by a pin: 74W is not on this map. Rather than invent a
+   coordinate for New York, the hop keeps its true position and the legacy line
+   is allowed to run off the western edge and come back. The detour is the
+   point, and every hop is also named in the DOM text below the map. Flagged
+   for a decision; see the report. */
+const WM_HOPS = {
+  hongkong:  { name: "Regional correspondent · Hong Kong", lat: 22.32, lon: 114.17 },
+  newyork:   { name: "US correspondent · New York",        lat: 40.71, lon: -74.00, offMap: true },
+  frankfurt: { name: "European correspondent · Frankfurt", lat: 50.11, lon:   8.68 },
+};
+
 const WM_CONFIG = {
   arcMs: 2000,          // Setlz crosses in 2 seconds real time
   wireSegMs: 2400,      // wire pulse per hop segment
@@ -580,76 +611,67 @@ const WM_CONFIG = {
   wireStallMs: 2600,    // extra stall with the banking hours label
   lapseMs: 2600,        // stage 2 time-lapse duration
   feeTicks: ["~$9", "~$18", "~$27", "$30 to 40 typical"],
+
+  /* One viewBox, the whole artboard, derived from the generated grid. The
+     previous version cropped per corridor with hardcoded rectangles, which is
+     how half the world came to be silently excluded. Padding is CSS. */
+  viewBox: [0, 0, MAP_GRID.w, MAP_GRID.h],
+
+  /* Modelled payment-chain durations, ILLUSTRATIVE, not measured. Shown as
+     elapsed days at each hop. transitDays is the container transit for the
+     lane and is the single source shared with the transit timeline. */
   corridors: [
-    {
-      key: "detroit-paris",
-      label: "Detroit → Paris",
-      viewBox: [85, 18, 440, 176],
-      viewBoxMobile: [105, 25, 380, 165],
-      dotR: 1.15,
-      from: { name: "Detroit", lat: 42.33, lon: -83.05, la: [-6, -8, "end"] },
-      to: { name: "Paris", lat: 48.86, lon: 2.35, la: [6, -8, "start"] },
-      pulseStart: "$1,000 · USDC",
-      pulseEnd: "EURC",
-      flip: true,
-      midCaption: "The FX event: USDC to EURC, transparent on-chain rate, executed in the same second.",
-      wireHops: [
-        { name: "Detroit bank", lat: 42.33, lon: -83.05, lbl: false },
-        { name: "US correspondent · New York", lat: 40.71, lon: -74.0, la: [7, 15, "start"] },
-        { name: "SWIFT network", lat: 38.0, lon: -38.0, la: [0, 16, "middle"] },
-        { name: "EU correspondent · Frankfurt", lat: 50.11, lon: 8.68, la: [8, 15, "end"] },
-        { name: "Paris bank", lat: 48.86, lon: 2.35, lbl: false },
-      ],
-      stallHop: 3,
-      payoff: "The money is in Paris before the wire form is finished.",
-    },
-    {
-      key: "malaga-dublin",
-      label: "Málaga → Dublin",
-      viewBox: [340, 28, 175, 105],
-      viewBoxMobile: [372, 32, 130, 102],
-      dotR: 0.62,
-      from: { name: "Málaga", lat: 36.72, lon: -4.42, la: [7, 11, "start"] },
-      to: { name: "Dublin", lat: 53.35, lon: -6.26, la: [7, -6, "start"] },
-      pulseStart: "EURC",
-      pulseEnd: "EURC",
-      flip: false,
-      midCaption: "EU internal: EURC end to end, no coin flip needed.",
-      wireHops: [
-        { name: "Málaga bank", lat: 36.72, lon: -4.42, lbl: false },
-        { name: "ES correspondent · Madrid", lat: 40.42, lon: -3.7, la: [7, 4, "start"] },
-        { name: "SWIFT network", lat: 46.0, lon: -14.0, la: [-7, 4, "end"] },
-        { name: "IE correspondent", lat: 52.3, lon: -8.6, la: [-7, 10, "end"] },
-        { name: "Dublin bank", lat: 53.35, lon: -6.26, lbl: false },
-      ],
-      stallHop: 3,
-      payoff: "The money is in Dublin before the wire form is finished.",
-    },
-    {
-      key: "accra-rotterdam",
-      label: "Accra → Rotterdam",
-      tag: "Exploratory · B2B corridor",
-      viewBox: [330, 28, 245, 238],
-      viewBoxMobile: [372, 30, 165, 236],
-      dotR: 0.85,
-      from: { name: "Accra", lat: 5.6, lon: -0.19, la: [8, 4, "start"] },
-      to: { name: "Rotterdam", lat: 51.92, lon: 4.48, la: [8, -6, "start"] },
-      pulseStart: "USDC",
-      pulseEnd: "EURC",
-      flip: true,
-      midCaption: "The FX event: USDC to EURC, transparent on-chain rate, executed in the same second.",
-      wireHops: [
-        { name: "Accra bank", lat: 5.6, lon: -0.19, lbl: false },
-        { name: "Regional correspondent", lat: 14.7, lon: -17.5, la: [7, 14, "start"] },
-        { name: "SWIFT network", lat: 30.0, lon: -22.0, la: [7, -7, "start"] },
-        { name: "EU correspondent · Frankfurt", lat: 50.11, lon: 8.68, la: [7, 14, "end"] },
-        { name: "Rotterdam bank", lat: 51.92, lon: 4.48, lbl: false },
-      ],
-      stallHop: 3,
-      payoff: "The money is in Rotterdam before the wire form is finished.",
-    },
+    { key: "busan-rotterdam",    from: "busan",     to: "rotterdam", transitDays: 38,
+      chain: ["hongkong", "newyork", "frankfurt"], hopDays: [0, 1, 3, 4, 5] },
+    { key: "shanghai-rotterdam", from: "shanghai",  to: "rotterdam", transitDays: 35,
+      chain: ["hongkong", "newyork", "frankfurt"], hopDays: [0, 1, 3, 4, 5] },
+    { key: "busan-hamburg",      from: "busan",     to: "hamburg",   transitDays: 36,
+      chain: ["hongkong", "newyork", "frankfurt"], hopDays: [0, 1, 3, 4, 5] },
+    { key: "hochiminh-genoa",    from: "hochiminh", to: "genoa",     transitDays: 32,
+      chain: ["hongkong", "newyork", "frankfurt"], hopDays: [0, 1, 3, 4, 5] },
+    /* Intra-APAC: no USD intermediary and no European correspondent. Fewer
+       hops and fewer days, which is a real difference and worth showing. */
+    { key: "busan-singapore",    from: "busan",     to: "singapore", transitDays: 7,
+      chain: ["hongkong"], hopDays: [0, 1, 2] },
+    { key: "shenzhen-singapore", from: "shenzhen",  to: "singapore", transitDays: 4,
+      chain: ["hongkong"], hopDays: [0, 1, 2] },
   ],
 };
+
+/* Expand the compact corridor rows into what the renderer reads. Labels, hop
+   lists and payoff lines are all derived, so a corridor is six fields and
+   cannot drift from its own name. */
+WM_CONFIG.corridors = WM_CONFIG.corridors.map((c) => {
+  const from = WM_PORTS[c.from];
+  const to = WM_PORTS[c.to];
+  const mid = c.chain.map((k) => WM_HOPS[k]);
+  const eastbound = from.lon > to.lon;
+  return {
+    key: c.key,
+    label: from.name + " \u2192 " + to.name,
+    transitDays: c.transitDays,
+    hopDays: c.hopDays,
+    viewBox: WM_CONFIG.viewBox,
+    dotR: 0.62,
+    from: { ...from, la: [eastbound ? 7 : -7, -7, eastbound ? "start" : "end"] },
+    to: { ...to, la: [eastbound ? -7 : 7, -7, eastbound ? "end" : "start"] },
+    pulseStart: "USDC",
+    pulseEnd: "EURC",
+    flip: c.chain.length > 1,
+    midCaption: "EURC on Base. One hop, no correspondent chain.",
+    wireHops: [
+      { name: from.name + " bank", lat: from.lat, lon: from.lon, lbl: false },
+      ...mid.map((h, i) => ({
+        name: h.name + " \u00b7 day " + c.hopDays[i + 1],
+        lat: h.lat, lon: h.lon, offMap: h.offMap,
+        la: [7, i % 2 ? -7 : 14, "start"],
+      })),
+      { name: to.name + " bank", lat: to.lat, lon: to.lon, lbl: false },
+    ],
+    stallHop: c.chain.length > 1 ? 2 : 1,
+    payoff: "The money is in " + to.name + " before the wire has cleared its first correspondent.",
+  };
+});
 
 const wm = document.getElementById("wm");
 
@@ -768,7 +790,7 @@ if (wm && typeof MAP_DOTS !== "undefined") {
   }
 
   function renderCorridor(c) {
-    const vb = isMobileMap() && c.viewBoxMobile ? c.viewBoxMobile : c.viewBox;
+    const vb = WM_CONFIG.viewBox;   // one artboard, never a crop
     svg.setAttribute("viewBox", vb.join(" "));
     const u = vb[2] / 440; // proportional unit so widths/labels stay screen-constant
     setDotRadius(c.dotR);

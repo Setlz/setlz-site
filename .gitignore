@@ -1,2 +1,7 @@
 design/vendor/
 design/og-image.svg.png
+
+# Generator input, re-fetched on demand by tools/gen_dots.py.
+# 138KB of reference data in a repo whose shipped payload is smaller than that,
+# same reasoning as design/vendor.
+tools/ne_110m_land.geojson
