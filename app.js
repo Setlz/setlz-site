@@ -147,6 +147,22 @@ if (prefersReducedMotion) {
    assertHeroRates() throws on either a missing value OR a missing source, so
    an estimate cannot quietly become the claim under the headline.
 
+   SOURCED FROM THE DECK (setlz-deck FINAL.html), except one.
+   Incumbent processing tiers 250 / 200 / 150 bps. Every value sits at or below
+   the conservative end of a range the deck cites: the 2 to 6% incumbent band,
+   floored at the 1.5% bottom of Stripe's 1.5 to 4.4% at enterprise volume. It
+   tiers because incumbent pricing tiers; holding it flat while ours falls
+   would inflate the gap.
+   Incumbent FX is derived arithmetic on two cited ranges rather than a fourth
+   number: correspondent banking 3 to 7% has a 300 bps floor, processing has a
+   150 bps floor, so the FX leg is 150 bps. Flat, because the deck gives no
+   basis for tiering it, and flat is the conservative choice.
+
+   STILL NULL, AND STILL BLOCKING: setlzFx. Our own cross-border spread is not
+   in the deck in any form. The brief flagged it as blocking on its own terms,
+   and it now drives the headline claim, so the gate stays shut until it is
+   confirmed against real corridor execution.
+
    Setlz processing figures are fixed by the published tiers in #pricing.
    NOTE, flagged rather than silently resolved: the brief calls these
    "midpoints of our published tiers" and gives 150 / 60 / 25. 60 and 25 are
@@ -158,23 +174,23 @@ const HERO_RATE_BANDS = [
   {
     // Applies at and below this volume, flat.
     anchorVolumeM: 250,
-    incumbentProcessing: { bps: null, source: null },
-    incumbentFx:         { bps: null, source: null },
+    incumbentProcessing: { bps: 250, source: "Incumbent band 2 to 6% (deck), conservative end, tiering to the Stripe 1.5% floor (World Bank, BIS 2026) at enterprise volume" },
+    incumbentFx:         { bps: 150, source: "Correspondent banking 3 to 7% floor, 300 bps, less the processing floor, 150 bps (World Bank, BIS 2026)" },
     setlzProcessing:     { bps: 150, source: "Published mid-market tier, 100 to 150 bps, #pricing" },
     setlzFx:             { bps: null, source: null },
   },
   {
     anchorVolumeM: 2000,
-    incumbentProcessing: { bps: null, source: null },
-    incumbentFx:         { bps: null, source: null },
+    incumbentProcessing: { bps: 200, source: "Incumbent band 2 to 6% (deck), conservative end, tiering to the Stripe 1.5% floor (World Bank, BIS 2026) at enterprise volume" },
+    incumbentFx:         { bps: 150, source: "Correspondent banking 3 to 7% floor, 300 bps, less the processing floor, 150 bps (World Bank, BIS 2026)" },
     setlzProcessing:     { bps: 60, source: "Published large-platform tier, 40 to 80 bps, #pricing" },
     setlzFx:             { bps: null, source: null },
   },
   {
     // Applies at and above this volume, flat.
     anchorVolumeM: 10000,
-    incumbentProcessing: { bps: null, source: null },
-    incumbentFx:         { bps: null, source: null },
+    incumbentProcessing: { bps: 150, source: "Incumbent band 2 to 6% (deck), conservative end, tiering to the Stripe 1.5% floor (World Bank, BIS 2026) at enterprise volume" },
+    incumbentFx:         { bps: 150, source: "Correspondent banking 3 to 7% floor, 300 bps, less the processing floor, 150 bps (World Bank, BIS 2026)" },
     setlzProcessing:     { bps: 25, source: "Published enterprise tier, 15 to 35 bps, #pricing" },
     setlzFx:             { bps: null, source: null },
   },
@@ -589,18 +605,16 @@ const WM_PORTS = {
 
 /* Correspondent banks on the legacy chain. Their positions are real too.
 
-   NEW YORK SITS OUTSIDE THE ARTBOARD, DELIBERATELY. The brief fixes the canvas
-   at 10W to 145E and separately requires the US correspondent hop be kept,
-   because a KRW or VND to EUR payment routinely clears through a USD
-   intermediary though neither end is American. Those two requirements cannot
-   both be satisfied by a pin: 74W is not on this map. Rather than invent a
-   coordinate for New York, the hop keeps its true position and the legacy line
-   is allowed to run off the western edge and come back. The detour is the
-   point, and every hop is also named in the DOM text below the map. Flagged
-   for a decision; see the report. */
+   NEW YORK HAS NO PIN. It sits at 74W, off this artboard, and rather than
+   invent a coordinate it is not plotted at all. It is NOT dropped from the
+   argument: a KRW or VND to EUR payment routinely clears through a USD
+   intermediary though neither end is American, so the hop stays in the text
+   chain under the map, where it is named with its elapsed day. Plotted chain
+   and stated chain are separate lists for exactly this reason. */
 const WM_HOPS = {
   hongkong:  { name: "Regional correspondent · Hong Kong", lat: 22.32, lon: 114.17 },
-  newyork:   { name: "US correspondent · New York",        lat: 40.71, lon: -74.00, offMap: true },
+  /* Text only, never plotted. See the note above. */
+  newyork:   { name: "US correspondent · New York",        lat: 40.71, lon: -74.00, plot: false },
   frankfurt: { name: "European correspondent · Frankfurt", lat: 50.11, lon:   8.68 },
 };
 
@@ -644,7 +658,8 @@ const WM_CONFIG = {
 WM_CONFIG.corridors = WM_CONFIG.corridors.map((c) => {
   const from = WM_PORTS[c.from];
   const to = WM_PORTS[c.to];
-  const mid = c.chain.map((k) => WM_HOPS[k]);
+  const stated = c.chain.map((k) => WM_HOPS[k]);          // every hop, for the text
+  const mid = stated.filter((h) => h.plot !== false);     // only those on the artboard
   const eastbound = from.lon > to.lon;
   return {
     key: c.key,
@@ -661,14 +676,21 @@ WM_CONFIG.corridors = WM_CONFIG.corridors.map((c) => {
     midCaption: "EURC on Base. One hop, no correspondent chain.",
     wireHops: [
       { name: from.name + " bank", lat: from.lat, lon: from.lon, lbl: false },
-      ...mid.map((h, i) => ({
-        name: h.name + " \u00b7 day " + c.hopDays[i + 1],
-        lat: h.lat, lon: h.lon, offMap: h.offMap,
-        la: [7, i % 2 ? -7 : 14, "start"],
+      ...mid.map((h) => ({
+        name: h.name + " \u00b7 day " + c.hopDays[stated.indexOf(h) + 1],
+        lat: h.lat, lon: h.lon,
+        la: [7, stated.indexOf(h) % 2 ? -7 : 14, "start"],
       })),
       { name: to.name + " bank", lat: to.lat, lon: to.lon, lbl: false },
     ],
-    stallHop: c.chain.length > 1 ? 2 : 1,
+    // Full chain including any hop with no pin. This is what the text list
+    // under the map reads, so the argument survives the graphic being absent.
+    statedChain: [
+      from.name + " bank \u00b7 day " + c.hopDays[0],
+      ...stated.map((h, i) => h.name + " \u00b7 day " + c.hopDays[i + 1]),
+      to.name + " bank \u00b7 day " + c.hopDays[c.hopDays.length - 1],
+    ],
+    stallHop: mid.length > 1 ? 2 : 1,
     payoff: "The money is in " + to.name + " before the wire has cleared its first correspondent.",
   };
 });
