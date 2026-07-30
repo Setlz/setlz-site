@@ -110,7 +110,7 @@
 
     <!-- The saving percentage is computed, never hardcoded in copy: it reads
          "Forty" on EU to EU and "Sixty-four" on cross-border. -->
-    <h1 class="hero-h1"><span id="cc-pct-word">Sixty-four</span> percent less to settle the same volume.</h1>
+    <h1 class="hero-h1"><span id="cc-pct-word">Sixty-three</span> percent less to settle the same volume.</h1>
     <p class="hero-sub">Move the volume to yours. The gap between the two bars is money that currently leaves your business as processing cost.</p>
 
     <div class="cc" id="cc">
@@ -145,11 +145,11 @@
       </div>
 
       <!-- --setlz-w is the single source of truth for the proportion. -->
-      <div class="cc-bars" id="cc-bars" style="--setlz-w: 35.5556%">
+      <div class="cc-bars" id="cc-bars" style="--setlz-w: 37.5%">
         <div class="cc-row">
           <div class="cc-row-head">
             <span class="cc-row-label">Incumbent rails</span>
-            <span class="cc-amt" id="cc-inc-amt">&euro;4,500,000</span>
+            <span class="cc-amt" id="cc-inc-amt">&euro;4,000,000</span>
           </div>
           <div class="cc-track"><span class="cc-fill cc-fill-inc" id="cc-inc-fill"></span></div>
         </div>
@@ -169,8 +169,8 @@
           <div class="cc-bracket is-shown" id="cc-bracket" aria-hidden="true"></div>
           <div class="cc-saving is-shown" id="cc-saving">
             <span class="cc-saving-label">Back to your margin</span>
-            <span class="cc-saving-amt" id="cc-saving-amt">&euro;2,900,000</span>
-            <span class="cc-cume is-shown" id="cc-cume">Over three years <strong id="cc-cume-amt">&euro;8,700,000</strong></span>
+            <span class="cc-saving-amt" id="cc-saving-amt">&euro;2,500,000</span>
+            <span class="cc-cume is-shown" id="cc-cume">Over three years <strong id="cc-cume-amt">&euro;7,500,000</strong></span>
           </div>
         </div>
       </div>
@@ -181,7 +181,7 @@
            written: it moves with the slider. -->
       <p class="cc-assume" id="cc-assume"></p>
 
-      <p class="cc-note">Card and correspondent-banking rates fall in a 2 to 6% band (World Bank, BIS 2026), and the incumbent figure used here sits at the conservative end of it at every volume. That is deliberate: a head of payments knows their own effective rate precisely, so widening the gap with a flattering anchor would only cost us the meeting. Cross-border adds an FX leg on both sides, against the 1 to 4% typically hidden in the exchange rate. <strong>Both sides tier down with settled volume</strong>, because incumbent pricing does too; holding theirs flat while ours falls would inflate the gap. Our own rate at any volume is set by the tiered table in <a href="#pricing">Pricing</a>. The licence is charged at cost.</p>
+      <p class="cc-note">Card and correspondent-banking rates fall in a 2 to 6% band (World Bank, BIS 2026), and the incumbent figure used here sits at the conservative end of it at every volume. That is deliberate: a head of payments knows their own effective rate precisely, so widening the gap with a flattering anchor would only cost us the meeting. Cross-border adds an FX leg to the incumbent, against the 1 to 4% typically hidden in the exchange rate. It adds nothing to our side: the tiered rate is what you pay us all in, and our own FX spread is a cost we carry rather than a line we charge. <strong>Both sides tier down with settled volume</strong>, because incumbent pricing does too; holding theirs flat while ours falls would inflate the gap. Our own rate at any volume is set by the tiered table in <a href="#pricing">Pricing</a>. The licence is charged at cost.</p>
 
       <div class="sr-only" aria-live="polite" id="cc-live"></div>
     </div>

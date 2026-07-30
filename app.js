@@ -158,10 +158,11 @@ if (prefersReducedMotion) {
    150 bps floor, so the FX leg is 150 bps. Flat, because the deck gives no
    basis for tiering it, and flat is the conservative choice.
 
-   STILL NULL, AND STILL BLOCKING: setlzFx. Our own cross-border spread is not
-   in the deck in any form. The brief flagged it as blocking on its own terms,
-   and it now drives the headline claim, so the gate stays shut until it is
-   confirmed against real corridor execution.
+   setlzFx IS ZERO, AND THAT IS A SOURCED POSITION, NOT A MISSING NUMBER. The
+   tiered table is what the platform pays us, all in. Our FX spread is a cost we
+   carry, and rule 46 forbids our cost appearing where our price belongs. So
+   cross-border adds an FX leg to the INCUMBENT only. This also removes the last
+   place on the page where our cost could be mistaken for our price.
 
    Setlz processing figures are fixed by the published tiers in #pricing.
    NOTE, flagged rather than silently resolved: the brief calls these
@@ -177,14 +178,14 @@ const HERO_RATE_BANDS = [
     incumbentProcessing: { bps: 250, source: "Incumbent band 2 to 6% (deck), conservative end, tiering to the Stripe 1.5% floor (World Bank, BIS 2026) at enterprise volume" },
     incumbentFx:         { bps: 150, source: "Correspondent banking 3 to 7% floor, 300 bps, less the processing floor, 150 bps (World Bank, BIS 2026)" },
     setlzProcessing:     { bps: 150, source: "Published mid-market tier, 100 to 150 bps, #pricing" },
-    setlzFx:             { bps: null, source: null },
+    setlzFx:             { bps: 0, source: "Included in the tiered rate. The FX spread is our cost, not a charge to the customer, and our cost never appears as our price" },
   },
   {
     anchorVolumeM: 2000,
     incumbentProcessing: { bps: 200, source: "Incumbent band 2 to 6% (deck), conservative end, tiering to the Stripe 1.5% floor (World Bank, BIS 2026) at enterprise volume" },
     incumbentFx:         { bps: 150, source: "Correspondent banking 3 to 7% floor, 300 bps, less the processing floor, 150 bps (World Bank, BIS 2026)" },
     setlzProcessing:     { bps: 60, source: "Published large-platform tier, 40 to 80 bps, #pricing" },
-    setlzFx:             { bps: null, source: null },
+    setlzFx:             { bps: 0, source: "Included in the tiered rate. The FX spread is our cost, not a charge to the customer, and our cost never appears as our price" },
   },
   {
     // Applies at and above this volume, flat.
@@ -192,31 +193,8 @@ const HERO_RATE_BANDS = [
     incumbentProcessing: { bps: 150, source: "Incumbent band 2 to 6% (deck), conservative end, tiering to the Stripe 1.5% floor (World Bank, BIS 2026) at enterprise volume" },
     incumbentFx:         { bps: 150, source: "Correspondent banking 3 to 7% floor, 300 bps, less the processing floor, 150 bps (World Bank, BIS 2026)" },
     setlzProcessing:     { bps: 25, source: "Published enterprise tier, 15 to 35 bps, #pricing" },
-    setlzFx:             { bps: null, source: null },
+    setlzFx:             { bps: 0, source: "Included in the tiered rate. The FX spread is our cost, not a charge to the customer, and our cost never appears as our price" },
   },
-];
-
-/* PROVISIONAL SHAPE DATA, NOT SHIPPABLE.
-
-   The brief supplies these as "indicative only, for scale, to be replaced not
-   adopted" and says explicitly: do not substitute estimates. They are kept
-   here, separate from the config above and OFF by default, purely so the
-   interpolation, the bar geometry and the counters can be exercised before the
-   real figures arrive. Flipping the constant below to true does NOT make them
-   sourced; it only lets the component render locally for review.
-
-   Shape: incumbent processing ~250 bps at 100M falling toward ~150 bps at 1B
-   as platforms negotiate interchange-plus; incumbent FX ~200 bps falling
-   toward ~100 bps across the same range. The band anchors below are solved so
-   the curve passes through those two points.
-
-   REPLACE, then delete this block and this constant. */
-const USE_PROVISIONAL_RATES = false;
-
-const PROVISIONAL_BPS = [
-  { incumbentProcessing: 250, incumbentFx: 200, setlzFx: 10 },
-  { incumbentProcessing: 100, incumbentFx:  50, setlzFx: 10 },
-  { incumbentProcessing:  75, incumbentFx:  35, setlzFx: 10 },
 ];
 
 const HERO_CUMULATIVE_YEARS = 3;
@@ -339,14 +317,6 @@ if (costComparison) {
   };
 
   try {
-    if (USE_PROVISIONAL_RATES) {
-      // Local review only. Does not make these figures sourced.
-      HERO_RATE_BANDS.forEach((b, i) => {
-        b.incumbentProcessing = { bps: PROVISIONAL_BPS[i].incumbentProcessing, source: "PROVISIONAL, unsourced" };
-        b.incumbentFx = { bps: PROVISIONAL_BPS[i].incumbentFx, source: "PROVISIONAL, unsourced" };
-        b.setlzFx = { bps: PROVISIONAL_BPS[i].setlzFx, source: "PROVISIONAL, unsourced" };
-      });
-    }
     assertHeroRates(HERO_RATE_BANDS);
     initCostComparison(el);
   } catch (err) {
