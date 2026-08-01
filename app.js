@@ -547,10 +547,17 @@ const WM_PORTS = {
   rotterdam: { name: "Rotterdam",   lat: 51.95, lon:   4.48 },
   hamburg:   { name: "Hamburg",     lat: 53.55, lon:  10.00 },
   genoa:     { name: "Genoa",       lat: 44.41, lon:   8.93 },
-  shanghai:  { name: "Shanghai",    lat: 31.23, lon: 121.47 },
   busan:     { name: "Busan",       lat: 35.10, lon: 129.04 },
-  shenzhen:  { name: "Shenzhen",    lat: 22.54, lon: 114.06 },
+  /* Hong Kong replaces Shanghai as the North Asia hub. Mainland China is
+     hostile to stablecoin settlement, so no mainland port appears as one of our
+     endpoints; Hong Kong has an operative regime, the Stablecoins Ordinance in
+     force since 1 August 2025 under HKMA licensing. Shenzhen went with
+     Shanghai, and would have overlapped Hong Kong on the map regardless at
+     30km apart. */
+  hongkong:  { name: "Hong Kong",   lat: 22.32, lon: 114.17 },
+  kaohsiung: { name: "Kaohsiung",   lat: 22.61, lon: 120.30 },
   hochiminh: { name: "Ho Chi Minh", lat: 10.82, lon: 106.63 },
+  portklang: { name: "Port Klang",  lat:  3.00, lon: 101.40 },
   singapore: { name: "Singapore",   lat:  1.35, lon: 103.82 },
 };
 
@@ -563,7 +570,11 @@ const WM_PORTS = {
    chain under the map, where it is named with its elapsed day. Plotted chain
    and stated chain are separate lists for exactly this reason. */
 const WM_HOPS = {
-  hongkong:  { name: "Regional correspondent · Hong Kong", lat: 22.32, lon: 114.17 },
+  /* Deliberately keyed apart from the PORT of the same city. Hong Kong is now
+     both a corridor endpoint and the regional clearing hub, and a lane
+     originating there does not route through itself: those corridors simply
+     omit this hop. */
+  hkclear:   { name: "Regional correspondent · Hong Kong", lat: 22.32, lon: 114.17 },
   /* Text only, never plotted. See the note above. */
   newyork:   { name: "US correspondent · New York",        lat: 40.71, lon: -74.00, plot: false },
   frankfurt: { name: "European correspondent · Frankfurt", lat: 50.11, lon:   8.68 },
@@ -586,20 +597,26 @@ const WM_CONFIG = {
      elapsed days at each hop. transitDays is the container transit for the
      lane and is the single source shared with the transit timeline. */
   corridors: [
-    { key: "busan-rotterdam",    from: "busan",     to: "rotterdam", transitDays: 38,
-      chain: ["hongkong", "newyork", "frankfurt"], hopDays: [0, 1, 3, 4, 5] },
-    { key: "shanghai-rotterdam", from: "shanghai",  to: "rotterdam", transitDays: 35,
-      chain: ["hongkong", "newyork", "frankfurt"], hopDays: [0, 1, 3, 4, 5] },
-    { key: "busan-hamburg",      from: "busan",     to: "hamburg",   transitDays: 36,
-      chain: ["hongkong", "newyork", "frankfurt"], hopDays: [0, 1, 3, 4, 5] },
-    { key: "hochiminh-genoa",    from: "hochiminh", to: "genoa",     transitDays: 32,
-      chain: ["hongkong", "newyork", "frankfurt"], hopDays: [0, 1, 3, 4, 5] },
+    { key: "busan-rotterdam",     from: "busan",     to: "rotterdam", transitDays: 38,
+      chain: ["hkclear", "newyork", "frankfurt"], hopDays: [0, 1, 3, 4, 5] },
+    /* Origin is the clearing hub, so there is no regional hop to make. */
+    { key: "hongkong-rotterdam",  from: "hongkong",  to: "rotterdam", transitDays: 34,
+      chain: ["newyork", "frankfurt"], hopDays: [0, 2, 3, 4] },
+    { key: "busan-hamburg",       from: "busan",     to: "hamburg",   transitDays: 36,
+      chain: ["hkclear", "newyork", "frankfurt"], hopDays: [0, 1, 3, 4, 5] },
+    { key: "kaohsiung-genoa",     from: "kaohsiung", to: "genoa",     transitDays: 33,
+      chain: ["hkclear", "newyork", "frankfurt"], hopDays: [0, 1, 3, 4, 5] },
+    { key: "hochiminh-genoa",     from: "hochiminh", to: "genoa",     transitDays: 32,
+      chain: ["hkclear", "newyork", "frankfurt"], hopDays: [0, 1, 3, 4, 5] },
     /* Intra-APAC: no USD intermediary and no European correspondent. Fewer
-       hops and fewer days, which is a real difference and worth showing. */
-    { key: "busan-singapore",    from: "busan",     to: "singapore", transitDays: 7,
-      chain: ["hongkong"], hopDays: [0, 1, 2] },
-    { key: "shenzhen-singapore", from: "shenzhen",  to: "singapore", transitDays: 4,
-      chain: ["hongkong"], hopDays: [0, 1, 2] },
+       hops and fewer days, which is a real difference and worth showing. The
+       two shortest lanes clear directly. */
+    { key: "busan-singapore",     from: "busan",     to: "singapore", transitDays: 7,
+      chain: ["hkclear"], hopDays: [0, 1, 2] },
+    { key: "hongkong-singapore",  from: "hongkong",  to: "singapore", transitDays: 5,
+      chain: [], hopDays: [0, 2] },
+    { key: "portklang-singapore", from: "portklang", to: "singapore", transitDays: 1,
+      chain: [], hopDays: [0, 1] },
   ],
 };
 
@@ -781,7 +798,7 @@ if (wm && typeof MAP_DOTS !== "undefined") {
 
   /* Elevation along a geodesic: h = apex * sin(pi * s). apex is proportional to
      TRANSIT DAYS, not distance, so Busan-Rotterdam at 38 days rises highest and
-     Shenzhen-Singapore at 4 days stays almost flat on the plane. */
+     Port Klang-Singapore at 1 day stays almost flat on the plane. */
   function liftArc(pts, transitDays) {
     const apex = (transitDays || 0) * WM_APEX_PER_DAY;
     return pts.map((pt, i) => {
@@ -905,6 +922,39 @@ if (wm && typeof MAP_DOTS !== "undefined") {
        mid-point flip caption, which fires on c.flip, so the two intra-APAC
        lanes drew an unlabelled green line. The whole contrast is "one hop, no
        correspondent chain", and it has to be legible without the animation. */
+    /* Labels are nudged apart AFTER placement, never the pins.
+
+       Three lanes collide on geography alone: Frankfurt sits 17px from
+       Rotterdam, the Hong Kong clearing hop sits near Ho Chi Minh, and Port
+       Klang and Singapore are 9px apart in the Malacca Strait. Per-corridor
+       offsets would fix those three and break on the next lane added, so this
+       resolves overlaps generically: each label that intersects one already
+       placed is pushed a line at a time until it clears, flipping upward if it
+       would leave the artboard. Pin positions are untouched, so the geography
+       stays honest. */
+    function labelsOverlap(a, b) {
+      const A = a.getBBox(), B = b.getBBox();
+      return A.x < B.x + B.width && B.x < A.x + A.width &&
+             A.y < B.y + B.height && B.y < A.y + A.height;
+    }
+    function deconflictLabels() {
+      const texts = Array.from(gDyn.querySelectorAll("text"));
+      const LINE = 8 * u;
+      for (let i = 1; i < texts.length; i++) {
+        for (let guard = 0; guard < 10; guard++) {
+          let clash = false;
+          for (let j = 0; j < i; j++) {
+            if (labelsOverlap(texts[i], texts[j])) { clash = true; break; }
+          }
+          if (!clash) break;
+          const y = parseFloat(texts[i].getAttribute("y"));
+          const box = texts[i].getBBox();
+          const down = y + LINE;
+          texts[i].setAttribute("y", down + box.height > MAP_GRID.h - 2 ? y - LINE : down);
+        }
+      }
+    }
+
     /* The apex is lifted off the plane now, so a label hung above it ran off
        the top of the artboard. Clamped inside, and placed below the apex when
        there is no room above it. */
@@ -968,6 +1018,8 @@ if (wm && typeof MAP_DOTS !== "undefined") {
     // Only the small stall chip is anchored to map coordinates; the
     // narrative boxes live in fixed corners so they never cover the routes.
     placeOverlay(wEl.stall, hops[c.stallHop].p, vb);
+
+    deconflictLabels();
 
     layer = { vb, u, arc, arcLen, arcPts, hops, segLens, wireTotal, wireTrail, setPulse, wirePulse, badge, setBadgeLabel, arcShadow, arcShadowLen };
   }
