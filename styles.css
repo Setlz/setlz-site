@@ -1053,6 +1053,13 @@ h3 {
   }
 }
 
+/* Tabular figures so the headline does not jitter as the number changes
+   between corridors and across the volume range. */
+.hero-pct {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+}
+
 /* The headline's emphasis, matching the deck's use of <em>. */
 .hero-h1 em { font-style: normal; color: var(--signal-deep); }
 

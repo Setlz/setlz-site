@@ -299,7 +299,7 @@ if (costComparison) {
   const el = {
     root:     costComparison,
     bars:     document.getElementById("cc-bars"),
-    pctWord:  document.getElementById("cc-pct-word"),
+    pct:      document.getElementById("cc-pct"),
     incAmt:   document.getElementById("cc-inc-amt"),
     incFill:  document.getElementById("cc-inc-fill"),
     setAmt:   document.getElementById("cc-setlz-amt"),
@@ -335,27 +335,6 @@ function initCostComparison(el) {
   const EUR = new Intl.NumberFormat("en-GB", {
     style: "currency", currency: "EUR", maximumFractionDigits: 0,
   });
-
-  const ONES = [
-    "zero", "one", "two", "three", "four", "five", "six", "seven", "eight",
-    "nine", "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen",
-    "sixteen", "seventeen", "eighteen", "nineteen",
-  ];
-  const TENS = [
-    "", "", "twenty", "thirty", "forty", "fifty", "sixty", "seventy",
-    "eighty", "ninety",
-  ];
-
-  // The headline's percentage is spelled out, and computed. Never hardcoded:
-  // it reads "Forty" on EU to EU and "Sixty-four" on cross-border.
-  function inWords(n) {
-    n = Math.round(n);
-    if (n < 0 || n > 99) return String(n);
-    const w = n < 20
-      ? ONES[n]
-      : TENS[Math.floor(n / 10)] + (n % 10 ? "-" + ONES[n % 10] : "");
-    return w.charAt(0).toUpperCase() + w.slice(1);
-  }
 
   /* One computation, one set of numbers, everything derived from it. Rounding
      happens here and only here, so the displayed figures reconcile by
@@ -418,7 +397,9 @@ function initCostComparison(el) {
     el.setAmt.textContent = EUR.format(d.setlz);
     el.savAmt.textContent = EUR.format(d.saving);
     el.cumeAmt.textContent = EUR.format(d.cumulative);
-    el.pctWord.textContent = inWords(d.savingPct);
+    // A figure, not a spelled-out word. Words of different lengths re-wrapped
+    // the headline every time the corridor changed.
+    el.pct.textContent = String(Math.round(d.savingPct));
     if (el.assume) {
       const pc = (n) => n.toFixed(2) + "%";
       el.assume.textContent = d.crossBorder
@@ -442,7 +423,7 @@ function initCostComparison(el) {
       "Incumbent rails " + EUR.format(d.incumbent) + ", " +
       "Setlz " + EUR.format(d.setlz) + ". " +
       "Saving " + EUR.format(d.saving) + ", " +
-      inWords(d.savingPct).toLowerCase() + " percent less.";
+      Math.round(d.savingPct) + " percent less.";
   }
 
   // Instant update. Used after the intro, and for every slider and toggle
