@@ -303,20 +303,20 @@
          setting them side by side removes the gap, drops the block from 305px
          to about half that, and lets the three figures read as one band
          instead of three lonely lines. -->
-    <div class="pstats reveal">
-      <div class="pstat">
+    <div class="statband reveal">
+      <div class="statband-cell">
         <span class="glabel">Delivery to provider paid</span>
-        <span class="pstat-val">Under 30 min</span>
-        <span class="pstat-note">Measured across repeated runs</span>
+        <span class="statband-val">Under 30 min</span>
+        <span class="statband-note">Measured across repeated runs</span>
       </div>
-      <div class="pstat">
+      <div class="statband-cell">
         <span class="glabel">Round trip, fiat to fiat</span>
-        <span class="pstat-val">11 min</span>
-        <span class="pstat-note">Bounded by our own 20-minute cron</span>
+        <span class="statband-val">11 min</span>
+        <span class="statband-note">Bounded by our own 20-minute cron</span>
       </div>
-      <div class="pstat">
+      <div class="statband-cell">
         <span class="glabel">Settlement uptime</span>
-        <span class="pstat-val">99.9%</span>
+        <span class="statband-val">99.9%</span>
       </div>
     </div>
 
@@ -485,22 +485,39 @@
     <h2 class="h2">Two lines. One rail.</h2>
     <p class="section-lede reveal">Licence at cost. Transactions for profit. The licence covers onboarding, integration and support, and is priced to cover cost rather than to earn: we make money only when you transact.</p>
 
-    <div class="group reveal">
+    <!-- Four stacked label/value rows put the label hard left and the figure
+         hard right across the full container, and the gap was different on
+         every row: 464px, 111px, 228px, 228px. The eye travelled a different
+         distance each time, so the four figures never read as a column.
+
+         The structure follows the heading instead. "Two lines" really is two
+         lines: the licence, then the transaction fee, which happens to have
+         three tiers. So the licence keeps a row of its own at the text measure
+         and the tiers become the shared three-column band, the same primitive
+         the proof figures use. -->
+    <div class="group group-narrow reveal">
       <div class="grow grow-lv">
         <span class="glabel">Licence &middot; onboarding, integration, support</span>
         <span class="gval-lg">At cost</span>
       </div>
-      <div class="grow grow-lv">
-        <span class="glabel">Transaction fee &middot; mid-market, around $100M settled a year</span>
-        <span class="gval-lg">100 to 150 bps</span>
+    </div>
+
+    <p class="glabel pricing-tier-head reveal">Transaction fee &middot; by settled volume</p>
+    <div class="statband reveal">
+      <div class="statband-cell">
+        <span class="glabel">Mid-market</span>
+        <span class="statband-val">100 to 150 bps</span>
+        <span class="statband-note">Around $100M settled a year</span>
       </div>
-      <div class="grow grow-lv">
-        <span class="glabel">Transaction fee &middot; large platform, around $1B a year</span>
-        <span class="gval-lg">40 to 80 bps</span>
+      <div class="statband-cell">
+        <span class="glabel">Large platform</span>
+        <span class="statband-val">40 to 80 bps</span>
+        <span class="statband-note">Around $1B a year</span>
       </div>
-      <div class="grow grow-lv">
-        <span class="glabel">Transaction fee &middot; enterprise, $10B a year and above</span>
-        <span class="gval-lg">15 to 35 bps</span>
+      <div class="statband-cell">
+        <span class="glabel">Enterprise</span>
+        <span class="statband-val">15 to 35 bps</span>
+        <span class="statband-note">$10B a year and above</span>
       </div>
     </div>
 

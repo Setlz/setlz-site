@@ -155,7 +155,15 @@
   --section-compressed:  var(--space-7);
 
   /* ---------- structure ---------- */
-  --measure:      70ch;    /* max prose line length */
+  /* THE MEASURE IS PIXELS, NOT CH, AND THAT MATTERS.
+     It was 70ch, and ch resolves against the element's own font, so one token
+     produced eleven different columns across the page: 596px on the hero note,
+     707px on body prose, 826px on a lede, 967px on the display-scale kicker.
+     The left edge was solid and the right edge was noise. A fixed column gives
+     every block the same right edge, and large type automatically gets fewer
+     characters per line, which is what it wants anyway. */
+  --measure:       700px;  /* body prose and headings */
+  --measure-tight: 460px;  /* display-scale text, which wants a short line */
   --container:    1120px;
   --gutter:       var(--space-5);
 
@@ -220,7 +228,7 @@ body {
   line-height: var(--lh-tight);
   letter-spacing: var(--display-1-track);
   font-weight: var(--display-w);
-  max-width: 15ch;
+  max-width: var(--measure);
 }
 
 .h2 {
@@ -229,7 +237,7 @@ body {
   line-height: var(--lh-tight);
   letter-spacing: var(--display-1-track);
   font-weight: var(--display-w);
-  max-width: 22ch;
+  max-width: var(--measure);
   margin-bottom: var(--space-5);
 }
 
@@ -269,7 +277,7 @@ h3 {
 .section-lede {
   font-size: var(--body-lede);
   color: var(--ink-soft);
-  max-width: 62ch;
+  max-width: var(--measure);
   margin-bottom: var(--space-7);
 }
 
@@ -735,7 +743,7 @@ h3 {
 .hero-sub {
   font-size: var(--body-lede);
   color: var(--ink-soft);
-  max-width: 56ch;
+  max-width: var(--measure);
   margin: var(--space-5) 0 var(--space-6);
 }
 
@@ -1013,6 +1021,7 @@ h3 {
    states what it is measured against instead of waiting to be asked. */
 .cc-assume {
   margin-top: var(--space-5);
+  max-width: var(--measure);
   font-family: var(--font-mono);
   font-size: var(--mono-label);
   letter-spacing: var(--mono-label-track);
@@ -1115,7 +1124,7 @@ h3 {
   margin-top: var(--space-5);
   font-size: var(--body-lede);
   color: var(--ink-soft);
-  max-width: 62ch;
+  max-width: var(--measure);
 }
 
 .race-foot { margin-top: var(--space-3); color: var(--ink-soft); font-size: var(--mono-label); }
@@ -1128,7 +1137,7 @@ h3 {
   line-height: var(--lh-snug);
   letter-spacing: var(--display-2-track);
   font-weight: var(--display-w-semi);
-  max-width: 30ch;
+  max-width: var(--measure);
   margin-bottom: var(--space-7);
 }
 
@@ -1174,8 +1183,14 @@ h3 {
   font-weight: var(--display-w-semi);
   border-left: 3px solid var(--ink);
   padding-left: var(--space-5);
-  max-width: 34ch;
+  max-width: var(--measure-tight);
 }
+
+/* A single label/value row across 1072px strands the two ends. Held to the
+   text column so the pair reads as one line. */
+.group-narrow { max-width: var(--measure); }
+
+.pricing-tier-head { display: block; margin: var(--space-8) 0 var(--space-3); }
 
 /* ---------- proof stat band ----------
    Three columns. The previous version used stacked .grow-lv rows, which put
@@ -1183,16 +1198,19 @@ h3 {
    band between them, three times in a row. Side by side, the figures read as
    one measurement and the qualifier goes under the number it qualifies rather
    than being crammed into the label. */
-.pstats {
+.statband {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: var(--space-6);
   border-top: var(--rule-w) solid var(--rule);
   padding-top: var(--space-5);
   margin-top: var(--space-7);
+  /* The band ends in small notes, so a following paragraph sat 12px off them
+     and read as a fourth column of the band rather than the next thought. */
+  margin-bottom: var(--space-7);
 }
-.pstat { display: flex; flex-direction: column; gap: var(--space-2); }
-.pstat-val {
+.statband-cell { display: flex; flex-direction: column; gap: var(--space-2); }
+.statband-val {
   font-family: var(--font-mono);
   font-size: var(--mono-stat);
   font-weight: var(--mono-display-w);
@@ -1202,7 +1220,7 @@ h3 {
   font-variant-numeric: tabular-nums;
   font-feature-settings: "tnum" 1;
 }
-.pstat-note {
+.statband-note {
   font-size: var(--body-small);
   line-height: var(--lh-snug);
   color: var(--ink-soft);
@@ -1333,7 +1351,7 @@ h3 {
 /* Mono at 11px with label tracking is much wider per character than the 70ch
    --measure assumes, so this wrapped into three stubby lines. Given its own
    ceiling in ch of its own face. */
-.anat-foot { color: var(--ink-soft); margin-top: var(--space-5); max-width: 78ch; }
+.anat-foot { color: var(--ink-soft); margin-top: var(--space-5); max-width: var(--measure); }
 .anat-audit-link { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1640,7 +1658,7 @@ h3 {
   font-size: var(--display-3);
   font-weight: var(--display-w-semi);
   letter-spacing: var(--display-3-track);
-  max-width: 48ch;
+  max-width: var(--measure);
 }
 
 /* ---------- why settles wins ---------- */
@@ -1663,7 +1681,7 @@ h3 {
   font-size: var(--display-3);
   color: var(--ink);
   font-weight: var(--body-w-mid);
-  max-width: 68ch;
+  max-width: var(--measure);
   margin-bottom: var(--space-4);
 }
 
@@ -1784,7 +1802,7 @@ h3 {
   margin-top: var(--space-5);
   color: var(--ink-soft);
   font-size: var(--body);
-  max-width: 64ch;
+  max-width: var(--measure);
   border-left: 3px solid var(--ink);
   padding-left: var(--space-4);
 }
@@ -1958,7 +1976,7 @@ h3 {
      meters below state every figure in text. */
   .wm-wire-label { display: none; }
 
-  .pstats { grid-template-columns: 1fr; gap: var(--space-5); }
+  .statband { grid-template-columns: 1fr; gap: var(--space-5); }
 
   /* --- anatomy rows --- */
   .anat-cells { gap: var(--space-3); }
