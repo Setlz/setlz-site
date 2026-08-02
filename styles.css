@@ -1409,6 +1409,18 @@ h3 {
   border-top: var(--rule-w) solid var(--rule);
 }
 
+/* THE ONE MOMENT THE PAGE OPENS UP.
+   Twelve screens of a single 1072px column with only two graphic objects on
+   it, and no point where the layout changes shape. The map is the page's only
+   picture, so it is the one element allowed to break the container: at 1400px
+   it reaches the gutters exactly, and stays 1352px beyond that so the labels
+   never balloon. Width only. No box, no ground change, no containment level
+   added, so conventions 1 and 3 are untouched. */
+@media (min-width: 1400px) {
+  .wm { margin-left: -140px; margin-right: -140px; }
+}
+
+
 .wm-top {
   display: flex;
   align-items: center;
