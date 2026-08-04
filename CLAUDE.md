@@ -4,7 +4,7 @@ Project memory for the Setlz marketing site. Read this before editing anything.
 
 Setlz is B2B stablecoin settlement infrastructure sold whitelabelled to marketplaces,
 freight platforms and fintechs. The buyer is a CFO, a head of payments, or a platform
-CTO. This repo is the marketing site, currently a demo build (`noindex, nofollow`).
+CTO. This repo is the marketing site, live and indexable at https://setlz.com since 2026-08-04.
 
 `README.md` holds the content guardrails and the change-order history (v2.1 through the
 third deck revision). It is the record of what may and may not be claimed on the page.

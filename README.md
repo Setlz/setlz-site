@@ -4,7 +4,7 @@ Demo marketing site for Setlz, whitelabelled delivery-triggered settlement infra
 
 See `CLAUDE.md` for the structural map, the component inventory and the rebuild status.
 
-**Demo site.**
+**Live at https://setlz.com (launched 2026-08-04).**
 
 ## Run it
 
@@ -274,11 +274,14 @@ Escrow guardrails (v2.1):
 
 ## Launch checklist (Phase 6.2)
 
-Everything below is deliberately unfinished while this is a demo. Each item is
-a single, findable change rather than a value buried somewhere.
+Status 2026-08-04: items 1 (domain, set to `https://setlz.com/`) and 2
+(indexing, opened: meta is `index, follow`, robots.txt carries the production
+block) are DONE and the "Demo site" footer line is removed. Items 1b (OG image
+still draws the old hero), 1c/3 (company number, registered office, contact
+email, Hacken URL, uptime backing) and 5 remain open.
 
-**1. The domain.** `TODO-SETLZ-DOMAIN` appears in `index.html`,
-`verticals/index.html`, `robots.txt` and `sitemap.xml`. Find and replace it in
+**1. The domain.** DONE. `TODO-SETLZ-DOMAIN` appeared in `index.html`,
+`verticals/index.html`, `robots.txt` and `sitemap.xml`. Find and replace in
 all four:
 
 ```bash
@@ -304,7 +307,7 @@ incomplete legal line reads worse than a short one. The requirement did not go
 away — the footer needs the registered company number and registered office
 before launch.
 
-**2. Indexing.** Two independent fail-safes hold the site closed:
+**2. Indexing.** DONE (opened at launch). Two independent fail-safes held the site closed:
 
 - `<meta name="robots" content="noindex, nofollow">` in both pages
 - `Disallow: /` in `robots.txt`

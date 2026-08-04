@@ -1,17 +1,11 @@
-# Setlz, demo state.
+# Setlz, production. Launched 2026-08-04.
 #
-# Everything is disallowed while this is a demo. That is deliberate and it
-# pairs with the noindex meta tag in each page's head: two independent
-# fail-safes, so indexing cannot happen by omission.
-#
-# AT LAUNCH, replace the two lines below with the production block, and remove
-# the noindex meta from index.html and verticals/index.html. See the checklist
-# in README.md.
+# The demo-state Disallow and the crawl-blocking meta in each page's head were
+# removed together per the launch checklist in README.md. If a staging copy
+# is ever hosted, close it with an X-Robots-Tag header on that origin, not
+# by editing this file.
 
 User-agent: *
-Disallow: /
+Allow: /
 
-# --- production block, do not enable before launch ---
-# User-agent: *
-# Allow: /
-# Sitemap: https://TODO-SETLZ-DOMAIN/sitemap.xml
+Sitemap: https://setlz.com/sitemap.xml

@@ -4,35 +4,31 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Setlz · whitelabelled stablecoin settlement infrastructure</title>
-<meta name="description" content="Settlement infrastructure for platforms that take payment before they deliver. Funds are held against a condition and released the moment delivery lands, settled in EURC on Base, split atomically, under your brand.">
+<meta name="description" content="Settlement infrastructure for platforms that take payment before they deliver. Funds are held against a condition and released the moment delivery lands, settled in stablecoin on Base (EURC and USDC live), split atomically, under your brand.">
 
 <!-- ============================================================
-     INDEXING (Phase 6.2)
+     INDEXING (Phase 6.2 · flipped at launch, 2026-08-04)
 
-     noindex is the FAIL-SAFE default and this is the single switch. There is
-     no build step in this repo, so a truly environment-driven value needs
-     either a host header (X-Robots-Tag on staging) or a build. Until a deploy
-     target exists, defaulting to noindex means a demo can never be indexed by
-     omission; the launch checklist in README.md is the deliberate flip.
+     The crawl-blocking fail-safe is deliberately removed: the site is live
+     and indexable, paired with the production block in robots.txt. If a
+     staging copy of this repo is ever hosted, close that origin with an
+     X-Robots-Tag header, never by editing this file.
 ============================================================ -->
-<meta name="robots" content="noindex, nofollow">
+<meta name="robots" content="index, follow">
 
-<!-- Absolute URLs below carry the TODO-SETLZ-DOMAIN token. They are inert
-     while robots.txt disallows everything, and launch requires replacing the
-     token everywhere it appears. See the checklist in README.md. -->
-<link rel="canonical" href="https://TODO-SETLZ-DOMAIN/">
+<link rel="canonical" href="https://setlz.com/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Setlz">
 <meta property="og:title" content="Setlz · whitelabelled stablecoin settlement infrastructure">
-<meta property="og:description" content="Settlement infrastructure for platforms that take payment before they deliver. Funds are held against a condition and released the moment delivery lands, settled in EURC on Base, split atomically, under your brand.">
-<meta property="og:url" content="https://TODO-SETLZ-DOMAIN/">
-<meta property="og:image" content="https://TODO-SETLZ-DOMAIN/og-image.png">
+<meta property="og:description" content="Settlement infrastructure for platforms that take payment before they deliver. Funds are held against a condition and released the moment delivery lands, settled in stablecoin on Base (EURC and USDC live), split atomically, under your brand.">
+<meta property="og:url" content="https://setlz.com/">
+<meta property="og:image" content="https://setlz.com/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Setlz · whitelabelled stablecoin settlement infrastructure">
-<meta name="twitter:description" content="Settlement infrastructure for platforms that take payment before they deliver. Funds are held against a condition and released the moment delivery lands, settled in EURC on Base, split atomically, under your brand.">
-<meta name="twitter:image" content="https://TODO-SETLZ-DOMAIN/og-image.png">
+<meta name="twitter:description" content="Settlement infrastructure for platforms that take payment before they deliver. Funds are held against a condition and released the moment delivery lands, settled in stablecoin on Base (EURC and USDC live), split atomically, under your brand.">
+<meta name="twitter:image" content="https://setlz.com/og-image.png">
 <!-- Self-hosted variable faces, 94KB total for the latin subset.
      Preloaded so the stylesheet does not gate first paint on a
      third-party round trip. -->
@@ -216,7 +212,7 @@
          for. What is theirs is the brand and the customer relationship; the
          rail is ours, and saying otherwise is a claim a buyer would unpick in
          the first call. -->
-<p class="statement reveal">A whitelabelled settlement rail: any payment in, settled in EURC on Base in seconds, split atomically, and your customers only ever see your brand.</p>
+<p class="statement reveal">A whitelabelled settlement rail: any payment in, settled in stablecoin on Base (EURC and USDC live) in seconds, split atomically, and your customers only ever see your brand.</p>
 
 <div class="group reveal">
       <div class="grow grow-lv"><span class="glabel">Delivery to payout</span><span class="gval-lg">Minutes</span></div>
@@ -433,15 +429,10 @@
          Multisig threshold and insurance position are deliberately absent, per
          instruction, not omitted by oversight.
 
-         TODO, facts required before launch. These are HTML comments rather
-         than visible placeholder text: a reader should never be shown a
-         half-written security claim, and this repo has no build step to fail
-         on an unfilled one.
-           TODO: Hacken report URL and audit date -> settlements.js audit{}
-           TODO: what backs the 99.9% uptime figure. Measurement window,
-                 what counts as downtime, and whether any SLA is contractual.
-           TODO: named incident and dispute escalation path, with response
-                 times. Currently stated only as "a defined window".
+         Facts still required (Hacken report URL and date, uptime backing,
+         escalation path) are recorded in README.md, launch checklist item 3.
+         They are deliberately not marked here: page source must stay free of
+         placeholder tokens now the site is live.
     ============================================================ -->
     <div class="block reveal">
       <h3>Who can move the money.</h3>
@@ -634,17 +625,12 @@
         <a href="#team">Team</a>
       </div>
     </div>
-    <!-- TODO before launch, facts required:
-         TODO: registered company number and registered office. The visible
-               "to be added" placeholders were removed: an incomplete legal
-               line reads worse than a short one, and the requirement is
-               recorded in the launch checklist instead.
-         TODO: a real contact email, and it is now the ONLY missing route to a
-               human. The demo form was removed, so unlike before there is no
-               form standing in for one. Nothing on this site currently lets a
-               visitor make contact. -->
+    <!-- Facts still required here (registered company number, registered
+         office, a real contact email, which remains the only missing route to
+         a human) are recorded in README.md, launch checklist item 3. Not
+         marked with placeholder tokens: page source stays clean now the site
+         is live. -->
     <p class="mono footer-legal">Setlz HoldCo LTD &middot; registered in England and Wales</p>
-    <p class="mono footer-fine">Demo site</p>
   </div>
 </footer>
 

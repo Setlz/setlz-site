@@ -7,32 +7,28 @@
 <meta name="description" content="Every vertical the Setlz settlement rail runs: travel supply, property management, fintech and PSPs, commodities, creator escrow, ticketing and platform treasury. Identical mechanics, different trigger event.">
 
 <!-- ============================================================
-     INDEXING (Phase 6.2)
+     INDEXING (Phase 6.2 · flipped at launch, 2026-08-04)
 
-     noindex is the FAIL-SAFE default and this is the single switch. There is
-     no build step in this repo, so a truly environment-driven value needs
-     either a host header (X-Robots-Tag on staging) or a build. Until a deploy
-     target exists, defaulting to noindex means a demo can never be indexed by
-     omission; the launch checklist in README.md is the deliberate flip.
+     The crawl-blocking fail-safe is deliberately removed: the site is live
+     and indexable, paired with the production block in robots.txt. If a
+     staging copy of this repo is ever hosted, close that origin with an
+     X-Robots-Tag header, never by editing this file.
 ============================================================ -->
-<meta name="robots" content="noindex, nofollow">
+<meta name="robots" content="index, follow">
 
-<!-- Absolute URLs below carry the TODO-SETLZ-DOMAIN token. They are inert
-     while robots.txt disallows everything, and launch requires replacing the
-     token everywhere it appears. See the checklist in README.md. -->
-<link rel="canonical" href="https://TODO-SETLZ-DOMAIN/verticals/">
+<link rel="canonical" href="https://setlz.com/verticals/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Setlz">
 <meta property="og:title" content="Verticals · Setlz settlement infrastructure">
 <meta property="og:description" content="Every vertical the Setlz settlement rail runs: travel supply, property management, fintech and PSPs, commodities, creator escrow, ticketing and platform treasury. Identical mechanics, different trigger event.">
-<meta property="og:url" content="https://TODO-SETLZ-DOMAIN/verticals/">
-<meta property="og:image" content="https://TODO-SETLZ-DOMAIN/og-image.png">
+<meta property="og:url" content="https://setlz.com/verticals/">
+<meta property="og:image" content="https://setlz.com/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Verticals · Setlz settlement infrastructure">
 <meta name="twitter:description" content="Every vertical the Setlz settlement rail runs: travel supply, property management, fintech and PSPs, commodities, creator escrow, ticketing and platform treasury. Identical mechanics, different trigger event.">
-<meta name="twitter:image" content="https://TODO-SETLZ-DOMAIN/og-image.png">
+<meta name="twitter:image" content="https://setlz.com/og-image.png">
 <!-- Self-hosted variable faces, 94KB total for the latin subset.
      Preloaded so the stylesheet does not gate first paint on a
      third-party round trip. -->
@@ -168,7 +164,6 @@
         <p class="footer-parent">A product of Setlz HoldCo LTD.</p>
       </div>
     </div>
-    <p class="mono footer-fine">Demo site</p>
   </div>
 </footer>
 
